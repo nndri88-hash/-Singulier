@@ -358,6 +358,109 @@ dialog.sheet::backdrop{background:rgba(20,0,4,.72); backdrop-filter:blur(4px)}
   :root[data-side="maeline"] .craft{backdrop-filter:none; -webkit-backdrop-filter:none}
   .top.is-solid{backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--bg)}
 }
+
+/* ---------- v2 : astres, histoire, filtres, prix, documents ---------- */
+:root{ --ease-out:cubic-bezier(.23,1,.32,1); --ease-in-out:cubic-bezier(.77,0,.175,1); --sky-a:#4A0C20; --sky-b:#160003 }
+:root[data-side="maeline"]{ --sky-a:#FFE9D2; --sky-b:#F6B9C4 }
+.moon canvas, .sun canvas{position:absolute; inset:0; width:100%; height:100%}
+.moon.is-live{background:none; box-shadow:none; opacity:1; filter:drop-shadow(0 0 46px rgba(239,230,226,.2))}
+.sun{width:min(70vw,820px); right:-12%; top:-10%}
+.sun.is-live{background:none}
+@media (max-width:820px){ .sun{width:120vw; right:-45%; top:4%} }
+.nav a{letter-spacing:.12em}
+@media (max-width:420px){ .nav a{font-size:.74rem; padding:0 6px; letter-spacing:.08em} }
+.btn:active, .chip:active, .switch-btn:active, .icon-btn:active, .size-row label:active{transform:scale(.97)}
+.chip, .icon-btn, .switch-btn, .size-row label{transition:transform .16s var(--ease-out), background-color .2s ease, color .2s ease, border-color .2s ease}
+
+/* Histoire */
+.story-sticky{display:grid; gap:40px}
+.story-left{display:grid; gap:20px; min-width:0}
+.story-right{display:grid; gap:28px; min-width:0; align-content:start}
+.stage{position:relative; aspect-ratio:1; width:min(100%, 520px); margin-inline:auto; border-radius:50%; overflow:hidden; isolation:isolate; background:linear-gradient(180deg, var(--sky-a), var(--sky-b)); box-shadow:0 0 0 1px var(--line), 0 40px 90px -40px rgba(43,2,2,.6)}
+.st-night{position:absolute; inset:0; background:radial-gradient(80% 80% at 50% 50%, #3A0A1C, #100003 78%); opacity:.95}
+.st-stars{position:absolute; inset:0; opacity:.6; background-image:radial-gradient(1.2px 1.2px at 18% 24%, #F4E3DF 50%, transparent 52%), radial-gradient(1px 1px at 76% 18%, #F4E3DF 50%, transparent 52%), radial-gradient(1.4px 1.4px at 84% 70%, #F4E3DF 50%, transparent 52%), radial-gradient(1px 1px at 30% 80%, #F4E3DF 50%, transparent 52%), radial-gradient(1px 1px at 58% 88%, #F4E3DF 50%, transparent 52%), radial-gradient(1px 1px at 12% 58%, #F4E3DF 50%, transparent 52%)}
+.st-body{position:absolute; left:50%; top:50%; width:44%; aspect-ratio:1; margin:-22% 0 0 -22%; border-radius:50%; will-change:transform, opacity}
+.st-corona{background:radial-gradient(circle, rgba(255,244,214,.95) 0 34%, rgba(255,214,150,.55) 46%, rgba(255,170,150,.18) 62%, transparent 72%), repeating-conic-gradient(from 12deg, rgba(255,236,200,.5) 0 5deg, transparent 5deg 17deg, rgba(255,220,170,.3) 17deg 21deg, transparent 21deg 40deg); filter:blur(5px); transform:scale(2.2)}
+.st-sun{background:radial-gradient(circle at 46% 42%, #FFFDF0 0%, #FFE39A 48%, #F9B052 100%); box-shadow:0 0 70px 22px rgba(255,200,120,.5)}
+.st-moon{background:radial-gradient(circle at 34% 30%, #2C0E18, #0F0207 72%)}
+.st-ring{border:2px solid var(--or-clair); box-shadow:0 0 26px rgba(217,184,115,.7), inset 0 0 20px rgba(217,184,115,.4)}
+.st-diamond{position:absolute; left:66.9%; top:35.9%; width:6%; aspect-ratio:1; border-radius:50%; transform:translate(-50%,-50%); background:radial-gradient(circle, #fff 0 30%, rgba(255,255,255,0) 70%); box-shadow:0 0 34px 14px rgba(255,244,220,.9), 0 0 90px 30px rgba(255,220,170,.45)}
+.story-intro{margin:0; font-size:clamp(1.1rem, 1.8vw, 1.35rem); line-height:1.5; max-width:44ch}
+:root[data-side="nina"] .story-intro{font-family:var(--f-nina); font-style:italic; font-size:clamp(1.3rem, 2.2vw, 1.7rem)}
+.chapters{list-style:none; margin:0; padding:0; display:grid; gap:36px}
+.chapter-n{display:block; color:var(--accent); font-size:.76rem; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin-bottom:8px}
+.chapter h3{margin:0 0 12px; font-family:var(--display); font-weight:var(--display-weight); font-size:clamp(1.9rem, 3.6vw, 3.2rem); line-height:1.02; text-wrap:balance}
+:root[data-side="nina"] .chapter h3{text-transform:uppercase; letter-spacing:.05em}
+:root[data-side="maeline"] .chapter h3{font-style:italic; font-variation-settings:"SOFT" 100; color:var(--rose)}
+.chapter p{margin:0 0 .8em; max-width:48ch; color:var(--muted); font-size:1.05rem}
+.story-dots{display:none; gap:8px}
+.story-dots i{width:28px; height:2px; background:var(--line); transition:background-color .3s ease}
+.story-dots i.is-on{background:var(--accent)}
+.story.is-pinned{height:440vh; padding-block:0}
+.story.is-pinned .story-sticky{position:sticky; top:0; height:100vh; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:center; gap:clamp(32px, 6vw, 96px); padding-top:72px}
+.story.is-pinned .stage{width:min(100%, 56vh)}
+.story.is-pinned .chapters{position:relative; display:block; height:min(46vh, 400px)}
+.story.is-pinned .chapter{position:absolute; inset:0; opacity:0; transform:translateY(14px); filter:blur(3px); transition:opacity .25s var(--ease-out), transform .35s var(--ease-out), filter .35s var(--ease-out); pointer-events:none}
+.story.is-pinned .chapter.is-on{opacity:1; transform:none; filter:none; pointer-events:auto}
+.story.is-pinned .story-dots{display:flex}
+
+/* Barre de filtres et de tri */
+.toolbar{margin:40px 0 28px; display:grid; gap:18px; padding:clamp(16px, 2.4vw, 24px); border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--surface)}
+.toolbar .filters{margin:0}
+.selects{display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(min(100%, 150px), 1fr))}
+.sel{display:grid; gap:6px; min-width:0}
+.sel label{font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:600; color:var(--muted)}
+.sel select{width:100%; min-height:44px; padding:0 38px 0 16px; font:inherit; font-size:.95rem; color:var(--fg); border:1px solid var(--line); border-radius:999px; appearance:none; -webkit-appearance:none; cursor:pointer;
+  background:linear-gradient(45deg, transparent 50%, currentColor 50%) calc(100% - 20px) 19px / 6px 6px no-repeat, linear-gradient(135deg, currentColor 50%, transparent 50%) calc(100% - 14px) 19px / 6px 6px no-repeat, color-mix(in srgb, var(--bg) 70%, transparent)}
+:root[data-side="nina"] .sel select{border-radius:2px}
+.sel select:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.tool-foot{display:flex; justify-content:space-between; align-items:center; gap:8px 16px; flex-wrap:wrap}
+.tool-foot .count{margin:0}
+.btn-link{background:none; border:0; min-height:44px; padding:0 4px; cursor:pointer; color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px}
+.empty{grid-column:1 / -1; padding:48px 16px; text-align:center; border:1px dashed var(--line); border-radius:var(--radius-lg); color:var(--muted)}
+.card-price{margin:4px 0 0; font-weight:600; font-variant-numeric:tabular-nums}
+.card-price small, .model-price small{display:block; font-weight:400; font-size:.76rem; color:var(--muted)}
+.model-price{margin:0; font-weight:600; font-variant-numeric:tabular-nums; color:var(--fg)!important}
+.face-front svg{transition:opacity .4s ease}
+.render{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; filter:blur(8px); transform:scale(1.04); transition:opacity .5s var(--ease-out), filter .5s var(--ease-out), transform .6s var(--ease-out)}
+.has-render .render{opacity:1; filter:none; transform:none}
+.has-render svg{opacity:0}
+.face-front::after{content:""; position:absolute; left:22%; right:22%; bottom:9%; height:7%; border-radius:50%; background:radial-gradient(closest-side, rgba(20,0,4,.4), transparent); filter:blur(4px); z-index:-1}
+@media (hover:hover) and (pointer:fine){
+  .card{transition:border-color .2s ease, box-shadow .3s var(--ease-out)}
+  .card:hover{border-color:var(--accent); box-shadow:0 24px 50px -30px rgba(43,2,2,.55)}
+}
+.calc{margin-top:16px; border:1px solid var(--line); border-radius:var(--radius); padding:0 16px; font-size:.9rem}
+.calc summary{min-height:44px; display:flex; align-items:center; cursor:pointer; font-weight:600; color:var(--fg)}
+.calc ul{margin:0 0 16px; padding-left:1.1em; color:var(--muted)}
+.sheet-price{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; padding:16px 20px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface)}
+.sheet-price strong{font-family:var(--display); font-size:clamp(1.6rem, 3.4vw, 2.2rem); font-weight:400; font-variant-numeric:tabular-nums}
+.sheet-price span{color:var(--muted); font-size:.88rem}
+#v-3d canvas{touch-action:none; cursor:grab}
+
+/* Documents légaux */
+.foot-links{display:flex; flex-wrap:wrap; justify-content:center; gap:0 8px; list-style:none; padding:0; margin:28px 0 0}
+.foot-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 12px; font-size:.88rem; text-underline-offset:4px}
+.doc{padding:8px clamp(20px, 5vw, 56px) 56px; max-width:80ch; margin-inline:auto}
+.doc h3{font-family:var(--display); font-weight:500; font-size:1.45rem; line-height:1.15; margin:2.2em 0 .5em}
+:root[data-side="nina"] .doc h3{text-transform:uppercase; letter-spacing:.05em; font-size:1.2rem}
+.doc p, .doc li{color:var(--muted)}
+.doc li{margin-bottom:.4em}
+.doc strong{color:var(--fg)}
+.doc .todo{background:color-mix(in srgb, var(--accent) 24%, transparent); color:var(--fg); padding:0 .35em; border-radius:4px; font-weight:600}
+.doc-box{border:1px solid var(--line); padding:16px 20px; border-radius:var(--radius); background:var(--surface)}
+.doc .notice{margin:20px 0}
+
+/* Entrée des fenêtres : légère échelle, sortie plus rapide */
+dialog.sheet{transition:opacity .28s var(--ease-out), transform .28s var(--ease-out), overlay .28s allow-discrete, display .28s allow-discrete}
+dialog.sheet::backdrop{transition:opacity .28s ease, overlay .28s allow-discrete, display .28s allow-discrete}
+@starting-style{ dialog.sheet[open]{opacity:0; transform:translateY(12px) scale(.97)} dialog.sheet[open]::backdrop{opacity:0} }
+dialog.sheet:not([open]){opacity:0; transform:scale(.98); transition-duration:.18s}
+@media (prefers-reduced-motion: reduce){
+  dialog.sheet, dialog.sheet:not([open]){transform:none; transition:opacity .2s ease, overlay .2s allow-discrete, display .2s allow-discrete}
+  .render{transition:opacity .2s ease; transform:none; filter:none}
+  .story.is-pinned .chapter{transform:none; filter:none}
+}
 </style>
 </head>
 <body>
@@ -384,6 +487,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <a class="logo" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
     <nav class="nav" aria-label="Sections">
       <ul>
+        <li><a href="#histoire">Histoire</a></li>
         <li><a href="#sur-mesure">Sur mesure</a></li>
         <li><a href="#flash">Flash</a></li>
         <li><a href="#pluriel">Pluriel</a></li>
@@ -405,19 +509,16 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
   <div class="world world-mae">
     <div class="sun" aria-hidden="true"></div>
     <svg class="sketch" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".55">
-        <path d="M1160 130c8 22 12 44 10 66M1250 180c-14 18-24 38-30 60M1080 210c20 8 38 20 52 34M1300 300c-22-2-44 2-64 10M1120 330c14-14 30-26 48-34"/>
-        <path d="M1180 420c40-30 110-36 150-6s40 84 0 112-120 24-150-8-30-70 0-98Z" stroke-dasharray="5 7"/>
-        <path d="M1150 470c-30 10-50 24-70 44" />
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".6">
+        <path d="M1000 588c-22 6-40 2-58-12M942 576l12-2M942 576l4 12"/>
       </g>
-      <text x="1190" y="400" transform="rotate(-6 1190 400)">croquis n°1 · or rose</text>
-      <text x="960" y="540" transform="rotate(3 960 540)">pierre : saphir rose ?</text>
+      <text x="1012" y="596" transform="rotate(-4 1012 596)">croquis n°1 · or rose</text>
     </svg>
     <p class="ht ht-mae" aria-hidden="true">Singulier</p>
     <div class="hs hs-mae">
       <p class="eyebrow">Côté soleil</p>
       <p class="hs-name">Maëline</p>
-      <p>Douce, solaire, minutieuse. Elle dessine, sertit et grave chaque bijou.</p>
+      <p>Le soleil. Douce, lumineuse, la tête pleine de bagues à dessiner.</p>
       <button type="button" class="btn btn-rose" data-go="maeline" data-scroll="#contenu">Entrer côté Maëline <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
     </div>
   </div>
@@ -436,7 +537,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <div class="hs hs-nina">
       <p class="eyebrow">Côté lune</p>
       <p class="hs-name">Nina</p>
-      <p>Sensuelle, sauvage, franche. La stratégie, la rigueur et l'histoire de la marque.</p>
+      <p>La lune. Sensuelle, sauvage, franche, les yeux fixés sur l'horizon.</p>
       <button type="button" class="btn btn-or" data-go="nina" data-scroll="#contenu">Entrer côté Nina <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
     </div>
   </div>
@@ -453,40 +554,55 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
 
 <main id="contenu" tabindex="-1">
 
-  <!-- Manifeste -->
-  <section class="section manifest" aria-labelledby="manifeste-titre">
-    <div class="wrap">
-      <div data-for="nina">
-        <p class="kicker"><svg aria-hidden="true"><use href="#i-lune"/></svg>Côté lune · Nina</p>
-        <h2 class="title-xl" id="manifeste-titre" data-split>Deux univers qui <em>s'attirent</em></h2>
-        <div class="grid-2" style="margin-top:48px">
-          <p class="lead" data-reveal>Une marque à double visage : la douceur d'un savoir-faire artisanal et la rigueur d'une vision d'entreprise.</p>
-          <div class="prose" data-reveal>
-            <p>Singulier est née de deux personnalités opposées. Maëline crée les bijoux. Nina porte l'administratif, le budget et la stratégie : les choix qui permettent à chaque pièce d'exister, et d'exister longtemps.</p>
-            <p>Son univers est structuré, sensuel et affirmé. Elle aime les contrastes francs, les engagements écrits et les promesses tenues. Là où Maëline dessine, Nina trace la route.</p>
-          </div>
+  <!-- Notre histoire -->
+  <section class="section story" id="histoire" aria-labelledby="story-title">
+    <div class="wrap story-sticky">
+      <div class="story-left">
+        <p class="kicker"><svg aria-hidden="true"><use href="#i-lune"/></svg>Notre histoire</p>
+        <h2 class="title-l" id="story-title">Le Soleil et la Lune</h2>
+        <div class="stage" aria-hidden="true">
+          <div class="st-night"></div>
+          <div class="st-stars"></div>
+          <div class="st-body st-corona"></div>
+          <div class="st-body st-sun"></div>
+          <div class="st-body st-moon"></div>
+          <div class="st-body st-ring"></div>
+          <div class="st-diamond"></div>
         </div>
-        <ul class="crafts">
-          <li class="craft" data-reveal><span class="craft-n">I</span><h3>Artisanat</h3><p>Chaque pièce est faite main, de la création à la gravure.</p></li>
-          <li class="craft" data-reveal><span class="craft-n">II</span><h3>Singularité</h3><p>Des bagues inspirées d'une histoire, d'un moment de vie, d'un trait de caractère.</p></li>
-          <li class="craft" data-reveal><span class="craft-n">III</span><h3>Qualité</h3><p>Matériaux nobles et certificat d'authenticité pour chaque bague unique.</p></li>
-        </ul>
       </div>
-      <div data-for="maeline">
-        <p class="kicker"><svg aria-hidden="true"><use href="#i-soleil"/></svg>Côté soleil · Maëline</p>
-        <h2 class="title-xl" id="manifeste-titre-m" data-split>Tout commence par un <em>trait de crayon</em></h2>
-        <div class="grid-2" style="margin-top:48px">
-          <p class="lead" data-reveal>Maëline imagine les bijoux, les dessine, puis les fabrique, les sertit et les grave elle-même.</p>
-          <div class="prose" data-reveal>
-            <p>Son univers est doux et plein de détails qu'on ne remarque qu'en approchant la main : un grain de métal posé contre une pierre, une goutte qui déborde, une racine gravée à l'intérieur de l'anneau.</p>
-            <p>Chaque bague passe par les mêmes gestes, dans le même ordre.</p>
-          </div>
-        </div>
-        <ol class="crafts">
-          <li class="craft" data-reveal><span class="craft-n">1. dessin</span><h3>Le croquis</h3><p>Une vue de dessus au crayon, ombrée, à l'échelle. On y place la pierre au dixième de millimètre.</p></li>
-          <li class="craft" data-reveal><span class="craft-n">2. sertissage</span><h3>Tenir la pierre</h3><p>Griffes, grains, chaton clos rabattu au brunissoir : le métal vient serrer la pierre sans l'abîmer.</p></li>
-          <li class="craft" data-reveal><span class="craft-n">3. gravure</span><h3>Signer la pièce</h3><p>Un motif, des initiales ou un mot gravé à la main à l'intérieur de l'anneau.</p></li>
+      <div class="story-right">
+        <p class="story-intro">Vus de la Terre, le Soleil et la Lune ont la même taille. Le Soleil est quatre cents fois plus large, et quatre cents fois plus loin. Ce hasard rend les éclipses possibles. Singulier lui doit tout.</p>
+
+        <ol class="chapters" data-for="nina">
+          <li class="chapter is-on"><span class="chapter-n">Chapitre I</span><h3>Le jour et la nuit</h3>
+            <p>Maëline vit en plein jour. Elle dessine sur ce qu'elle a sous la main, un ticket, une nappe, le coin d'un carnet, et elle rit fort.</p>
+            <p>Moi, je commence quand la ville se tait. J'aime les chiffres qui tombent juste, les plans à trois ans et le rouge très sombre. Sur le papier, nous n'avions rien en commun.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre II</span><h3>L'attraction</h3>
+            <p>La Lune ne produit aucune lumière. Elle renvoie celle du Soleil, et c'est elle qui soulève les marées.</p>
+            <p>J'ai compris ça en regardant Maëline créer. Ses idées m'éclairent, et je leur donne un cap. Une creative girl, une business girl : chacune a trouvé chez l'autre ce qui lui manquait.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre III</span><h3>L'éclipse</h3>
+            <p>Puis nos deux trajectoires se sont alignées. Pendant une éclipse totale, à la seconde où la Lune finit de couvrir le Soleil, un dernier point de lumière brille sur le bord du disque.</p>
+            <p>Les astronomes appellent cet instant l'anneau de diamant. Nous avons décidé d'en faire des bagues.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre IV</span><h3>Singulier</h3>
+            <p>Chaque bague porte nos deux signatures : l'éclat du jour et la profondeur de la nuit.</p>
+            <p>Il lui manque une troisième histoire, la vôtre. Racontez-la-nous, nous la mettrons à votre doigt. Singulier, c'est vous.</p></li>
         </ol>
+
+        <ol class="chapters" data-for="maeline">
+          <li class="chapter is-on"><span class="chapter-n">Chapitre I</span><h3>Le jour et la nuit</h3>
+            <p>Nina, c'est la nuit. Elle parle peu, elle va droit au but et elle voit loin quand les autres dorment.</p>
+            <p>Moi, j'ai besoin de lumière, de couleurs et de mes crayons. Je remplis des carnets de bagues que personne n'a encore portées. Sur le papier, nous n'avions rien en commun.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre II</span><h3>L'attraction</h3>
+            <p>Le Soleil brille tout seul, et il éblouit. Pour le regarder en face, il faut un filtre.</p>
+            <p>Nina est ce filtre. Elle prend mes idées trop grandes, trop nombreuses, et elle leur trace un chemin. Elle est la business girl, je suis la creative girl, et depuis nous avançons au même rythme.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre III</span><h3>L'éclipse</h3>
+            <p>Un jour, nos chemins se sont superposés. Pendant une éclipse totale, à la seconde où la Lune finit de couvrir le Soleil, un dernier éclat reste accroché au bord.</p>
+            <p>Les astronomes l'appellent l'anneau de diamant. En voyant cette image, j'ai su ce que nous allions fabriquer.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre IV</span><h3>Singulier</h3>
+            <p>Dans chaque bague, il y a un peu de nous deux : la douceur d'un trait de crayon et l'aplomb de quelqu'un qui sait où elle va.</p>
+            <p>Il y a surtout vous. Votre souvenir, votre caractère, votre histoire. Singulier, c'est vous.</p></li>
+        </ol>
+        <div class="story-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i><i></i></div>
       </div>
     </div>
   </section>
@@ -537,7 +653,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
         </div>
       </div>
 
-      <form class="form-card" id="histoire" novalidate aria-labelledby="form-titre">
+      <form class="form-card" id="raconter" novalidate aria-labelledby="form-titre">
         <h3 class="title-l" id="form-titre">Racontez votre histoire</h3>
         <div class="form-grid">
           <div class="field">
@@ -587,13 +703,32 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
         </div>
         <div class="prose" data-reveal>
           <p data-for="nina">Ce ne sont pas des pièces sur mesure : chaque bague est déjà dessinée et n'existera qu'en un exemplaire. Les pierres viennent de lots sélectionnés aux enchères et seront vérifiées avant fabrication. Un lot vendu est remplacé par une pierre de même nature, de même couleur et de poids proche.</p>
-          <p data-for="maeline">Chatons qui débordent sur la pierre, bras en spirale, branches, racines, gouttes, granules, sertis étoilés. Survolez une fiche : la bague se retourne et montre sa monture au crayon. Ouvrez-la pour voir le croquis, la maquette 3D, l'illustration et le détail du serti.</p>
-          <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Les illustrations sont dessinées par programme à partir des paramètres de chaque modèle. Ce sont des rendus de travail, pas des photos de pièces finies. Pierres, poids et dimensions sont proposés, à confirmer.</span></p>
+          <p data-for="maeline">Chatons qui débordent sur la pierre, bras en spirale, branches, racines, gouttes, granules, sertis étoilés. Survolez une fiche : la bague se retourne et montre sa monture au crayon. Ouvrez-la pour la faire tourner en 3D et voir le croquis, l'illustration et le détail du serti.</p>
+          <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Les bagues affichées sont des rendus 3D calculés à partir des paramètres de chaque modèle, en attendant les photos des pièces réelles. Pierres, poids, dimensions et prix sont proposés, à confirmer.</span></p>
+          <details class="calc">
+            <summary>Comment la fourchette de prix est calculée</summary>
+            <ul>
+              <li>Prix = (pierre + métal + heures de fabrication + matériel) × 1,10.</li>
+              <li>Pierre : prix au carat estimé d'après des lots aux enchères, à remplacer par le prix réel.</li>
+              <li>Métal : or 18 carats entre 98 et 112 € le gramme, argent 925 entre 1,50 et 2 € le gramme (hypothèses).</li>
+              <li>Fabrication : 9 à 16 heures selon la monture, au SMIC horaire brut de 12,31 €.</li>
+              <li>Non compris : TVA éventuelle, fonte sous-traitée, poinçon de garantie, écrin, livraison.</li>
+            </ul>
+          </details>
         </div>
       </div>
 
-      <ul class="filters" id="filters" aria-label="Filtrer par couleur de pierre"></ul>
-      <p class="count" id="count" aria-live="polite"></p>
+      <div class="toolbar" role="group" aria-label="Filtrer et trier les bagues">
+        <ul class="filters" id="filters" aria-label="Couleur de pierre"></ul>
+        <div class="selects">
+          <div class="sel"><label for="fl-metal">Métal</label><select id="fl-metal"></select></div>
+          <div class="sel"><label for="fl-motif">Monture</label><select id="fl-motif"></select></div>
+          <div class="sel"><label for="fl-forme">Forme de la pierre</label><select id="fl-forme"></select></div>
+          <div class="sel"><label for="fl-prix">Budget de départ</label><select id="fl-prix"></select></div>
+          <div class="sel"><label for="fl-tri">Trier par</label><select id="fl-tri"></select></div>
+        </div>
+        <div class="tool-foot"><p class="count" id="count" aria-live="polite"></p><button type="button" class="btn-link" id="fl-reset" hidden>Effacer les filtres</button></div>
+      </div>
       <ul class="fiches" id="fiches"></ul>
       <div class="more"><button type="button" class="btn btn-line" id="more"></button></div>
     </div>
@@ -623,7 +758,13 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <p class="foot-brand">SINGULIER</p>
     <p class="foot-tag">Singulier, c'est vous.</p>
     <p>Nina &amp; Maëline · Bijoux faits main, sertis et gravés</p>
-    <small>Les illustrations des bagues sont des rendus de travail générés à partir des paramètres de chaque modèle, pas des photos de pièces finies. Aucun prix n'est affiché tant qu'il n'est pas validé.</small>
+    <ul class="foot-links">
+      <li><a href="#cgv" data-doc="cgv">Conditions générales de vente</a></li>
+      <li><a href="#mentions-legales" data-doc="mentions-legales">Mentions légales</a></li>
+      <li><a href="#confidentialite" data-doc="confidentialite">Confidentialité</a></li>
+      <li><a href="#cadre-legal" data-doc="cadre-legal">Lois et obligations</a></li>
+    </ul>
+    <small>Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Les prix sont des fourchettes estimées, à confirmer par devis.</small>
   </div>
 </footer>
 
@@ -643,15 +784,16 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <button type="button" class="icon-btn" id="sheet-close" aria-label="Fermer la fiche"><svg aria-hidden="true"><use href="#i-croix"/></svg></button>
   </div>
   <div class="sheet-body">
+    <p class="sheet-price"><strong id="sheet-price"></strong><span>Fourchette estimée, à confirmer par devis.</span></p>
     <div class="views">
+      <figure class="view">
+        <div class="view-art" id="v-3d"></div>
+        <figcaption><span><strong>Rendu 3D.</strong> Glissez pour faire tourner la bague.</span>
+          <span class="view-tools"><button type="button" class="chip" id="v-mode" aria-pressed="false">Maquette framboise</button></span></figcaption>
+      </figure>
       <figure class="view">
         <div class="view-art view-paper" id="v-croquis"></div>
         <figcaption><span><strong>Croquis dessin.</strong> Vue de dessus au crayon, échelle 5 mm.</span></figcaption>
-      </figure>
-      <figure class="view">
-        <div class="view-art" id="v-3d"><canvas id="sheet-canvas" aria-label="Maquette 3D de la bague, faites-la tourner en glissant"></canvas></div>
-        <figcaption><span><strong>Croquis 3D.</strong> Glissez pour faire tourner.</span>
-          <span class="view-tools"><button type="button" class="chip" id="v-mode" aria-pressed="false">Couleurs réelles</button></span></figcaption>
       </figure>
       <figure class="view">
         <div class="view-art" id="v-illu"></div>
@@ -670,6 +812,166 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     </div>
   </div>
 </dialog>
+
+<dialog class="sheet" id="legal" aria-labelledby="legal-title">
+  <div class="sheet-head">
+    <h2 id="legal-title"></h2>
+    <button type="button" class="icon-btn" id="legal-close" aria-label="Fermer le document"><svg aria-hidden="true"><use href="#i-croix"/></svg></button>
+  </div>
+  <div class="doc" id="legal-body"></div>
+</dialog>
+
+<template id="doc-cgv">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Projet de conditions générales, à faire relire par un ou une juriste avant toute vente. Les passages surlignés sont à compléter une fois l'entreprise créée.</span></p>
+  <p>Version du <span class="todo">[date]</span>. Les présentes conditions s'appliquent aux ventes conclues entre <span class="todo">[dénomination sociale, forme juridique, adresse du siège, numéro SIREN]</span>, ci-après « Singulier », et toute personne physique qui achète pour ses besoins personnels, ci-après « le client ».</p>
+
+  <h3>1. Objet</h3>
+  <p>Singulier crée et vend des bijoux faits main. Les présentes conditions fixent les droits et obligations des parties pour les trois offres : les bagues <strong>Sur mesure</strong>, les bagues <strong>Flash</strong> en pièce unique, et la collection <strong>Pluriel</strong>. Le client les accepte en signant le devis ou le bon de commande.</p>
+
+  <h3>2. Produits</h3>
+  <ul>
+    <li>Chaque bijou est fabriqué à la main. De légères différences de forme, de poids ou de teinte par rapport aux croquis, aux rendus 3D et aux photographies sont normales et ne constituent pas un défaut.</li>
+    <li>Les images du site sont des rendus de travail. Seul le descriptif du devis ou du bon de commande engage Singulier.</li>
+    <li>Les pierres sont naturelles, sauf mention contraire. Conformément au décret n° 2002-65 du 14 janvier 2002 relatif au commerce des pierres gemmes et des perles, Singulier indique la dénomination exacte de chaque pierre et les traitements qu'elle a reçus.</li>
+    <li>Le titre du métal figure sur le descriptif : or 750 millièmes (18 carats) ou argent 925 millièmes.</li>
+  </ul>
+
+  <h3>3. Prix</h3>
+  <p>Les prix sont exprimés en euros, toutes taxes comprises <span class="todo">[ou : « TVA non applicable, article 293 B du CGI » si franchise en base]</span>. Les fourchettes affichées sur le site sont des estimations : elles dépendent du cours des métaux, du prix réel de la pierre et du temps de fabrication. Le prix ferme est celui du devis ou du bon de commande accepté par le client. Les frais de livraison sont indiqués avant la validation de la commande.</p>
+
+  <h3>4. Commande</h3>
+  <p>Le site ne propose pas de paiement en ligne. La commande se forme lorsque le client accepte par écrit le devis ou le bon de commande que Singulier lui adresse.</p>
+  <ul>
+    <li><strong>Sur mesure :</strong> après un premier échange, Singulier présente un croquis et un devis. La fabrication commence après validation écrite du croquis et versement d'un acompte de <span class="todo">[x %]</span>.</li>
+    <li><strong>Flash :</strong> chaque bague existe en un seul exemplaire. La première commande confirmée et payée l'emporte.</li>
+    <li><strong>Pluriel :</strong> le client choisit son modèle et sa taille.</li>
+  </ul>
+
+  <h3>5. Paiement</h3>
+  <p>Moyens acceptés : <span class="todo">[virement, carte bancaire, autre]</span>. Le solde est dû avant l'expédition ou à la remise en main propre. Le paiement en espèces est limité à 1 000 € par l'article D. 112-3 du Code monétaire et financier.</p>
+
+  <h3>6. Fabrication et livraison</h3>
+  <p>Singulier indique un délai de fabrication et de livraison sur chaque devis. À défaut d'indication, la livraison intervient au plus tard trente jours après la commande (article L. 216-1 du Code de la consommation). En cas de retard, le client peut résoudre le contrat dans les conditions de l'article L. 216-6 du même code. Les bijoux voyagent en envoi assuré, remis contre signature. Le risque de perte ou de dommage passe au client lorsqu'il prend physiquement possession du bijou (article L. 216-2).</p>
+
+  <h3>7. Droit de rétractation</h3>
+  <p>Pour les bagues <strong>Flash</strong> et la collection <strong>Pluriel</strong> achetées à distance, le client dispose de quatorze jours à compter de la réception pour se rétracter, sans donner de motif (article L. 221-18 du Code de la consommation). Il en informe Singulier par une déclaration écrite sans ambiguïté, ou avec le formulaire ci-dessous, puis renvoie le bijou dans son état d'origine, non porté, dans les quatorze jours qui suivent. Les frais de retour sont à sa charge. Singulier rembourse la totalité des sommes versées, livraison standard comprise, dans les quatorze jours suivant la notification, et peut différer ce remboursement jusqu'à la réception du bijou ou d'une preuve d'expédition.</p>
+  <p><strong>Exception.</strong> Le droit de rétractation ne s'applique pas aux biens confectionnés selon les spécifications du client ou nettement personnalisés (article L. 221-28, 3°). Sont concernés : les bagues Sur mesure, et toute pièce gravée ou modifiée à la demande du client.</p>
+  <div class="doc-box">
+    <p><strong>Formulaire de rétractation</strong></p>
+    <p>À l'attention de <span class="todo">[dénomination, adresse postale, adresse e-mail]</span>. Je vous notifie par la présente ma rétractation du contrat portant sur la vente du bijou suivant : … Commandé le … / reçu le … Nom du client : … Adresse du client : … Date : … Signature (si envoi sur papier) : …</p>
+  </div>
+
+  <h3>8. Garanties légales</h3>
+  <p>Le client bénéficie de la garantie légale de conformité (articles L. 217-3 et suivants du Code de la consommation) pendant deux ans à compter de la délivrance du bijou, et de la garantie des vices cachés (articles 1641 à 1649 du Code civil), à exercer dans les deux ans suivant la découverte du vice. Pendant la garantie de conformité, le client peut demander la réparation ou le remplacement du bijou, ou à défaut une réduction du prix ou la résolution de la vente.</p>
+  <p><span class="todo">[Insérer ici l'encadré d'information obligatoire prévu à l'annexe de l'article D. 211-2 du Code de la consommation.]</span></p>
+  <p>Ces garanties ne couvrent pas l'usure normale, les rayures, les chocs, la perte d'une pierre à la suite d'un choc, ni les interventions réalisées par un tiers.</p>
+
+  <h3>9. Poinçons et certificat</h3>
+  <p>Les ouvrages en métaux précieux sont soumis à la garantie du titre prévue aux articles 521 et suivants du Code général des impôts. Ils portent le poinçon de maître de Singulier et, au-delà de 3 grammes pour l'or et de 30 grammes pour l'argent, le poinçon de garantie. Chaque bague Sur mesure et chaque bague Flash est remise avec un certificat d'authenticité qui décrit le métal, la pierre et ses éventuels traitements.</p>
+
+  <h3>10. Diamants</h3>
+  <p>Singulier s'approvisionne auprès de fournisseurs qui garantissent, sur leurs factures, que leurs diamants proviennent de sources légitimes, conformes au Processus de Kimberley et aux résolutions des Nations unies.</p>
+
+  <h3>11. Entretien et mise à taille</h3>
+  <p>Singulier remet des conseils d'entretien avec chaque bijou. Une mise à taille est possible sur devis lorsque la monture le permet. Certaines montures sculptées ne peuvent pas être agrandies ou réduites : Singulier le signale avant la commande.</p>
+
+  <h3>12. Réserve de propriété</h3>
+  <p>Le bijou reste la propriété de Singulier jusqu'au paiement complet du prix (article 2367 du Code civil).</p>
+
+  <h3>13. Force majeure</h3>
+  <p>Aucune des parties n'est responsable d'un manquement causé par un événement de force majeure au sens de l'article 1218 du Code civil.</p>
+
+  <h3>14. Données personnelles</h3>
+  <p>Singulier traite les données du client pour répondre à ses demandes et exécuter ses commandes. Le détail figure dans la politique de confidentialité.</p>
+
+  <h3>15. Médiation et litiges</h3>
+  <p>En cas de difficulté, le client écrit d'abord à <span class="todo">[adresse e-mail du service client]</span>. Si aucune solution n'est trouvée, il peut saisir gratuitement le médiateur de la consommation dont relève Singulier (article L. 612-1 du Code de la consommation) : <span class="todo">[nom du médiateur, adresse postale, site internet]</span>.</p>
+  <p>Les présentes conditions sont soumises au droit français. Le client peut saisir, à son choix, la juridiction du lieu où il demeurait au moment de la conclusion du contrat ou de la survenance du fait dommageable (article R. 631-3 du Code de la consommation).</p>
+</template>
+
+<template id="doc-mentions">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Mentions à compléter dès l'immatriculation de l'entreprise. Elles sont imposées par la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique.</span></p>
+  <h3>Éditeur du site</h3>
+  <ul>
+    <li>Dénomination : <span class="todo">[dénomination sociale ou nom et prénom]</span></li>
+    <li>Forme juridique et capital : <span class="todo">[à compléter]</span></li>
+    <li>Siège : <span class="todo">[adresse]</span></li>
+    <li>Immatriculation : <span class="todo">[SIREN, RCS ou Répertoire national des entreprises]</span></li>
+    <li>TVA intracommunautaire : <span class="todo">[numéro, ou mention de la franchise en base]</span></li>
+    <li>Contact : <span class="todo">[adresse e-mail et numéro de téléphone]</span></li>
+    <li>Directrice de la publication : <span class="todo">[nom et prénom]</span></li>
+  </ul>
+  <h3>Hébergeur</h3>
+  <p><span class="todo">[Nom de l'hébergeur, adresse, numéro de téléphone]</span></p>
+  <h3>Propriété intellectuelle</h3>
+  <p>Le nom Singulier, les textes, les croquis, les rendus et les modèles de bijoux présentés sur ce site appartiennent à leurs autrices. Toute reproduction sans accord écrit est interdite (articles L. 122-4 et L. 335-2 du Code de la propriété intellectuelle).</p>
+  <h3>Images</h3>
+  <p>Les bagues affichées sont des rendus 3D et des illustrations générés à partir des paramètres de chaque modèle. Ce ne sont pas des photographies de pièces finies. La Lune et le Soleil de la page d'accueil sont calculés en temps réel.</p>
+</template>
+
+<template id="doc-conf">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Projet de politique de confidentialité, conforme au règlement (UE) 2016/679 (RGPD) et à la loi n° 78-17 du 6 janvier 1978. À compléter et à faire relire avant la mise en ligne.</span></p>
+  <h3>Responsable du traitement</h3>
+  <p><span class="todo">[Dénomination, adresse, adresse e-mail de contact]</span></p>
+  <h3>Données collectées</h3>
+  <ul>
+    <li><strong>Formulaire « Racontez votre histoire » :</strong> prénom, adresse e-mail, récit, métal préféré. Ne nous confiez pas d'informations de santé ou d'autres données sensibles dans votre récit.</li>
+    <li><strong>Commande :</strong> identité, adresse de livraison, taille de doigt, historique des échanges et des paiements.</li>
+  </ul>
+  <h3>Finalités et bases légales</h3>
+  <ul>
+    <li>Répondre à votre demande et préparer un devis : mesures précontractuelles prises à votre demande.</li>
+    <li>Fabriquer, livrer et garantir votre bijou : exécution du contrat.</li>
+    <li>Tenir la comptabilité : obligation légale.</li>
+    <li>Vous envoyer des nouvelles de la marque : votre consentement, que vous pouvez retirer à tout moment.</li>
+  </ul>
+  <h3>Durées de conservation</h3>
+  <ul>
+    <li>Demandes sans suite : trois ans après le dernier contact.</li>
+    <li>Commandes et factures : dix ans (article L. 123-22 du Code de commerce).</li>
+  </ul>
+  <h3>Destinataires</h3>
+  <p>Nina et Maëline, et leurs prestataires : <span class="todo">[hébergeur, messagerie, transporteur, banque]</span>. Singulier ne vend aucune donnée.</p>
+  <h3>Cookies et stockage local</h3>
+  <p>Le site ne dépose aucun cookie publicitaire ni de mesure d'audience. Il enregistre dans votre navigateur un seul réglage, l'univers choisi (Nina ou Maëline). Ce stockage est strictement nécessaire à l'affichage et ne demande pas de consentement (article 82 de la loi du 6 janvier 1978).</p>
+  <p>Les polices de caractères et les bibliothèques d'animation sont chargées depuis des serveurs tiers (Google Fonts, cdnjs, jsDelivr), qui reçoivent votre adresse IP. <span class="todo">[Recommandation : héberger ces fichiers sur le serveur du site avant la mise en ligne.]</span></p>
+  <h3>Vos droits</h3>
+  <p>Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, leur portabilité, la limitation du traitement, ou vous y opposer. Vous pouvez aussi définir le sort de vos données après votre décès. Écrivez à <span class="todo">[adresse e-mail]</span>. Si la réponse ne vous satisfait pas, vous pouvez saisir la CNIL, 3 place de Fontenoy, 75007 Paris, cnil.fr.</p>
+</template>
+
+<template id="doc-lois">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Résumé des principaux textes qui encadrent la vente de bijoux en France. Il ne remplace pas un conseil juridique : vérifiez chaque point avec le bureau de garantie des douanes et un professionnel du droit.</span></p>
+  <h3>Métaux précieux</h3>
+  <ul>
+    <li><strong>Garantie du titre</strong> (Code général des impôts, articles 521 et suivants). Titres légaux les plus courants : or 750 millièmes, argent 925 millièmes.</li>
+    <li><strong>Poinçon de maître</strong> du fabricant et <strong>poinçon de garantie</strong>. Les ouvrages de moins de 3 grammes en or et de moins de 30 grammes en argent sont dispensés du poinçon de garantie.</li>
+    <li><strong>Déclaration d'existence</strong> auprès du bureau de garantie avant de commencer l'activité, et tenue des registres exigés par les douanes.</li>
+  </ul>
+  <h3>Pierres</h3>
+  <ul>
+    <li><strong>Décret n° 2002-65 du 14 janvier 2002</strong> : dénomination exacte des pierres gemmes et des perles, mention obligatoire des traitements, des pierres synthétiques et des imitations.</li>
+    <li><strong>Processus de Kimberley</strong> (règlement (CE) n° 2368/2002) : certification des diamants bruts, complétée par les garanties écrites des fournisseurs pour les diamants taillés.</li>
+  </ul>
+  <h3>Vente aux particuliers</h3>
+  <ul>
+    <li><strong>Information précontractuelle</strong> (Code de la consommation, articles L. 111-1 et L. 221-5) : caractéristiques, prix, délai, identité du vendeur, garanties.</li>
+    <li><strong>Affichage des prix</strong> toutes taxes comprises (arrêté du 3 décembre 1987).</li>
+    <li><strong>Droit de rétractation de quatorze jours</strong> pour la vente à distance (article L. 221-18), sauf pour les pièces sur mesure ou personnalisées (article L. 221-28, 3°).</li>
+    <li><strong>Garantie légale de conformité</strong> de deux ans (articles L. 217-3 et suivants) et <strong>garantie des vices cachés</strong> (Code civil, articles 1641 à 1649).</li>
+    <li><strong>Médiation de la consommation</strong> : adhésion obligatoire à un médiateur (article L. 612-1).</li>
+    <li><strong>Paiement en espèces</strong> plafonné à 1 000 € (Code monétaire et financier, article D. 112-3).</li>
+  </ul>
+  <h3>Site internet et données</h3>
+  <ul>
+    <li><strong>Mentions légales</strong> : loi n° 2004-575 du 21 juin 2004.</li>
+    <li><strong>Données personnelles</strong> : RGPD et loi Informatique et Libertés du 6 janvier 1978.</li>
+  </ul>
+  <h3>Marque et modèles</h3>
+  <ul>
+    <li><strong>Dépôt de la marque</strong> Singulier à l'INPI, après une recherche d'antériorité.</li>
+    <li><strong>Protection des créations</strong> : droit d'auteur dès la création, et dépôt de dessins et modèles possible à l'INPI.</li>
+  </ul>
+</template>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -765,6 +1067,26 @@ const RINGS = (() => {
   }
   return out;
 })();
+
+/* Fourchette de prix : (pierre + métal + heures × SMIC + matériel) × (1 + marge). Valeurs estimées, à valider. */
+const PRICE = { smic: 12.31, or: [98, 112], argent: [1.5, 2.0], materiel: [20, 45], marge: .10 };
+const CARAT = { 'saphir-bleu':[120,350], 'saphir-rose':[100,300], 'saphir-jaune':[80,220], 'padparadscha':[300,800], 'saphir-vert':[60,180], 'saphir-parti':[80,220], 'rubis':[200,600], 'spinelle-rose':[100,300], 'spinelle-rouge':[200,550], 'tourmaline-verte':[40,120], 'tourmaline-rose':[50,150], 'tanzanite':[80,250], 'tsavorite':[150,450], 'spessartite':[60,180], 'aigue-marine':[40,120], 'peridot':[30,80], 'zircon':[40,110], 'emeraude':[150,500] };
+function priceOf(r, opt = {}){
+  let ct = CARAT[r.stone.id];
+  if (r.stone.id === 'diamant'){ const b = 2600 + 2400 * Math.max(0, r.ct - .5); ct = [b, b * 1.45]; }
+  const add = { chaton: 2, spirale: 1.5, racines: -.5, etoile: .5, branches: 0, gouttes: .8, granules: .5 }[r.motif] || 0;
+  let g = opt.g ? opt.g + add * .3 : Math.max(3, 6.5 + add + (r.W - 6) * .35);
+  if (r.metal === 'argent') g *= .67;
+  const mp = r.metal === 'argent' ? PRICE.argent : PRICE.or;
+  const extra = { chaton: 1, racines: 2, branches: 2, etoile: 2 }[r.motif] || 0;
+  const h = opt.h || [9 + extra, 14 + extra];
+  const low = (r.ct * ct[0] + g * .9 * mp[0] + h[0] * PRICE.smic + PRICE.materiel[0]) * (1 + PRICE.marge);
+  const high = (r.ct * ct[1] + g * 1.1 * mp[1] + h[1] * PRICE.smic + PRICE.materiel[1]) * (1 + PRICE.marge);
+  return [Math.floor(low / 10) * 10, Math.ceil(high / 10) * 10];
+}
+const eur = (n) => n.toLocaleString('fr-FR') + ' €';
+const priceTxt = (p) => `${p[0].toLocaleString('fr-FR')} à ${eur(p[1])}`;
+RINGS.forEach(r => { r.prix = priceOf(r); });
 
 function stoneLine(r){
   const s = r.stone;
@@ -918,24 +1240,40 @@ function ringSVG(r, mode, opt = {}){
 </defs>${sketch && !opt.noPaper ? `<rect x="-20" y="-20" width="260" height="260" fill="#F6EFE6"/>` : ''}${parts.join('')}${deco}</svg>`;
 }
 
-/* ================= Flash : grille, filtres, fiche ================= */
-const listEl = $('#fiches'), moreBtn = $('#more'), countEl = $('#count'), filtersEl = $('#filters');
-let filter = 'tout', shown = 12;
+/* ================= Flash : filtres, tri, grille, fiche ================= */
+const listEl = $('#fiches'), moreBtn = $('#more'), countEl = $('#count'), filtersEl = $('#filters'), resetBtn = $('#fl-reset');
 const PAGE = mobile ? 8 : 12;
-shown = PAGE;
-function filtered(){ return filter === 'tout' ? RINGS : RINGS.filter(r => r.stone.fam === filter); }
-filtersEl.innerHTML = FAMILIES.map(f => `<li><button type="button" class="chip" data-f="${f.id}" aria-pressed="${f.id === filter}">${f.sw ? `<span class="sw" style="background:${f.sw}"></span>` : ''}${f.nom}</button></li>`).join('');
+const F = { fam: 'tout', metal: '', motif: '', forme: '', prix: '', tri: 'num' };
+let shown = PAGE;
+const fillSel = (id, opts) => { $('#' + id).innerHTML = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join(''); };
+fillSel('fl-metal', [['', 'Tous les métaux'], ...Object.entries(METALS).map(([k, m]) => [k, m.nom])]);
+fillSel('fl-motif', [['', 'Toutes les montures'], ...Object.entries(MOTIFS).map(([k, m]) => [k, m.nom])]);
+fillSel('fl-forme', [['', 'Toutes les formes'], ...Object.entries(SHAPES).map(([k, s]) => [k, 'Taille ' + s.nom])]);
+fillSel('fl-prix', [['', 'Tous les budgets'], ['0-700', 'Moins de 700 €'], ['700-1200', '700 à 1 200 €'], ['1200-2000', '1 200 à 2 000 €'], ['2000-999999', 'Plus de 2 000 €']]);
+fillSel('fl-tri', [['num', 'Numéro'], ['nom', 'Nom, de A à Z'], ['prix-asc', 'Prix croissant'], ['prix-desc', 'Prix décroissant'], ['ct-desc', 'Pierre la plus grosse'], ['ct-asc', 'Pierre la plus petite']]);
+const SORTERS = { num: (x, y) => x.i - y.i, nom: (x, y) => x.nom.localeCompare(y.nom, 'fr'), 'prix-asc': (x, y) => x.prix[0] - y.prix[0], 'prix-desc': (x, y) => y.prix[1] - x.prix[1], 'ct-desc': (x, y) => y.ct - x.ct, 'ct-asc': (x, y) => x.ct - y.ct };
+function filtered(){
+  let a = RINGS.filter(r => (F.fam === 'tout' || r.stone.fam === F.fam) && (!F.metal || r.metal === F.metal) && (!F.motif || r.motif === F.motif) && (!F.forme || r.shape === F.forme));
+  if (F.prix){ const [lo, hi] = F.prix.split('-').map(Number); a = a.filter(r => r.prix[0] >= lo && r.prix[0] < hi); }
+  return a.slice().sort(SORTERS[F.tri]);
+}
+filtersEl.innerHTML = FAMILIES.map(f => `<li><button type="button" class="chip" data-f="${f.id}" aria-pressed="${f.id === F.fam}">${f.sw ? `<span class="sw" style="background:${f.sw}"></span>` : ''}${f.nom}</button></li>`).join('');
+function refilter(){ shown = PAGE; renderList(true); }
 filtersEl.addEventListener('click', e => {
   const b = e.target.closest('[data-f]'); if (!b) return;
-  filter = b.dataset.f; shown = PAGE;
-  $$('[data-f]', filtersEl).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  renderList(true);
+  F.fam = b.dataset.f; $$('[data-f]', filtersEl).forEach(x => x.setAttribute('aria-pressed', String(x === b))); refilter();
+});
+[['fl-metal', 'metal'], ['fl-motif', 'motif'], ['fl-forme', 'forme'], ['fl-prix', 'prix'], ['fl-tri', 'tri']].forEach(([id, key]) => $('#' + id).addEventListener('change', e => { F[key] = e.target.value; refilter(); }));
+resetBtn.addEventListener('click', () => {
+  Object.assign(F, { fam: 'tout', metal: '', motif: '', forme: '', prix: '' });
+  ['fl-metal', 'fl-motif', 'fl-forme', 'fl-prix'].forEach(id => { $('#' + id).value = ''; });
+  $$('[data-f]', filtersEl).forEach(x => x.setAttribute('aria-pressed', String(x.dataset.f === 'tout'))); refilter();
 });
 function cardHTML(r){
   return `<li><article class="card" data-i="${r.i}">
     <button type="button" class="card-stage" data-open="${r.i}" aria-label="Ouvrir la fiche ${r.nom}, numéro ${r.num}">
       <span class="card-inner">
-        <span class="face face-front">${ringSVG(r, 'illu')}</span>
+        <span class="face face-front">${ringSVG(r, 'illu')}<img class="render" alt="" decoding="async"></span>
         <span class="face face-back">${ringSVG(r, 'monture', { label: 'monture · n°' + r.num })}</span>
       </span>
     </button>
@@ -943,6 +1281,7 @@ function cardHTML(r){
       <p class="card-num">N° ${r.num} / 66</p>
       <h3 class="card-name">${r.nom}</h3>
       <p class="card-spec">${stoneLine(r)}<br>${METALS[r.metal].nom} · ${MOTIFS[r.motif].nom.toLowerCase()}</p>
+      <p class="card-price">${priceTxt(r.prix)}<small>fourchette estimée</small></p>
       <div class="card-actions">
         <button type="button" class="btn btn-line" data-flip aria-pressed="false">Voir la monture</button>
         <button type="button" class="btn btn-main" data-open="${r.i}">Ouvrir la fiche</button>
@@ -955,24 +1294,25 @@ function renderList(reset){
   const slice = items.slice(0, shown);
   const startAt = reset ? 0 : listEl.children.length;
   if (reset) listEl.innerHTML = '';
-  listEl.insertAdjacentHTML('beforeend', slice.slice(startAt).map(cardHTML).join(''));
+  if (!items.length) listEl.innerHTML = '<li class="empty">Aucune bague ne correspond à ces filtres. Retirez-en un, ou effacez-les tous.</li>';
+  else listEl.insertAdjacentHTML('beforeend', slice.slice(startAt).map(cardHTML).join(''));
   const rest = items.length - slice.length;
-  countEl.textContent = `${slice.length} bague${slice.length > 1 ? 's' : ''} affichée${slice.length > 1 ? 's' : ''} sur ${items.length}`;
+  countEl.textContent = items.length ? `${slice.length} bague${slice.length > 1 ? 's' : ''} affichée${slice.length > 1 ? 's' : ''} sur ${items.length}` : 'Aucune bague';
+  resetBtn.hidden = !(F.fam !== 'tout' || F.metal || F.motif || F.forme || F.prix);
   moreBtn.hidden = rest <= 0;
   moreBtn.textContent = `Afficher ${Math.min(PAGE, rest)} bagues de plus (${rest} restantes)`;
-  const fresh = Array.from(listEl.children).slice(startAt);
-  if (G && !reduce && fresh.length) G.from(fresh, { opacity: 0, y: mobile ? 0 : 24, duration: .6, stagger: .05, ease: 'power2.out', clearProps: 'all' });
+  const fresh = items.length ? Array.from(listEl.children).slice(startAt) : [];
+  fresh.forEach(li => { const card = li.querySelector('.card'); const r = RINGS[+card.dataset.i]; if (Studio) Studio.thumb(r, card, url => { if (!url) return; const img = card.querySelector('.render'); img.onload = () => card.querySelector('.face-front').classList.add('has-render'); img.src = url; }); });
+  if (G && !reduce && fresh.length) G.from(fresh, { opacity: 0, y: mobile ? 0 : 20, duration: .5, stagger: { each: .04, ease: 'power1.in' }, ease: 'power3.out', clearProps: 'all' });
   if (window.ScrollTrigger) requestAnimationFrame(() => window.ScrollTrigger.refresh());
 }
 moreBtn.addEventListener('click', () => { const before = listEl.children.length; shown += PAGE; renderList(false); const first = listEl.children[before]; if (first) first.querySelector('.card-stage').focus({ preventScroll: true }); });
 listEl.addEventListener('click', e => {
   const flip = e.target.closest('[data-flip]');
-  if (flip){ const card = flip.closest('.card'); const on = !card.classList.contains('is-flipped'); card.classList.toggle('is-flipped', on); flip.setAttribute('aria-pressed', String(on)); flip.textContent = on ? 'Voir la pierre' : 'Voir la monture'; Sound.tick(); return; }
+  if (flip){ const card = flip.closest('.card'); const on = !card.classList.contains('is-flipped'); card.classList.toggle('is-flipped', on); flip.setAttribute('aria-pressed', String(on)); flip.textContent = on ? 'Voir la bague' : 'Voir la monture'; Sound.tick(); return; }
   const open = e.target.closest('[data-open]');
   if (open) openSheet(+open.dataset.open, open);
 });
-listEl.addEventListener('mouseenter', e => { if (e.target.closest && e.target.closest('.card-stage')) Sound.tick(); }, true);
-renderList(true);
 
 /* Fiche détaillée */
 const sheet = $('#sheet');
@@ -988,6 +1328,7 @@ function fillSheet(){
   const r = RINGS[sheetIdx];
   $('#sheet-num').textContent = `N° ${r.num} / 66`;
   $('#sheet-title').textContent = r.nom;
+  $('#sheet-price').textContent = priceTxt(r.prix);
   $('#v-croquis').innerHTML = ringSVG(r, 'croquis', { label: 'n°' + r.num + ' · vue de dessus' });
   $('#v-illu').innerHTML = ringSVG(r, 'illu');
   const px = Math.min(9, 112 / Math.max(r.L, r.W * 1.15));
@@ -1006,30 +1347,32 @@ function fillSheet(){
     ['Métal', METALS[r.metal].nom + ', coulé et sculpté à la main']
   ];
   $('#sheet-specs').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
-  $('#sheet-note').textContent = isD
-    ? 'Le diamant reste à sourcer : la spécification et le poids sont une cible. Illustrations : rendus de travail, pas des photos de pièces finies.'
-    : 'La pierre est un lot aux enchères : s’il est vendu, il sera remplacé par une pierre de même nature, de même couleur et de poids proche. La taille et les dimensions sont proposées d’après le poids et la densité. Illustrations : rendus de travail, pas des photos de pièces finies.';
+  $('#sheet-note').textContent = (isD
+    ? 'Le diamant reste à sourcer : la spécification et le poids sont une cible. '
+    : 'La pierre est un lot aux enchères : s’il est vendu, il sera remplacé par une pierre de même nature, de même couleur et de poids proche. ')
+    + 'La fourchette de prix est une estimation, hors TVA éventuelle, fonte sous-traitée, poinçon et écrin. Les images sont des rendus de travail, pas des photos de pièces finies.';
 }
 $('#sheet-close').addEventListener('click', () => sheet.close());
 sheet.addEventListener('click', e => { if (e.target === sheet) sheet.close(); });
 sheet.addEventListener('close', () => { Viewer.stop(); if (sheetOpener && document.contains(sheetOpener)) sheetOpener.focus(); });
 $('#sheet-prev').addEventListener('click', () => { sheetIdx = (sheetIdx + 65) % 66; fillSheet(); Viewer.show(RINGS[sheetIdx]); });
 $('#sheet-next').addEventListener('click', () => { sheetIdx = (sheetIdx + 1) % 66; fillSheet(); Viewer.show(RINGS[sheetIdx]); });
-$('#v-mode').addEventListener('click', e => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', String(on)); Viewer.setReal(on); });
+$('#v-mode').addEventListener('click', e => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', String(on)); Viewer.setReal(!on); });
 
 /* ================= Pluriel ================= */
 const MODELS = [
-  { nom:'Granule', txt:'Un anneau fin bordé de grains de métal, avec une petite pierre au centre.', art:['Bague fine','Bague large'], r:{ stone:STONES[1], shape:'rond', motif:'granules', metal:'rose', L:3.4, W:3.4, seed:11 } },
-  { nom:'Goutte', txt:'Une goutte de métal coulé retient la pierre comme une perle d’eau.', art:['Bague','Bague de phalange'], r:{ stone:STONES[14], shape:'poire', motif:'gouttes', metal:'jaune', L:4.6, W:3.2, seed:23 } },
-  { nom:'Racine', txt:'Un jonc fin parcouru de racines gravées, sans pierre ou avec un éclat.', art:['Jonc','Bague fine'], r:{ stone:STONES[18], shape:'rond', motif:'racines', metal:'argent', L:2.6, W:2.6, seed:37 } },
-  { nom:'Étoile', txt:'Un petit serti étoilé à six branches sur un anneau régulier.', art:['Bague','Bague large'], r:{ stone:STONES[11], shape:'rond', motif:'etoile', metal:'blanc', L:3.6, W:3.6, seed:51 } }
+  { nom:'Granule', txt:'Un anneau fin bordé de grains de métal, avec une petite pierre au centre.', art:['Bague fine','Bague large'], r:{ stone:STONES[1], shape:'rond', motif:'granules', metal:'rose', L:3.4, W:3.4, ct:.2, seed:11 } },
+  { nom:'Goutte', txt:'Une goutte de métal coulé retient la pierre comme une perle d’eau.', art:['Bague','Bague de phalange'], r:{ stone:STONES[14], shape:'poire', motif:'gouttes', metal:'jaune', L:4.6, W:3.2, ct:.3, seed:23 } },
+  { nom:'Racine', txt:'Un jonc fin parcouru de racines gravées, avec un éclat de diamant.', art:['Jonc','Bague fine'], r:{ stone:STONES[18], shape:'rond', motif:'racines', metal:'argent', L:2.6, W:2.6, ct:.07, seed:37 } },
+  { nom:'Étoile', txt:'Un petit serti étoilé à six branches sur un anneau régulier.', art:['Bague','Bague large'], r:{ stone:STONES[11], shape:'rond', motif:'etoile', metal:'blanc', L:3.6, W:3.6, ct:.25, seed:51 } }
 ];
 const SIZES = [48, 50, 52, 54, 56, 58, 60];
-$('#models').innerHTML = MODELS.map((m, k) => `<li class="model">
-  <div class="model-art">${ringSVG(m.r, 'illu')}</div>
+$('#models').innerHTML = MODELS.map((m, k) => `<li class="model" data-k="${k}">
+  <div class="model-art face-front" style="position:relative">${ringSVG(m.r, 'illu')}<img class="render" alt="" decoding="async"></div>
   <div class="model-body">
     <h3>${m.nom}</h3>
     <p>${m.txt}</p>
+    <p class="model-price">${priceTxt(priceOf(m.r, { g: 3.4, h: [4, 7] }))}<small>fourchette estimée, ${METALS[m.r.metal].nom.toLowerCase()}</small></p>
     <ul class="articles" aria-label="Articles">${m.art.map(a => `<li>${a}</li>`).join('')}</ul>
     <fieldset class="sizes"><legend>Taille</legend>
       <div class="size-row">${SIZES.map(s => `<input type="radio" id="t-${k}-${s}" name="taille-${k}" value="${s}"${s === 52 ? ' checked' : ''}><label for="t-${k}-${s}">${s}</label>`).join('')}</div>
@@ -1085,24 +1428,52 @@ function makeEnv(renderer){
   add(6, 1.4, [3, 3, 3], [0, -1.5, 6]);
   add(2.4, 2.4, [3, 1.1, 1.6], [3, -4, 3]);
   add(4, 2, [.6, .1, .2], [-3, -4, -4]);
-  const rt = pm.fromScene(s, .035); pm.dispose(); return rt.texture;
+  const rnd = mulberry32(7);                                   // petits éclats pour faire scintiller les facettes
+  for (let k = 0; k < 18; k++){ const a = rnd() * Math.PI * 2, e = (rnd() - .2) * 1.4; const c = [[26, 26, 26], [30, 22, 16], [16, 20, 30], [30, 14, 20]][k % 4]; add(.35, .35, c, [Math.cos(a) * Math.cos(e) * 7, Math.sin(e) * 7, Math.sin(a) * Math.cos(e) * 7]); }
+  const rt = pm.fromScene(s, .02); pm.dispose(); return rt.texture;
+}
+function makeGemEnv(renderer){                                   // pièce sombre semée de petites lumières : chaque facette s'allume ou s'éteint
+  const pm = new THREE.PMREMGenerator(renderer);
+  const s = new THREE.Scene(); s.background = new THREE.Color(0x1c1c1e);
+  const rnd = mulberry32(11);
+  for (let k = 0; k < 70; k++){
+    const a = rnd() * Math.PI * 2, e = Math.asin(rnd() * 2 - 1), sz = .5 + rnd() * 1.6, v = 2 + rnd() * 9;
+    const mat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }); mat.color.setRGB(v, v * (.92 + rnd() * .1), v * (.86 + rnd() * .2));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(sz, sz), mat); m.position.set(Math.cos(a) * Math.cos(e) * 7, Math.sin(e) * 7, Math.sin(a) * Math.cos(e) * 7); m.lookAt(0, 0, 0); s.add(m);
+  }
+  const top = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }); top.color.setRGB(3, 3, 3);
+  const tm = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), top); tm.position.set(0, 7, 0); tm.lookAt(0, 0, 0); s.add(tm);
+  const rt = pm.fromScene(s, 0); pm.dispose(); return rt.texture;
 }
 const ELONG = { rond:1, ovale:1.33, poire:1.45, marquise:1.9, coussin:1.12, emeraude:1.35, trillion:1 };
 const SEG = { rond:16, ovale:16, poire:16, marquise:16, coussin:12, emeraude:8, trillion:3 };
+function gemGeo(n, twist){
+  const rings = [[.52, .30, 0], [.80, .17, .5], [1, .03, 0], [1, -.03, 0], [.55, -.44, .5]];
+  const P = (rg, k) => { const a = (k + rg[2] * twist) / n * Math.PI * 2; return [Math.cos(a) * rg[0], rg[1], Math.sin(a) * rg[0]]; };
+  const v = []; const tri = (a, b, c) => v.push(a[0], a[1], a[2], b[0], b[1], b[2], c[0], c[1], c[2]);
+  for (let k = 0; k < n; k++){
+    tri([0, .30, 0], P(rings[0], k), P(rings[0], k + 1));
+    for (let j = 0; j < rings.length - 1; j++){
+      const A = rings[j], B = rings[j + 1], a0 = P(A, k), a1 = P(A, k + 1), b0 = P(B, k), b1 = P(B, k + 1);
+      if (B[2] > A[2]){ tri(a0, a1, b0); tri(a1, b1, b0); } else if (B[2] < A[2]){ tri(a0, b1, b0); tri(a0, a1, b1); } else { tri(a0, a1, b1); tri(a0, b1, b0); }
+    }
+    tri(P(rings[4], k), P(rings[4], k + 1), [0, -.84, 0]);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3)); g.computeVertexNormals(); return g;
+}
 function placeBetween(mesh, a, b){ const d = new THREE.Vector3().subVectors(b, a); mesh.position.copy(a).addScaledVector(d, .5); mesh.scale.set(1, d.length(), 1); mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize()); }
 function buildRing3D(p, low){
   const g = new THREE.Group();
   const metal = new THREE.MeshStandardMaterial({ color: p.metal, metalness: 1, roughness: .17, envMapIntensity: 1.25 });
-  const stoneMat = new THREE.MeshPhysicalMaterial({ color: p.stone, metalness: 0, roughness: .02, ior: p.ior || 1.77, clearcoat: 1, clearcoatRoughness: 0, envMapIntensity: 2.6, flatShading: true, transparent: true, opacity: .94, specularIntensity: 1 });
+  const stoneMat = new THREE.MeshStandardMaterial({ color: p.stone, metalness: 1, roughness: .04, envMap: p.gemEnv || null, envMapIntensity: 1.9, flatShading: true, side: THREE.DoubleSide });
+  stoneMat.emissive.copy(stoneMat.color); stoneMat.emissiveIntensity = .2;
   const seed = p.seed || 1;
   const band = lump(new THREE.TorusGeometry(1, .1, low ? 14 : 24, low ? 90 : 170), .035, 6, seed, v => .45 + Math.max(0, v.y) * 1.25);
   g.add(new THREE.Mesh(band, metal));
   const s = p.size || .3, el = ELONG[p.shape] || 1, n = SEG[p.shape] || 16, top = 1.13;
   // pierre (couronne + culasse)
   const stone = new THREE.Group();
-  const crown = new THREE.CylinderGeometry(.6, 1, .32, n, 1); crown.translate(0, .16, 0);
-  const pav = new THREE.ConeGeometry(1, .8, n, 1); pav.rotateX(Math.PI); pav.translate(0, -.4, 0);
-  stone.add(new THREE.Mesh(crown, stoneMat), new THREE.Mesh(pav, stoneMat));
+  stone.add(new THREE.Mesh(gemGeo(n, p.shape === 'emeraude' ? 0 : 1), stoneMat));
   if (p.shape === 'emeraude') stone.rotation.y = Math.PI / 8;
   stone.scale.set(s, s, s * el); stone.position.y = top + .02;
   g.add(stone);
@@ -1126,7 +1497,7 @@ const Hero = hasThree ? (() => {
   const canvas = $('#ring'), hero = $('#accueil');
   let renderer, scene, camera, ring, raf = 0, visible = true, blend = side === 'nina' ? 1 : 0, blendTarget = blend;
   const pointer = { x: 0, y: 0 }, cur = { rx: .5, ry: 0 }; let auto = 0, last = performance.now(), scrollP = 0;
-  const COL = { nina: { metal: new THREE.Color(0xD6D2D8), stone: new THREE.Color(0x8A1534) }, mae: { metal: new THREE.Color(0xEBB29A), stone: new THREE.Color(0xF27FA3) } };
+  const COL = { nina: { metal: new THREE.Color(0xD6D2D8), stone: new THREE.Color(0xA3123C) }, mae: { metal: new THREE.Color(0xEBB29A), stone: new THREE.Color(0xF56E9A) } };
   const tmpA = new THREE.Color(), tmpB = new THREE.Color();
   function init(){
     try {
@@ -1136,7 +1507,7 @@ const Hero = hasThree ? (() => {
     renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
     scene = new THREE.Scene(); scene.environment = makeEnv(renderer);
     camera = new THREE.PerspectiveCamera(30, 1, .1, 50);
-    ring = buildRing3D({ metal: 0xD6D2D8, stone: 0x8A1534, shape: 'ovale', motif: 'chaton', size: .32, ior: 1.77, seed: 3 }, mobile);
+    ring = buildRing3D({ metal: 0xD6D2D8, stone: 0x8A1534, shape: 'ovale', motif: 'chaton', size: .32, ior: 1.77, seed: 3, gemEnv: makeGemEnv(renderer) }, mobile);
     scene.add(ring);
     const dl = new THREE.DirectionalLight(0xffffff, 1.2); dl.position.set(2, 4, 3); scene.add(dl);
     resize(); addEventListener('resize', resize);
@@ -1167,7 +1538,7 @@ const Hero = hasThree ? (() => {
     blend += (blendTarget - blend) * (reduce ? 1 : 1 - Math.pow(.01, dt));
     const u = ring.userData;
     u.metal.color.copy(tmpA.copy(COL.mae.metal).lerp(COL.nina.metal, blend));
-    u.stoneMat.color.copy(tmpB.copy(COL.mae.stone).lerp(COL.nina.stone, blend));
+    u.stoneMat.color.copy(tmpB.copy(COL.mae.stone).lerp(COL.nina.stone, blend)); u.stoneMat.emissive.copy(u.stoneMat.color);
     u.metal.roughness = .22 - blend * .1;
     renderer.render(scene, camera);
     raf = requestAnimationFrame(frame);
@@ -1175,52 +1546,99 @@ const Hero = hasThree ? (() => {
   return { init, setBlend(v){ blendTarget = v; loop(); } };
 })() : null;
 
+/* --- Studio : un seul moteur pour les vignettes des fiches et la visionneuse --- */
+const Studio = hasThree ? (() => {
+  const canvas = document.createElement('canvas');
+  canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Rendu 3D de la bague. Glissez pour la faire tourner.');
+  const TH = mobile ? 320 : 460;
+  let renderer, scene, camera, gemEnv, ok = null, jobs = [], pumping = false, viewing = false;
+  const cache = new Map();
+  const idle = window.requestIdleCallback ? (f) => requestIdleCallback(f, { timeout: 200 }) : (f) => setTimeout(f, 30);
+  function init(){
+    if (ok !== null) return ok;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch(e){ return (ok = false); }
+    renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+    scene = new THREE.Scene(); scene.environment = makeEnv(renderer); gemEnv = makeGemEnv(renderer);
+    camera = new THREE.PerspectiveCamera(28, 1, .1, 50);
+    const dl = new THREE.DirectionalLight(0xffffff, 1.1); dl.position.set(2, 4, 3); scene.add(dl);
+    return (ok = true);
+  }
+  function make(r){
+    const size = Math.max(.26, Math.min(.5, r.W * .06));
+    return buildRing3D({ metal: METALS[r.metal].three, stone: r.stone.hex[1], shape: r.shape, motif: r.motif, size, ior: r.stone.ior, seed: (r.seed % 17) + 1, gemEnv }, mobile);
+  }
+  function dispose(obj){ obj.traverse(o => { if (o.geometry) o.geometry.dispose(); }); obj.userData.metal.dispose(); obj.userData.stoneMat.dispose(); }
+  function shoot(r){
+    renderer.setPixelRatio(1); renderer.setSize(TH, TH, false);
+    camera.aspect = 1; camera.position.set(0, .2, 5.7); camera.lookAt(0, .2, 0); camera.updateProjectionMatrix();
+    const g = make(r); g.rotation.set(.95, -.5 + ((r.seed % 5) - 2) * .12, 0); g.position.y = -.2; scene.add(g);
+    renderer.render(scene, camera);
+    let url = ''; try { url = canvas.toDataURL('image/webp', .9); } catch(e){}
+    scene.remove(g); dispose(g); return url;
+  }
+  function pump(){
+    if (viewing || !jobs.length){ pumping = false; return; }
+    const job = jobs.shift();
+    if (document.contains(job.el)){ let url = cache.get(job.key); if (url === undefined){ url = shoot(job.r); cache.set(job.key, url); } job.done(url); }
+    idle(pump);
+  }
+  function kick(){ if (!pumping && !viewing && jobs.length){ pumping = true; idle(pump); } }
+  return {
+    canvas,
+    thumb(r, el, done){ const key = r.nom + r.seed; if (cache.has(key)){ done(cache.get(key)); return; } if (!init()) return; jobs.push({ r, el, done, key }); kick(); },
+    begin(){ if (!init()) return null; viewing = true; return { renderer, scene, camera, make, dispose }; },
+    end(){ viewing = false; kick(); }
+  };
+})() : null;
+
 /* --- Visionneuse de la fiche --- */
 const Viewer = (() => {
-  let renderer, scene, camera, ring, raf = 0, real = false, cur = null, drag = null, rot = { x: .6, y: 0 }, vel = .25, last = 0;
-  const canvas = $('#sheet-canvas');
-  function init(){
-    if (renderer) return true;
-    if (!hasThree) return false;
-    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch(e){ return false; }
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2));
-    renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    scene = new THREE.Scene(); scene.environment = makeEnv(renderer);
-    camera = new THREE.PerspectiveCamera(28, 1, .1, 50); camera.position.set(0, .3, 7.6); camera.lookAt(0, .15, 0);
-    const dl = new THREE.DirectionalLight(0xffffff, 1); dl.position.set(2, 4, 3); scene.add(dl); scene.add(new THREE.AmbientLight(0xffffff, .35));
-    canvas.style.touchAction = 'none';
-    canvas.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, rx: rot.x, ry: rot.y }; canvas.setPointerCapture(e.pointerId); });
-    canvas.addEventListener('pointermove', e => { if (!drag) return; rot.y = drag.ry + (e.clientX - drag.x) * .012; rot.x = Math.max(-.4, Math.min(1.4, drag.rx + (e.clientY - drag.y) * .01)); });
-    const end = () => { drag = null; }; canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end);
-    return true;
-  }
+  let ctx = null, ring = null, raf = 0, real = true, cur = null, drag = null, rot = { x: .7, y: 0 }, last = 0, bound = false;
+  const mount = $('#v-3d');
   function apply(){
     if (!ring || !cur) return;
     const u = ring.userData;
-    if (real){ u.metal.color.setHex(METALS[cur.metal].three); u.metal.metalness = 1; u.metal.roughness = .17; u.stoneMat.color.set(cur.stone.hex[1]); u.stoneMat.opacity = .94; }
-    else { u.metal.color.setHex(0xEDE7E1); u.metal.metalness = .15; u.metal.roughness = .6; u.stoneMat.color.setHex(0xC8285A); u.stoneMat.opacity = 1; }
+    if (real){ u.metal.color.setHex(METALS[cur.metal].three); u.metal.metalness = 1; u.metal.roughness = .16; u.stoneMat.color.set(cur.stone.hex[1]); u.stoneMat.metalness = 1; }
+    else { u.metal.color.setHex(0xEDE7E1); u.metal.metalness = .15; u.metal.roughness = .6; u.stoneMat.color.setHex(0xC8285A); u.stoneMat.metalness = .2; }
+    u.stoneMat.emissive.copy(u.stoneMat.color);
   }
-  function dispose(obj){ obj.traverse(o => { if (o.geometry) o.geometry.dispose(); }); if (obj.userData.metal){ obj.userData.metal.dispose(); obj.userData.stoneMat.dispose(); } }
+  function bind(canvas){
+    if (bound) return; bound = true;
+    canvas.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, rx: rot.x, ry: rot.y }; canvas.setPointerCapture(e.pointerId); canvas.style.cursor = 'grabbing'; });
+    canvas.addEventListener('pointermove', e => { if (!drag) return; rot.y = drag.ry + (e.clientX - drag.x) * .012; rot.x = Math.max(-.4, Math.min(1.5, drag.rx + (e.clientY - drag.y) * .01)); });
+    const end = () => { drag = null; canvas.style.cursor = ''; }; canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end);
+  }
   function show(r){
     cur = r;
-    if (!init()){ $('#v-3d').innerHTML = ringSVG(r, 'croquis', { label: 'maquette indisponible : vue au crayon' }); return; }
-    if (ring){ scene.remove(ring); dispose(ring); }
-    const size = Math.max(.2, Math.min(.42, r.W * .052));
-    ring = buildRing3D({ metal: METALS[r.metal].three, stone: r.stone.hex[1], shape: r.shape, motif: r.motif, size, ior: r.stone.ior, seed: r.seed % 17 + 1 }, mobile);
-    ring.position.y = -.35; scene.add(ring); apply();
-    rot = { x: .6, y: 0 };
-    requestAnimationFrame(() => { const w = canvas.clientWidth, h = canvas.clientHeight; if (w && h){ renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); } });
+    if (!ctx) ctx = Studio && Studio.begin();
+    if (!ctx){ mount.innerHTML = ringSVG(r, 'illu'); return; }
+    if (Studio.canvas.parentNode !== mount){ mount.innerHTML = ''; mount.appendChild(Studio.canvas); bind(Studio.canvas); }
+    if (ring){ ctx.scene.remove(ring); ctx.dispose(ring); }
+    ring = ctx.make(r); ring.position.y = -.4; ctx.scene.add(ring); apply();
+    rot = { x: .7, y: -.4 };
+    requestAnimationFrame(() => {
+      const w = mount.clientWidth, h = mount.clientHeight; if (!w || !h) return;
+      ctx.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2)); ctx.renderer.setSize(w, h, false);
+      ctx.camera.aspect = w / h; ctx.camera.position.set(0, .3, 7.2); ctx.camera.lookAt(0, .15, 0); ctx.camera.updateProjectionMatrix();
+    });
     last = performance.now(); if (!raf) raf = requestAnimationFrame(frame);
   }
   function frame(now){
-    raf = 0; if (!sheet.open) return;
+    raf = 0; if (!sheet.open || !ring) return;
     const dt = Math.min(.05, (now - last) / 1000); last = now;
-    if (!drag && !reduce) rot.y += dt * vel;
-    ring.rotation.set(rot.x, rot.y, 0); renderer.render(scene, camera);
+    if (!drag && !reduce) rot.y += dt * .3;
+    ring.rotation.set(rot.x, rot.y, 0); ctx.renderer.render(ctx.scene, ctx.camera);
     raf = requestAnimationFrame(frame);
   }
-  return { show, stop(){ if (raf) cancelAnimationFrame(raf); raf = 0; }, setReal(v){ real = v; apply(); } };
+  return {
+    show,
+    stop(){ if (raf) cancelAnimationFrame(raf); raf = 0; if (ring && ctx){ ctx.scene.remove(ring); ctx.dispose(ring); ring = null; } if (ctx){ ctx = null; Studio.end(); } },
+    setReal(v){ real = v; apply(); }
+  };
 })();
+
+renderList(true);
+if (Studio) $$('#models .model').forEach(li => { const m = MODELS[+li.dataset.k]; Studio.thumb(m.r, li, url => { if (!url) return; const img = li.querySelector('.render'); img.onload = () => li.querySelector('.model-art').classList.add('has-render'); img.src = url; }); });
 
 if (!(Hero && Hero.init())){
   $('#ring').hidden = true;
@@ -1228,12 +1646,112 @@ if (!(Hero && Hero.init())){
   fb.innerHTML = ringSVG({ stone: STONES[1], shape: 'ovale', motif: 'chaton', metal: 'rose', L: 9, W: 6.7, seed: 7 }, 'illu');
 }
 
+/* ================= Lune et Soleil calculés (shaders WebGL) ================= */
+const Sky = (() => {
+  const NOISE = `precision highp float;
+uniform vec2 uRes;
+float hash(vec3 p){ p = fract(p * .3183099 + .1); p *= 17.; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float noise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3. - 2. * f);
+  return mix(mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x), mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x), mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y), f.z); }
+float fbm(vec3 p){ float a = .5, s = 0.; for (int i = 0; i < 5; i++){ s += a * noise(p); p *= 2.03; a *= .5; } return s; }
+`;
+  const MOON = NOISE + `uniform vec3 uLight;
+vec3 hash3(vec3 p){ return fract(sin(vec3(dot(p, vec3(127.1,311.7,74.7)), dot(p, vec3(269.5,183.3,246.1)), dot(p, vec3(113.5,271.9,124.6)))) * 43758.5453); }
+float craters(vec3 p){ vec3 i = floor(p), f = fract(p); float h = 0.;
+  for (int x = -1; x <= 1; x++) for (int y = -1; y <= 1; y++) for (int z = -1; z <= 1; z++){
+    vec3 g = vec3(float(x), float(y), float(z)); vec3 o = hash3(i + g);
+    if (o.z > .42){ float rad = .16 + .3 * o.x * o.y; float d = length(g + o - f) / rad;
+      float bowl = smoothstep(1., 0., d); float rim = exp(-pow((d - 1.) * 4., 2.));
+      h += (-.7 * bowl * (2. - bowl) + .28 * rim) * rad * (.4 + .6 * o.y); } }
+  return h; }
+float height(vec3 p){ return craters(p * 2.2) * .9 + craters(p * 5. + 11.) * .5 + craters(p * 11. + 5.) * .28 + craters(p * 24. + 2.) * .12 + fbm(p * 6.) * .09; }
+void main(){
+  vec2 uv = (gl_FragCoord.xy / uRes) * 2. - 1.; uv /= .97; float r2 = dot(uv, uv);
+  if (r2 > 1.){ gl_FragColor = vec4(0.); return; }
+  vec3 n = vec3(uv, sqrt(1. - r2));
+  vec3 t = normalize(cross(vec3(0., 1., 0.), n) + 1e-4), b = cross(n, t);
+  float e = .0035, h0 = height(n), hx = height(normalize(n + t * e)), hy = height(normalize(n + b * e));
+  vec3 nn = normalize(n - (t * (hx - h0) + b * (hy - h0)) / e * .16);
+  float maria = smoothstep(.46, .6, fbm(n * 1.5 + vec3(3.1, 1.7, .4)));
+  float alb = mix(.74, .3, maria) * (.72 + .5 * fbm(n * 5.) * (.6 + .8 * fbm(n * 22.))) + max(0., h0) * .9 + smoothstep(.62, .8, fbm(n * 3.3 + 9.)) * .1;
+  float mu0 = max(dot(nn, uLight), 0.), mu = max(nn.z, .05);
+  float lit = 2. * mu0 / (mu0 + mu) * smoothstep(-.04, .1, dot(n, uLight));
+  vec3 col = vec3(alb) * vec3(1., .965, .93) * (lit * .95 + .03);
+  float aa = smoothstep(1., .985, sqrt(r2));
+  gl_FragColor = vec4(col * aa, aa);
+}`;
+  const SUN = NOISE + `uniform float uT;
+void main(){
+  vec2 uv = (gl_FragCoord.xy / uRes) * 2. - 1.; float r = length(uv) / .46;
+  vec3 col = vec3(0.); float a = 0.;
+  if (r < 1.02){ float rr = min(r, 1.); vec3 n = vec3(uv / .46, sqrt(1. - rr * rr));
+    float ang = uT * .02; vec3 p = vec3(n.x * cos(ang) + n.z * sin(ang), n.y, -n.x * sin(ang) + n.z * cos(ang));
+    float g = fbm(p * 16. + vec3(0., uT * .1, 0.)), g2 = fbm(p * 4. + vec3(uT * .03));
+    float spots = smoothstep(.7, .78, fbm(p * 2.4 + 7.));
+    float mu = n.z;
+    vec3 c = mix(vec3(1., .74, .32), vec3(1., .97, .86), smoothstep(.34, .72, g * .6 + g2 * .5));
+    c = mix(c, vec3(.96, .44, .14), pow(1. - mu, 1.6) * .8); c *= .5 + .62 * pow(mu, .5);
+    c = mix(c, c * vec3(.5, .28, .16), spots * .75);
+    col = c; a = 1.; }
+  float d = max(r - 1., 0.); float th = atan(uv.y, uv.x); vec2 dir = vec2(cos(th), sin(th));
+  float rays = .5 + .5 * noise(vec3(dir * 3.2, uT * .06)) * (.55 + .45 * noise(vec3(dir * 9., uT * .04 + 3.)));
+  float cor = (exp(-d * 2.6) * rays * .8 + exp(-d * 11.) * .7) * smoothstep(1.15, .0, d);
+  vec3 cc = mix(vec3(1., .6, .34), vec3(1., .9, .68), exp(-d * 5.));
+  float edge = smoothstep(1.015, .99, r);
+  col = mix(cc, col, edge); a = mix(clamp(cor, 0., 1.), 1., edge);
+  gl_FragColor = vec4(col * a, a);
+}`;
+  function program(canvas, frag){
+    let gl; try { gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false }); } catch(e){}
+    if (!gl) return null;
+    const mk = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
+    const vs = mk(gl.VERTEX_SHADER, 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }'), fs = mk(gl.FRAGMENT_SHADER, frag);
+    if (!vs || !fs) return null;
+    const pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+    gl.useProgram(pr);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const U = {};
+    return { draw(px, u){
+      if (canvas.width !== px){ canvas.width = px; canvas.height = px; }
+      gl.viewport(0, 0, px, px); gl.uniform2f(U.uRes || (U.uRes = gl.getUniformLocation(pr, 'uRes')), px, px);
+      for (const k in u){ const l = U[k] || (U[k] = gl.getUniformLocation(pr, k)); const v = u[k]; if (typeof v === 'number') gl.uniform1f(l, v); else gl.uniform3f(l, v[0], v[1], v[2]); }
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); } };
+  }
+  const moonBox = $('.moon'), sunBox = $('.sun');
+  const mc = document.createElement('canvas'), sc = document.createElement('canvas');
+  const moon = program(mc, MOON), sun = program(sc, SUN);
+  if (moon){ moonBox.appendChild(mc); moonBox.classList.add('is-live'); }
+  if (sun){ sunBox.appendChild(sc); sunBox.classList.add('is-live'); }
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let phase = -1, wanted = .5, moonDue = false, heroOn = true, t0 = performance.now(), lastSun = 0, raf = 0;
+  function drawMoon(){
+    moonDue = false; if (!moon) return;
+    const px = Math.min(mobile ? 520 : 960, Math.round(moonBox.clientWidth * dpr)) || 400;
+    const a = 1.75 - 1.3 * wanted;                       // plus la nuit de Nina avance, plus la Lune est pleine
+    moon.draw(px, { uLight: [Math.sin(a), .22, Math.cos(a)] }); phase = wanted;
+  }
+  function tick(now){
+    raf = 0; if (!heroOn || document.hidden) return;
+    if (sun && now - lastSun > (mobile ? 60 : 33)){ lastSun = now; const px = Math.min(mobile ? 420 : 760, Math.round(sunBox.clientWidth * dpr * .8)) || 320; sun.draw(px, { uT: (now - t0) / 1000 }); }
+    if (!reduce && sun) raf = requestAnimationFrame(tick);
+  }
+  function start(){ if (!raf) raf = requestAnimationFrame(tick); }
+  new IntersectionObserver(([en]) => { heroOn = en.isIntersecting; if (heroOn) start(); }).observe($('#accueil'));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+  addEventListener('resize', () => { if (!moonDue){ moonDue = true; requestAnimationFrame(drawMoon); } lastSun = 0; start(); });
+  drawMoon(); start();
+  return { setSplit(v){ wanted = v / 100; if (Math.abs(wanted - phase) > .015 && !moonDue){ moonDue = true; requestAnimationFrame(drawMoon); } } };
+})();
+
 /* ================= Ligne de partage ================= */
 const heroEl = $('#accueil'), handle = $('#split-handle');
 let split = 50;
 function setSplit(v, animate){
   v = Math.max(0, Math.min(100, v));
-  const applyV = (x) => { split = x; heroEl.style.setProperty('--split-pct', x + '%'); handle.setAttribute('aria-valuenow', String(Math.round(x))); handle.setAttribute('aria-valuetext', x > 60 ? 'Surtout Nina' : x < 40 ? 'Surtout Maëline' : 'Moitié Nina, moitié Maëline'); if (Hero) Hero.setBlend(x / 100); };
+  const applyV = (x) => { split = x; heroEl.style.setProperty('--split-pct', x + '%'); handle.setAttribute('aria-valuenow', String(Math.round(x))); handle.setAttribute('aria-valuetext', x > 60 ? 'Surtout Nina' : x < 40 ? 'Surtout Maëline' : 'Moitié Nina, moitié Maëline'); if (Hero) Hero.setBlend(x / 100); Sky.setSplit(x); };
   if (animate && G && !reduce){ const o = { v: split }; G.to(o, { v, duration: .9, ease: 'power3.inOut', onUpdate: () => applyV(o.v) }); }
   else applyV(v);
 }
@@ -1258,6 +1776,36 @@ handle.addEventListener('keydown', e => {
 });
 $$('.hs').forEach(el => el.addEventListener('focusin', () => { if (!mobile && (split > 80 || split < 20)) setSplit(50, true); }));
 
+/* ================= Histoire : l'éclipse suit le défilement ================= */
+const Story = (() => {
+  const st = $('#histoire'), moon = $('.st-moon', st), cor = $('.st-corona', st), night = $('.st-night', st), dia = $('.st-diamond', st), ring = $('.st-ring', st), sunEl = $('.st-sun', st);
+  const dots = $$('.story-dots i', st), lists = $$('.chapters', st);
+  let p = 1, idx = -1;
+  const ss = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+  function set(v){
+    p = v;
+    const e = ss(p / .6);
+    moon.style.transform = `translate(${(-155 * (1 - e)).toFixed(2)}%, ${(-36 * (1 - e)).toFixed(2)}%)`;
+    night.style.opacity = (side === 'nina' ? .5 + .45 * e : e * .95).toFixed(3);
+    cor.style.opacity = ss((p - .5) / .14).toFixed(3);
+    const d = ss((p - .56) / .1), fade = ss((p - .8) / .15);
+    dia.style.opacity = (d * (1 - fade * .25)).toFixed(3);
+    dia.style.transform = `translate(-50%,-50%) scale(${(.5 + .5 * d + .5 * ss((p - .62) / .1) * (1 - fade)).toFixed(3)})`;
+    ring.style.opacity = fade.toFixed(3);
+    sunEl.style.opacity = (1 - fade * .9).toFixed(3);
+    const i = Math.min(3, Math.floor(p * 4 + .001));
+    if (i !== idx){ idx = i; lists.forEach(l => Array.from(l.children).forEach((li, k) => li.classList.toggle('is-on', k === i))); dots.forEach((dot, k) => dot.classList.toggle('is-on', k <= i)); }
+  }
+  if (G && window.ScrollTrigger && !reduce && !mobile){
+    st.classList.add('is-pinned'); set(0);
+    window.ScrollTrigger.create({ trigger: st, start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: self => set(self.progress) });
+  } else {
+    lists.forEach(l => Array.from(l.children).forEach(li => li.classList.add('is-on'))); set(1);
+    lists.forEach(l => Array.from(l.children).forEach(li => li.classList.add('is-on')));
+  }
+  return { refresh(){ const pinned = st.classList.contains('is-pinned'); const keep = idx; idx = -1; set(p); if (!pinned) lists.forEach(l => Array.from(l.children).forEach(li => li.classList.add('is-on'))); } };
+})();
+
 /* ================= Transition entre les univers ================= */
 const eclipse = $('#eclipse');
 let busy = false;
@@ -1271,6 +1819,7 @@ function applySide(s){
   door.dataset.go = other;
   const bas = $('#bascule'); bas.querySelector('use').setAttribute('href', other === 'nina' ? '#i-lune' : '#i-soleil'); bas.querySelector('span').textContent = `Basculer côté ${other === 'nina' ? 'Nina' : 'Maëline'}`; bas.dataset.go = other;
   heroForSide(true);
+  Story.refresh();
   Sound.swap();
   if (window.ScrollTrigger) requestAnimationFrame(() => window.ScrollTrigger.refresh());
 }
@@ -1381,7 +1930,7 @@ function heroIntro(){
 heroIntro(); setupReveals();
 
 /* ================= Formulaire ================= */
-const form = $('#histoire');
+const form = $('#raconter');
 form.addEventListener('submit', e => {
   e.preventDefault();
   const checks = [
@@ -1397,7 +1946,26 @@ form.addEventListener('submit', e => {
   status.textContent = `Merci ${$('#f-prenom').value.trim()}. Ce formulaire est une démonstration : il n'est pas encore relié à une boîte mail, donc votre histoire n'a pas été envoyée.`;
   Sound.chime();
 });
-$$('#histoire input, #histoire textarea').forEach(f => f.addEventListener('input', () => { if (f.getAttribute('aria-invalid') === 'true'){ f.removeAttribute('aria-invalid'); const err = $('#e-' + f.id.slice(2)); if (err) err.hidden = true; } }));
+$$('#raconter input, #raconter textarea').forEach(f => f.addEventListener('input', () => { if (f.getAttribute('aria-invalid') === 'true'){ f.removeAttribute('aria-invalid'); const err = $('#e-' + f.id.slice(2)); if (err) err.hidden = true; } }));
+
+/* ================= Documents légaux ================= */
+const legal = $('#legal');
+const DOCS = { 'cgv': ['Conditions générales de vente', 'doc-cgv'], 'mentions-legales': ['Mentions légales', 'doc-mentions'], 'confidentialite': ['Politique de confidentialité', 'doc-conf'], 'cadre-legal': ['Lois et obligations', 'doc-lois'] };
+let legalOpener = null;
+function openDoc(id, opener){
+  const d = DOCS[id]; if (!d) return;
+  legalOpener = opener || null;
+  $('#legal-title').textContent = d[0];
+  const body = $('#legal-body'); body.innerHTML = ''; body.appendChild($('#' + d[1]).content.cloneNode(true));
+  if (!legal.open) legal.showModal();
+  legal.scrollTop = 0;
+}
+document.addEventListener('click', e => { const a = e.target.closest('[data-doc]'); if (!a) return; e.preventDefault(); openDoc(a.dataset.doc, a); try { history.replaceState(null, '', '#' + a.dataset.doc); } catch(err){} });
+$('#legal-close').addEventListener('click', () => legal.close());
+legal.addEventListener('click', e => { if (e.target === legal) legal.close(); });
+legal.addEventListener('close', () => { try { history.replaceState(null, '', location.pathname + location.search); } catch(err){} if (legalOpener && document.contains(legalOpener)) legalOpener.focus(); });
+if (DOCS[location.hash.slice(1)]) openDoc(location.hash.slice(1));
+addEventListener('hashchange', () => { const id = location.hash.slice(1); if (DOCS[id]) openDoc(id); });
 
 /* ================= Préférences changeantes ================= */
 mqReduce.addEventListener && mqReduce.addEventListener('change', e => { reduce = e.matches; });
