@@ -1006,7 +1006,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <a class="foot-brand" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
     <p class="foot-tag">Singulier, c'est vous.</p>
     <p>Nina &amp; Maëline · Bijoux faits main, sertis et gravés</p>
-    <small>Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Les prix sont des fourchettes estimées, à confirmer par devis. Le compte, le panier et la revue sont des démonstrations enregistrées dans votre navigateur.</small>
+    <small id="foot-note">Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Les prix sont des fourchettes estimées, à confirmer par devis. Le compte, le panier et la revue sont des démonstrations enregistrées dans votre navigateur.</small>
   </div>
 </footer>
 
@@ -2593,6 +2593,7 @@ function postToShop(fields){
   document.body.appendChild(f); f.submit(); f.remove();
 }
 syncShop();
+if (Live.on) $('#foot-note').textContent = 'Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Prix, stock, panier et paiement sont gérés par la boutique Singulier sur Shopify.';
 if (Live.on){ Live.ready.then(refreshPrices).catch(() => toast('La boutique ne répond pas. Les prix affichés sont des estimations.')); loadLiveCart(); }
 
 /* ================= Essayage sur la main, avec suivi automatique ================= */

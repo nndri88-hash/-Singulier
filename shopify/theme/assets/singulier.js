@@ -1260,6 +1260,7 @@ function postToShop(fields){
   document.body.appendChild(f); f.submit(); f.remove();
 }
 syncShop();
+if (Live.on) $('#foot-note').textContent = 'Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Prix, stock, panier et paiement sont gérés par la boutique Singulier sur Shopify.';
 if (Live.on){ Live.ready.then(refreshPrices).catch(() => toast('La boutique ne répond pas. Les prix affichés sont des estimations.')); loadLiveCart(); }
 
 /* ================= Essayage sur la main, avec suivi automatique ================= */
