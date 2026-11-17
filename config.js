@@ -15,8 +15,8 @@
  */
 window.SINGULIER_CONFIG = {
   shopify: {
-    domain: '',
-    storefrontToken: '',
+    domain: 'e538my-jc.myshopify.com',
+    storefrontToken: 'dba8afe69edb7c1db9a36f5deba2800c',
     apiVersion: '2026-07'
   },
   handTracking: {
