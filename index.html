@@ -157,6 +157,10 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 /* ---------- Curseur ---------- */
 .cursor{position:fixed; left:0; top:0; z-index:100; pointer-events:none; display:none}
 .has-cursor .cursor{display:block}
+/* Le curseur passe dans la couche supérieure du navigateur (popover) pour rester au-dessus des fenêtres : cookies, panier, compte, fiches */
+.cursor[popover]{inset:0 auto auto 0; width:0; height:0; margin:0; padding:0; border:0; background:none; overflow:visible; color:inherit}
+.cursor[popover]::backdrop{display:none}
+.has-cursor dialog, .has-cursor dialog::backdrop{cursor:none}
 .has-cursor, .has-cursor a, .has-cursor button, .has-cursor [role="slider"], .has-cursor label{cursor:none}
 .has-cursor input, .has-cursor textarea, .has-cursor select{cursor:auto}
 .c-dot, .c-ring{position:fixed; left:0; top:0; border-radius:50%; will-change:transform}
@@ -2268,11 +2272,16 @@ new IntersectionObserver(([en]) => { door.classList.toggle('is-away', en.isInter
 const Cursor = (() => {
   const el = $('#cursor'), ringEl = $('.c-ring', el), dotEl = $('.c-dot', el), label = $('.c-label', el);
   let active = false, qx, qy, rx, ry;
+  const topLayer = typeof el.showPopover === 'function';
+  if (topLayer) el.setAttribute('popover', 'manual');
+  /* Chaque fenêtre ouverte passe au sommet de la couche supérieure : on y remet le curseur juste après */
+  function raise(){ if (!topLayer || !active) return; try { if (el.matches(':popover-open')) el.hidePopover(); el.showPopover(); } catch(e){} }
+  if (topLayer) ['showModal', 'show'].forEach(k => { const f = HTMLDialogElement.prototype[k]; HTMLDialogElement.prototype[k] = function(){ const r = f.apply(this, arguments); raise(); return r; }; });
   function enable(){
-    if (active || !mqFine.matches) return; active = true; root.classList.add('has-cursor');
+    if (active || !mqFine.matches) return; active = true; root.classList.add('has-cursor'); raise();
     if (G && !reduce){ qx = G.quickTo(ringEl, 'x', { duration: .45, ease: 'power3' }); qy = G.quickTo(ringEl, 'y', { duration: .45, ease: 'power3' }); }
   }
-  function disable(){ active = false; root.classList.remove('has-cursor'); }
+  function disable(){ active = false; root.classList.remove('has-cursor'); if (topLayer && el.matches(':popover-open')) el.hidePopover(); }
   addEventListener('pointermove', e => {
     if (e.pointerType !== 'mouse') return; if (!active) enable(); if (!active) return;
     dotEl.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
