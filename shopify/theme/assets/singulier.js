@@ -1441,7 +1441,12 @@ function closeEclipse(){
   ckDlg.classList.add('is-leaving');
   setTimeout(() => { ckDlg.close(); ckDlg.classList.remove('is-leaving'); }, 650);
 }
-function setCookies(audience){ store.set('singulier-cookies', JSON.stringify({ ts: Date.now(), audience: !!audience })); closeEclipse(); toast(audience ? 'Cookies acceptés. La lumière revient.' : 'Seuls les cookies nécessaires restent actifs.'); }
+/* Sur la boutique Shopify, le choix fait dans l'éclipse est transmis à l'API de consentement de Shopify */
+function shopifyConsent(audience){
+  const S = window.Shopify; if (!S || typeof S.loadFeatures !== 'function') return;
+  try { S.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], err => { if (err || !S.customerPrivacy) return; S.customerPrivacy.setTrackingConsent({ analytics: !!audience, marketing: false, preferences: true, sale_of_data: false }, () => {}); }); } catch(e){}
+}
+function setCookies(audience){ store.set('singulier-cookies', JSON.stringify({ ts: Date.now(), audience: !!audience })); shopifyConsent(audience); closeEclipse(); toast(audience ? 'Cookies acceptés. La lumière revient.' : 'Seuls les cookies nécessaires restent actifs.'); }
 ckDlg.addEventListener('cancel', e => e.preventDefault());           // un choix explicite est demandé ; « Tout refuser » est aussi simple qu'accepter
 if (!cookieChoice()) requestAnimationFrame(() => { ckDlg.showModal(); $('#ck-title').focus({ preventScroll: true }); });
 document.addEventListener('click', e => {
