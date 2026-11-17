@@ -560,59 +560,7 @@ function buildRing3D(p, low){
   return g;
 }
 
-/* --- Accueil --- */
-const Hero = hasThree ? (() => {
-  const canvas = $('#ring'), hero = $('#accueil');
-  let renderer, scene, camera, ring, raf = 0, visible = true, blend = side === 'nina' ? 1 : 0, blendTarget = blend;
-  const pointer = { x: 0, y: 0 }, cur = { rx: .5, ry: 0 }; let auto = 0, last = performance.now(), scrollP = 0;
-  const COL = { nina: { metal: new THREE.Color(0xD6D2D8), stone: new THREE.Color(0xA3123C) }, mae: { metal: new THREE.Color(0xEBB29A), stone: new THREE.Color(0xF56E9A) } };
-  const tmpA = new THREE.Color(), tmpB = new THREE.Color();
-  function init(){
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: true, powerPreference: 'high-performance' });
-    } catch(e){ return false; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2));
-    renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-    scene = new THREE.Scene(); scene.environment = makeEnv(renderer);
-    camera = new THREE.PerspectiveCamera(30, 1, .1, 50);
-    ring = buildRing3D({ metal: 0xD6D2D8, stone: 0x8A1534, shape: 'ovale', motif: 'chaton', size: .32, ior: 1.77, seed: 3, gemEnv: makeGemEnv(renderer) }, mobile);
-    scene.add(ring);
-    const dl = new THREE.DirectionalLight(0xffffff, 1.2); dl.position.set(2, 4, 3); scene.add(dl);
-    resize(); addEventListener('resize', resize);
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) loop(); }, { threshold: 0 }).observe(hero);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) loop(); });
-    hero.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const r = hero.getBoundingClientRect(); pointer.x = (e.clientX - r.left) / r.width * 2 - 1; pointer.y = (e.clientY - r.top) / r.height * 2 - 1; });
-    addEventListener('scroll', () => { scrollP = Math.min(1, scrollY / Math.max(1, hero.offsetHeight)); }, { passive: true });
-    loop(); return true;
-  }
-  function resize(){
-    const w = hero.clientWidth, h = hero.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h;
-    const aspect = w / h, tanH = Math.tan(THREE.MathUtils.degToRad(15));
-    const d = Math.max(8.2, 2.5 / (2 * tanH * aspect * .62));
-    camera.position.set(0, .15, d); camera.lookAt(0, .05, 0); camera.updateProjectionMatrix();
-    ring.position.y = aspect < .8 ? d * 2 * tanH * .06 : -.15;
-  }
-  function loop(){ if (raf) return; raf = requestAnimationFrame(frame); }
-  function frame(now){
-    raf = 0; if (!visible || document.hidden) return;
-    const dt = Math.min(.05, (now - last) / 1000); last = now;
-    if (!reduce) auto += dt * .35;
-    const ty = auto + pointer.x * .9 + scrollP * (reduce ? 0 : 2.4);
-    const tx = .55 + pointer.y * .25 + scrollP * (reduce ? 0 : .5);
-    const k = reduce ? 1 : 1 - Math.pow(.002, dt);
-    cur.ry += (ty - cur.ry) * k; cur.rx += (tx - cur.rx) * k;
-    ring.rotation.set(cur.rx, cur.ry, 0);
-    blend += (blendTarget - blend) * (reduce ? 1 : 1 - Math.pow(.01, dt));
-    const u = ring.userData;
-    u.metal.color.copy(tmpA.copy(COL.mae.metal).lerp(COL.nina.metal, blend));
-    u.stoneMat.color.copy(tmpB.copy(COL.mae.stone).lerp(COL.nina.stone, blend)); u.stoneMat.emissive.copy(u.stoneMat.color);
-    u.metal.roughness = .22 - blend * .1;
-    renderer.render(scene, camera);
-    raf = requestAnimationFrame(frame);
-  }
-  return { init, setBlend(v){ blendTarget = v; loop(); } };
-})() : null;
+const Hero = null;   // la bague 3D de l'accueil a été retirée
 
 /* --- Studio : un seul moteur pour les vignettes des fiches et la visionneuse --- */
 const Studio = hasThree ? (() => {
@@ -711,11 +659,6 @@ const Viewer = (() => {
 renderList(true);
 if (Studio) $$('#models .model').forEach(li => { const m = MODELS[+li.dataset.k]; Studio.thumb(m.r, li, url => { if (!url) return; const img = li.querySelector('.render'); img.onload = () => li.querySelector('.model-art').classList.add('has-render'); img.src = url; }); });
 
-if (!(Hero && Hero.init())){
-  $('#ring').hidden = true;
-  const fb = $('#ring-fallback'); fb.hidden = false;
-  fb.innerHTML = ringSVG({ stone: STONES[1], shape: 'ovale', motif: 'chaton', metal: 'rose', L: 9, W: 6.7, seed: 7 }, 'illu');
-}
 
 /* ================= Lune et Soleil calculés (shaders WebGL) ================= */
 const Sky = (() => {
