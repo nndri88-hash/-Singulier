@@ -1025,7 +1025,7 @@ form.addEventListener('submit', e => {
     const nImg = ($('#f-inspi-img').files || []).length;
     postToShop({ form_type: 'contact', 'contact[name]': prenom, 'contact[email]': $('#f-email').value.trim(), 'contact[Demande]': 'Bague sur mesure',
       'contact[body]': `Histoire : ${$('#f-histoire').value.trim()}\n\nPierres souhaitées : ${pierres}\nMétal préféré : ${$('#f-metal').value}\nInspirations : ${$('#f-inspi').value.trim() || 'aucune'}${nImg ? `\nImages d'inspiration : ${nImg} (à envoyer en réponse à notre e-mail)` : ''}` });
-    status.textContent = `Merci ${prenom}. Votre histoire part vers la boutique Singulier : une page de confirmation s'est ouverte.${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
+    status.textContent = `Envoi de votre histoire en cours…${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
   } else status.textContent = `Merci ${prenom}. Ce formulaire est une démonstration : il n'est pas encore relié à une boîte mail, donc votre histoire n'a pas été envoyée.`;
   Sound.chime();
 });
@@ -1085,7 +1085,28 @@ function syncShop(){
 
 /* --- Panier Shopify --- */
 const CART_FIELDS = `id checkoutUrl totalQuantity cost{ totalAmount{ amount currencyCode } } lines(first: 50){ nodes{ id quantity cost{ totalAmount{ amount } } merchandise{ ... on ProductVariant{ id title product{ handle title } } } } }`;
+/* Sur la boutique elle-même (bijouteriesingulier.com), le site utilise le panier natif de Shopify :
+   un seul panier partagé avec les fiches produit, les collections et la page panier de la boutique. */
+const Native = (() => {
+  const on = !!(Live.on && window.Shopify && window.Shopify.shop && location.hostname === Live.domain);
+  const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  const shape = (c) => ({ id: 'native', checkoutUrl: root + 'checkout', totalQuantity: c.item_count, cost: { totalAmount: { amount: String(c.total_price / 100), currencyCode: c.currency } },
+    lines: { nodes: c.items.map(i => ({ id: i.key, quantity: i.quantity, cost: { totalAmount: { amount: String(i.final_line_price / 100) } },
+      merchandise: { id: 'gid://shopify/ProductVariant/' + i.variant_id, title: i.variant_title || 'Default Title', product: { handle: i.handle, title: i.product_title } } })) } });
+  async function call(path, body){
+    const r = await fetch(root + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) } : { headers: { Accept: 'application/json' } });
+    if (!r.ok){ let m = 'panier'; try { m = (await r.json()).description || m; } catch(e){} throw new Error(m); }
+    return r.json();
+  }
+  return {
+    on,
+    get: async () => shape(await call('cart.js')),
+    add: async (variantGid) => { await call('cart/add.js', { items: [{ id: +String(variantGid).split('/').pop(), quantity: 1 }] }); return shape(await call('cart.js')); },
+    remove: async (key) => shape(await call('cart/change.js', { id: key, quantity: 0 }))
+  };
+})();
 async function loadLiveCart(){
+  if (Native.on){ try { liveCart = await Native.get(); } catch(e){ liveCart = null; } syncShop(); return; }
   if (!Live.on || !shop.cartId) return;
   try { const d = await Live.gql(`query C($id: ID!){ cart(id: $id){ ${CART_FIELDS} } }`, { id: shop.cartId }); liveCart = d.cart; if (!liveCart){ shop.cartId = ''; } } catch(e){ liveCart = null; }
   syncShop();
@@ -1105,6 +1126,7 @@ async function liveAdd(id, it){
   if (liveCart && liveCart.lines.nodes.some(l => l.merchandise.id === v.id && id[0] === 'f')){ toast(`${it.nom} est déjà dans votre panier.`); return; }
   if (cartBusy) return; cartBusy = true;
   try {
+    if (Native.on){ liveCart = await Native.add(v.id); syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick(); cartBusy = false; return; }
     const lines = [{ merchandiseId: v.id, quantity: 1 }];
     const create = async () => (await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines })).cartCreate;
     let res = shop.cartId ? (await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })).cartLinesAdd : await create();
@@ -1115,6 +1137,7 @@ async function liveAdd(id, it){
   cartBusy = false;
 }
 async function liveRemove(lineId){
+  if (Native.on){ try { liveCart = await Native.remove(lineId); syncShop(); } catch(e){ toast('Impossible de retirer cet article pour le moment.'); } return; }
   try { const d = await Live.gql(`mutation R($id: ID!, $ids: [ID!]!){ cartLinesRemove(cartId: $id, lineIds: $ids){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, ids: [lineId] }); liveCart = d.cartLinesRemove.cart; syncShop(); }
   catch(e){ toast('Impossible de retirer cet article pour le moment.'); }
 }
@@ -1255,11 +1278,34 @@ document.addEventListener('submit', e => {
 });
 /* Envoi vers les formulaires natifs de la boutique Shopify (contact et abonnement) */
 function postToShop(fields){
+  /* Sur la boutique Shopify, le thème fournit les vrais formulaires (contact et abonnement) avec leurs jetons anti-spam : on les remplit et on les envoie dans la même page */
+  const real = document.getElementById(fields.form_type === 'customer' ? 'sg-customer' : 'sg-contact');
+  if (real){
+    real.querySelectorAll('[data-sg]').forEach(i => i.remove());
+    Object.entries(fields).forEach(([k, v]) => { if (k === 'form_type' || k === 'utf8') return; const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; i.dataset.sg = ''; real.appendChild(i); });
+    try { sessionStorage.setItem('sg-sent', fields.form_type === 'customer' ? 'news' : 'contact'); } catch(e){}
+    HTMLFormElement.prototype.submit.call(real); return true;   // envoi natif : les scripts de la boutique interceptaient l'événement et annulaient l'envoi
+  }
   const f = document.createElement('form'); f.method = 'post'; f.action = `https://${Live.domain}/contact#contact_form`; f.target = '_blank'; f.hidden = true;
   Object.entries(Object.assign({ utf8: '✓' }, fields)).forEach(([k, v]) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
   document.body.appendChild(f); f.submit(); f.remove();
 }
 syncShop();
+/* Retour de Shopify après l'envoi d'un formulaire : confirmation ou erreur */
+(() => {
+  let sent = ''; try { sent = sessionStorage.getItem('sg-sent') || ''; sessionStorage.removeItem('sg-sent'); } catch(e){}
+  if (!sent) return;
+  const q = new URLSearchParams(location.search), ok = q.get('contact_posted') === 'true' || q.get('customer_posted') === 'true';
+  if (sent === 'contact'){
+    const st = $('#form-status'); st.hidden = false;
+    st.textContent = ok ? 'Merci. Votre histoire est bien arrivée chez Singulier. Nina et Maëline vous répondent par e-mail.' : "Votre histoire n'a pas pu être envoyée. Vérifiez votre adresse e-mail et réessayez.";
+    setTimeout(() => { const f = $('#raconter'); if (f) f.scrollIntoView({ block: 'center' }); }, 300);
+  } else {
+    const st = $('#news-status'); st.hidden = false;
+    st.textContent = ok ? 'Merci. Votre inscription à la revue est enregistrée.' : "L'inscription n'a pas pu être enregistrée. Réessayez dans un instant.";
+  }
+  if (ok) history.replaceState(null, '', location.pathname + location.hash);
+})();
 if (Live.on) $('#foot-note').textContent = 'Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Prix, stock, panier et paiement sont gérés par la boutique Singulier sur Shopify.';
 if (Live.on){ Live.ready.then(refreshPrices).catch(() => toast('La boutique ne répond pas. Les prix affichés sont des estimations.')); loadLiveCart(); }
 
@@ -1464,7 +1510,7 @@ $('#news-form').addEventListener('submit', e => {
   $('#n-err').textContent = !ok ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : 'Cochez la case pour confirmer votre inscription.';
   if (!ok){ inp.focus(); return; } if (!agree){ $('#n-ok').focus(); return; }
   shop.news = inp.value.trim(); if (shop.user) shop.user.news = true; saveShop(); st.hidden = false;
-  if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Merci. Votre inscription part vers la boutique Singulier : une page de confirmation s\'est ouverte.'; }
+  if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Inscription en cours…'; }
   else st.textContent = 'Merci. Démonstration : l\'envoi de la revue n\'est pas encore branché, votre adresse est seulement notée dans ce navigateur.';
 });
 

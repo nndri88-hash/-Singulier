@@ -57,6 +57,10 @@ layout = f"""<!doctype html>
 </head>
 <body>
 {{{{ content_for_layout }}}}
+{{%- comment -%}} Vrais formulaires Shopify (jetons anti-spam) remplis par le site : demandes Sur mesure et revue mensuelle {{%- endcomment -%}}
+<style>.sg-shopify-form{{display:none}}</style>
+{{%- form 'contact', id: 'sg-contact', class: 'sg-shopify-form' -%}}{{%- endform -%}}
+{{%- form 'customer', id: 'sg-customer', class: 'sg-shopify-form' -%}}{{%- endform -%}}
 <script>
 window.SINGULIER_CONFIG = {{
   shopify: {{

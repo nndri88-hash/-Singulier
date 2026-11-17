@@ -10,6 +10,7 @@ if (/\.github\.io$/.test(location.hostname)) location.replace('https://bijouteri
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Singulier : bijoux faits main, sertis et gravés par Maëline. Bagues sur mesure, éditions Flash et collection Pluriel.">
 <meta name="theme-color" content="#2B0202">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100' role='img' aria-label='Singulier'%3E%3Crect width='100' height='100' rx='22' fill='#2B0202'/%3E%3Cg transform='translate%286.00 4.00%29 scale%280.8800%29'%3E%3Cmask id='eclipse'%3E%3Crect width='100' height='100' fill='#fff'/%3E%3Ccircle cx='45.8' cy='57.2' r='29.2' fill='#000'/%3E%3C/mask%3E%3Ccircle cx='50' cy='53' r='31' fill='#D9B873' mask='url%28#eclipse%29'/%3E%3Ccircle cx='45.8' cy='57.2' r='29.2' fill='#2B0202'/%3E%3Cpath d='M71.92 14.08 C72.66 28.98 74.02 30.34 88.92 31.08 C74.02 31.81 72.66 33.18 71.92 48.08 C71.19 33.18 69.82 31.81 54.92 31.08 C69.82 30.34 71.19 28.98 71.92 14.08Z' fill='#D9B873'/%3E%3Ccircle cx='71.92' cy='31.08' r='2.3' fill='#D9B873'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Manrope:wght@400;500;600&display=swap">
@@ -598,6 +599,9 @@ fieldset.field legend{font-weight:600; font-size:.92rem; padding:0; margin-botto
 @media (hover:hover) and (pointer:fine){ .foot-cols a:hover, .foot-cols button:hover{text-decoration:underline; text-underline-offset:4px} }
 .foot-cols li.plain{min-height:40px; display:flex; align-items:center; font-size:.92rem; color:var(--muted)}
 a.foot-brand{display:block; text-decoration:none}
+.logo{display:inline-flex; align-items:center}
+.logo-mark{width:1.9em; height:1.9em; margin-right:.55em; flex:none; overflow:visible}
+.foot-mark{display:block; width:.9em; height:.9em; margin:0 auto .12em; overflow:visible}
 @media (prefers-reduced-motion: reduce){ dialog.drawer, dialog.drawer:not([open]){transform:none; transition:opacity .2s ease, overlay .2s allow-discrete, display .2s allow-discrete} .toast{transition:opacity .2s ease; transform:translate(-50%,0)} .cookies{transition:none} }
 
 /* ---------- v4 : cookies en éclipse, suivi de la main ---------- */
@@ -661,12 +665,13 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
   <symbol id="i-compte" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.800 7.5 5.4"/></g></symbol>
   <symbol id="i-panier" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></g></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3.5L9 6h6l1.5 2H20v11H4z"/><circle cx="12" cy="13" r="3.4"/></g></symbol>
+  <symbol id="i-logo" viewBox="0 0 100 100"><mask id="sg-eclipse" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect width="100" height="100" fill="#fff"/><circle cx="47.6" cy="55.4" r="29.2" fill="#000"/></mask><circle cx="50" cy="53" r="31" fill="currentColor" mask="url(#sg-eclipse)"/><path fill="currentColor" d="M71.92 14.08C72.66 28.98 74.02 30.34 88.92 31.08 74.02 31.81 72.66 33.18 71.92 48.08 71.19 33.18 69.82 31.81 54.92 31.08 69.82 30.34 71.19 28.98 71.92 14.08Z"/><circle cx="71.92" cy="31.08" r="2.3" fill="currentColor"/></symbol>
   <symbol id="i-bague" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="15" r="6.5"/><path d="M9 6.5 12 3l3 3.5-3 2.5z" fill="currentColor"/></g></symbol>
 </svg>
 
 <header class="top" id="top">
   <div class="top-in">
-    <a class="logo" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
+    <a class="logo" href="#accueil" aria-label="Singulier, retour à l'accueil"><svg class="logo-mark" aria-hidden="true"><use href="#i-logo"/></svg>SINGULIER</a>
     <nav class="nav" aria-label="Sections">
       <ul>
         <li><a href="#histoire">Histoire</a></li>
@@ -1006,7 +1011,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
         <li><a href="#flash">Bagues Flash</a></li>
         <li><a href="#pluriel">Collection Pluriel</a></li></ul></div>
     </div>
-    <a class="foot-brand" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
+    <a class="foot-brand" href="#accueil" aria-label="Singulier, retour à l'accueil"><svg class="foot-mark" aria-hidden="true"><use href="#i-logo"/></svg>SINGULIER</a>
     <p class="foot-tag">Singulier, c'est vous.</p>
     <p>Nina &amp; Maëline · Bijoux faits main, sertis et gravés</p>
     <small id="foot-note">Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Les prix sont des fourchettes estimées, à confirmer par devis. Le compte, le panier et la revue sont des démonstrations enregistrées dans votre navigateur.</small>
@@ -2361,7 +2366,7 @@ form.addEventListener('submit', e => {
     const nImg = ($('#f-inspi-img').files || []).length;
     postToShop({ form_type: 'contact', 'contact[name]': prenom, 'contact[email]': $('#f-email').value.trim(), 'contact[Demande]': 'Bague sur mesure',
       'contact[body]': `Histoire : ${$('#f-histoire').value.trim()}\n\nPierres souhaitées : ${pierres}\nMétal préféré : ${$('#f-metal').value}\nInspirations : ${$('#f-inspi').value.trim() || 'aucune'}${nImg ? `\nImages d'inspiration : ${nImg} (à envoyer en réponse à notre e-mail)` : ''}` });
-    status.textContent = `Merci ${prenom}. Votre histoire part vers la boutique Singulier : une page de confirmation s'est ouverte.${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
+    status.textContent = `Envoi de votre histoire en cours…${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
   } else status.textContent = `Merci ${prenom}. Ce formulaire est une démonstration : il n'est pas encore relié à une boîte mail, donc votre histoire n'a pas été envoyée.`;
   Sound.chime();
 });
@@ -2421,7 +2426,28 @@ function syncShop(){
 
 /* --- Panier Shopify --- */
 const CART_FIELDS = `id checkoutUrl totalQuantity cost{ totalAmount{ amount currencyCode } } lines(first: 50){ nodes{ id quantity cost{ totalAmount{ amount } } merchandise{ ... on ProductVariant{ id title product{ handle title } } } } }`;
+/* Sur la boutique elle-même (bijouteriesingulier.com), le site utilise le panier natif de Shopify :
+   un seul panier partagé avec les fiches produit, les collections et la page panier de la boutique. */
+const Native = (() => {
+  const on = !!(Live.on && window.Shopify && window.Shopify.shop && location.hostname === Live.domain);
+  const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  const shape = (c) => ({ id: 'native', checkoutUrl: root + 'checkout', totalQuantity: c.item_count, cost: { totalAmount: { amount: String(c.total_price / 100), currencyCode: c.currency } },
+    lines: { nodes: c.items.map(i => ({ id: i.key, quantity: i.quantity, cost: { totalAmount: { amount: String(i.final_line_price / 100) } },
+      merchandise: { id: 'gid://shopify/ProductVariant/' + i.variant_id, title: i.variant_title || 'Default Title', product: { handle: i.handle, title: i.product_title } } })) } });
+  async function call(path, body){
+    const r = await fetch(root + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) } : { headers: { Accept: 'application/json' } });
+    if (!r.ok){ let m = 'panier'; try { m = (await r.json()).description || m; } catch(e){} throw new Error(m); }
+    return r.json();
+  }
+  return {
+    on,
+    get: async () => shape(await call('cart.js')),
+    add: async (variantGid) => { await call('cart/add.js', { items: [{ id: +String(variantGid).split('/').pop(), quantity: 1 }] }); return shape(await call('cart.js')); },
+    remove: async (key) => shape(await call('cart/change.js', { id: key, quantity: 0 }))
+  };
+})();
 async function loadLiveCart(){
+  if (Native.on){ try { liveCart = await Native.get(); } catch(e){ liveCart = null; } syncShop(); return; }
   if (!Live.on || !shop.cartId) return;
   try { const d = await Live.gql(`query C($id: ID!){ cart(id: $id){ ${CART_FIELDS} } }`, { id: shop.cartId }); liveCart = d.cart; if (!liveCart){ shop.cartId = ''; } } catch(e){ liveCart = null; }
   syncShop();
@@ -2441,6 +2467,7 @@ async function liveAdd(id, it){
   if (liveCart && liveCart.lines.nodes.some(l => l.merchandise.id === v.id && id[0] === 'f')){ toast(`${it.nom} est déjà dans votre panier.`); return; }
   if (cartBusy) return; cartBusy = true;
   try {
+    if (Native.on){ liveCart = await Native.add(v.id); syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick(); cartBusy = false; return; }
     const lines = [{ merchandiseId: v.id, quantity: 1 }];
     const create = async () => (await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines })).cartCreate;
     let res = shop.cartId ? (await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })).cartLinesAdd : await create();
@@ -2451,6 +2478,7 @@ async function liveAdd(id, it){
   cartBusy = false;
 }
 async function liveRemove(lineId){
+  if (Native.on){ try { liveCart = await Native.remove(lineId); syncShop(); } catch(e){ toast('Impossible de retirer cet article pour le moment.'); } return; }
   try { const d = await Live.gql(`mutation R($id: ID!, $ids: [ID!]!){ cartLinesRemove(cartId: $id, lineIds: $ids){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, ids: [lineId] }); liveCart = d.cartLinesRemove.cart; syncShop(); }
   catch(e){ toast('Impossible de retirer cet article pour le moment.'); }
 }
@@ -2591,11 +2619,34 @@ document.addEventListener('submit', e => {
 });
 /* Envoi vers les formulaires natifs de la boutique Shopify (contact et abonnement) */
 function postToShop(fields){
+  /* Sur la boutique Shopify, le thème fournit les vrais formulaires (contact et abonnement) avec leurs jetons anti-spam : on les remplit et on les envoie dans la même page */
+  const real = document.getElementById(fields.form_type === 'customer' ? 'sg-customer' : 'sg-contact');
+  if (real){
+    real.querySelectorAll('[data-sg]').forEach(i => i.remove());
+    Object.entries(fields).forEach(([k, v]) => { if (k === 'form_type' || k === 'utf8') return; const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; i.dataset.sg = ''; real.appendChild(i); });
+    try { sessionStorage.setItem('sg-sent', fields.form_type === 'customer' ? 'news' : 'contact'); } catch(e){}
+    HTMLFormElement.prototype.submit.call(real); return true;   // envoi natif : les scripts de la boutique interceptaient l'événement et annulaient l'envoi
+  }
   const f = document.createElement('form'); f.method = 'post'; f.action = `https://${Live.domain}/contact#contact_form`; f.target = '_blank'; f.hidden = true;
   Object.entries(Object.assign({ utf8: '✓' }, fields)).forEach(([k, v]) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
   document.body.appendChild(f); f.submit(); f.remove();
 }
 syncShop();
+/* Retour de Shopify après l'envoi d'un formulaire : confirmation ou erreur */
+(() => {
+  let sent = ''; try { sent = sessionStorage.getItem('sg-sent') || ''; sessionStorage.removeItem('sg-sent'); } catch(e){}
+  if (!sent) return;
+  const q = new URLSearchParams(location.search), ok = q.get('contact_posted') === 'true' || q.get('customer_posted') === 'true';
+  if (sent === 'contact'){
+    const st = $('#form-status'); st.hidden = false;
+    st.textContent = ok ? 'Merci. Votre histoire est bien arrivée chez Singulier. Nina et Maëline vous répondent par e-mail.' : "Votre histoire n'a pas pu être envoyée. Vérifiez votre adresse e-mail et réessayez.";
+    setTimeout(() => { const f = $('#raconter'); if (f) f.scrollIntoView({ block: 'center' }); }, 300);
+  } else {
+    const st = $('#news-status'); st.hidden = false;
+    st.textContent = ok ? 'Merci. Votre inscription à la revue est enregistrée.' : "L'inscription n'a pas pu être enregistrée. Réessayez dans un instant.";
+  }
+  if (ok) history.replaceState(null, '', location.pathname + location.hash);
+})();
 if (Live.on) $('#foot-note').textContent = 'Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Prix, stock, panier et paiement sont gérés par la boutique Singulier sur Shopify.';
 if (Live.on){ Live.ready.then(refreshPrices).catch(() => toast('La boutique ne répond pas. Les prix affichés sont des estimations.')); loadLiveCart(); }
 
@@ -2800,7 +2851,7 @@ $('#news-form').addEventListener('submit', e => {
   $('#n-err').textContent = !ok ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : 'Cochez la case pour confirmer votre inscription.';
   if (!ok){ inp.focus(); return; } if (!agree){ $('#n-ok').focus(); return; }
   shop.news = inp.value.trim(); if (shop.user) shop.user.news = true; saveShop(); st.hidden = false;
-  if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Merci. Votre inscription part vers la boutique Singulier : une page de confirmation s\'est ouverte.'; }
+  if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Inscription en cours…'; }
   else st.textContent = 'Merci. Démonstration : l\'envoi de la revue n\'est pas encore branché, votre adresse est seulement notée dans ce navigateur.';
 });
 
