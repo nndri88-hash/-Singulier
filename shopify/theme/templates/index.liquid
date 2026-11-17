@@ -1,0 +1,689 @@
+{%- layout 'singulier' -%}
+{%- comment -%} Page d'accueil : le site Singulier, généré par shopify/theme/build.py à partir de index.html. {%- endcomment -%}
+{% raw %}
+<script>/* applique l'univers mémorisé avant le premier rendu */
+try{var s=localStorage.getItem('singulier-side'); if(s==='maeline'||s==='nina') document.documentElement.dataset.side=s;}catch(e){}
+if(!document.documentElement.dataset.side) document.documentElement.dataset.side='nina';
+</script>
+
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-lune" viewBox="0 0 24 24"><path fill="currentColor" d="M14.5 2.5a9.5 9.5 0 1 0 7 15.9A8 8 0 0 1 14.5 2.5Z"/></symbol>
+  <symbol id="i-soleil" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></symbol>
+  <symbol id="i-son" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></g></symbol>
+  <symbol id="i-muet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></g></symbol>
+  <symbol id="i-fleche" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></g></symbol>
+  <symbol id="i-croix" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-compte" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.800 7.5 5.4"/></g></symbol>
+  <symbol id="i-panier" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></g></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3.5L9 6h6l1.5 2H20v11H4z"/><circle cx="12" cy="13" r="3.4"/></g></symbol>
+  <symbol id="i-bague" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="15" r="6.5"/><path d="M9 6.5 12 3l3 3.5-3 2.5z" fill="currentColor"/></g></symbol>
+</svg>
+
+<header class="top" id="top">
+  <div class="top-in">
+    <a class="logo" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
+    <nav class="nav" aria-label="Sections">
+      <ul>
+        <li><a href="#histoire">Histoire</a></li>
+        <li><a href="#sur-mesure">Sur mesure</a></li>
+        <li><a href="#flash">Flash</a></li>
+        <li><a href="#pluriel">Pluriel</a></li>
+      </ul>
+    </nav>
+    <div class="top-actions">
+      <div class="switch" role="group" aria-label="Choisir un univers">
+        <button type="button" class="switch-btn" data-go="nina" aria-pressed="true"><svg aria-hidden="true"><use href="#i-lune"/></svg><span>Nina</span></button>
+        <button type="button" class="switch-btn" data-go="maeline" aria-pressed="false"><svg aria-hidden="true"><use href="#i-soleil"/></svg><span>Maëline</span></button>
+      </div>
+      <button type="button" class="icon-btn" id="sound" aria-pressed="false" aria-label="Activer le son"><svg aria-hidden="true"><use href="#i-muet"/></svg></button>
+      <button type="button" class="icon-btn" id="btn-account" aria-label="Mon compte"><svg aria-hidden="true"><use href="#i-compte"/></svg></button>
+      <button type="button" class="icon-btn" id="btn-cart" aria-label="Mon panier, vide"><svg aria-hidden="true"><use href="#i-panier"/></svg><span class="badge" id="cart-count" hidden>0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="accueil" aria-labelledby="hero-title">
+  <h1 id="hero-title" class="sr-only">Singulier, bijoux faits main, sertis et gravés. Deux univers : Nina et Maëline.</h1>
+
+  <div class="world world-mae">
+    <div class="sun" aria-hidden="true"></div>
+    <svg class="sketch" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".6">
+        <path d="M1000 588c-22 6-40 2-58-12M942 576l12-2M942 576l4 12"/>
+      </g>
+      <text x="1012" y="596" transform="rotate(-4 1012 596)">croquis n°1 · or rose</text>
+    </svg>
+    <p class="ht ht-mae" aria-hidden="true">Singulier</p>
+    <div class="hs hs-mae">
+      <p class="eyebrow">Côté soleil</p>
+      <p class="hs-name">Maëline</p>
+      <p>Le soleil. Douce, lumineuse, la tête pleine de bagues à dessiner.</p>
+      <button type="button" class="btn btn-rose" data-go="maeline" data-scroll="#contenu">Entrer côté Maëline <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
+    </div>
+  </div>
+
+  <div class="world world-nina">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="moon" aria-hidden="true"></div>
+    <svg class="filigree" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#D9B873" stroke-width=".8" opacity=".55">
+        <path d="M-20 720C180 640 260 760 420 700s180-200 330-170"/>
+        <path d="M-20 760C200 690 300 800 460 744s200-210 360-180" opacity=".5"/>
+        <path d="M120 120c60 40 80 110 40 160s-20 120 50 140" opacity=".6"/>
+      </g>
+    </svg>
+    <p class="ht ht-nina" aria-hidden="true">Singulier</p>
+    <div class="hs hs-nina">
+      <p class="eyebrow">Côté lune</p>
+      <p class="hs-name">Nina</p>
+      <p>La lune. Sensuelle, sauvage, franche, les yeux fixés sur l'horizon.</p>
+      <button type="button" class="btn btn-or" data-go="nina" data-scroll="#contenu">Entrer côté Nina <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
+    </div>
+  </div>
+
+  <canvas id="ring" aria-hidden="true"></canvas>
+  <div class="ring-fallback" id="ring-fallback" hidden aria-hidden="true"></div>
+
+  <div class="split-line" id="split-line">
+    <button type="button" class="split-handle" id="split-handle" role="slider" aria-label="Ligne entre l'univers de Nina et celui de Maëline" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="Moitié Nina, moitié Maëline"></button>
+  </div>
+  <p class="hero-hint" aria-hidden="true">Faites glisser la ligne · la bague suit la souris</p>
+  <button type="button" class="btn btn-line bascule" id="bascule"><svg aria-hidden="true"><use href="#i-soleil"/></svg><span>Basculer côté Maëline</span></button>
+</section>
+
+<main id="contenu" tabindex="-1">
+
+  <!-- Notre histoire -->
+  <section class="section story" id="histoire" aria-labelledby="story-title">
+    <div class="wrap story-sticky">
+      <div class="story-left">
+        <p class="kicker"><svg aria-hidden="true"><use href="#i-lune"/></svg>Notre histoire</p>
+        <h2 class="title-l" id="story-title">Le Soleil et la Lune</h2>
+        <div class="stage" aria-hidden="true">
+          <div class="st-night"></div>
+          <div class="st-stars"></div>
+          <div class="st-body st-corona"></div>
+          <div class="st-body st-sun"></div>
+          <div class="st-body st-moon"></div>
+          <div class="st-body st-ring"></div>
+          <div class="st-diamond"></div>
+        </div>
+      </div>
+      <div class="story-right">
+        <p class="story-intro">Vus de la Terre, le Soleil et la Lune ont la même taille. Le Soleil est quatre cents fois plus large, et quatre cents fois plus loin. Ce hasard rend les éclipses possibles. Singulier lui doit tout.</p>
+
+        <ol class="chapters" data-for="nina">
+          <li class="chapter is-on"><span class="chapter-n">Chapitre I</span><h3>Le jour et la nuit</h3>
+            <p>Maëline vit en plein jour. Elle dessine sur ce qu'elle a sous la main, un ticket, une nappe, le coin d'un carnet, et elle rit fort.</p>
+            <p>Moi, je commence quand la ville se tait. J'aime les chiffres qui tombent juste, les plans à trois ans et le rouge très sombre. Sur le papier, nous n'avions rien en commun.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre II</span><h3>L'attraction</h3>
+            <p>La Lune ne produit aucune lumière. Elle renvoie celle du Soleil, et c'est elle qui soulève les marées.</p>
+            <p>J'ai compris ça en regardant Maëline créer. Ses idées m'éclairent, et je leur donne un cap. Une creative girl, une business girl : chacune a trouvé chez l'autre ce qui lui manquait.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre III</span><h3>L'éclipse</h3>
+            <p>Puis nos deux trajectoires se sont alignées. Pendant une éclipse totale, à la seconde où la Lune finit de couvrir le Soleil, un dernier point de lumière brille sur le bord du disque.</p>
+            <p>Les astronomes appellent cet instant l'anneau de diamant. Nous avons décidé d'en faire des bagues.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre IV</span><h3>Singulier</h3>
+            <p>Chaque bague porte nos deux signatures : l'éclat du jour et la profondeur de la nuit.</p>
+            <p>Il lui manque une troisième histoire, la vôtre. Racontez-la-nous, nous la mettrons à votre doigt. Singulier, c'est vous.</p></li>
+        </ol>
+
+        <ol class="chapters" data-for="maeline">
+          <li class="chapter is-on"><span class="chapter-n">Chapitre I</span><h3>Le jour et la nuit</h3>
+            <p>Nina, c'est la nuit. Elle parle peu, elle va droit au but et elle voit loin quand les autres dorment.</p>
+            <p>Moi, j'ai besoin de lumière, de couleurs et de mes crayons. Je remplis des carnets de bagues que personne n'a encore portées. Sur le papier, nous n'avions rien en commun.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre II</span><h3>L'attraction</h3>
+            <p>Le Soleil brille tout seul, et il éblouit. Pour le regarder en face, il faut un filtre.</p>
+            <p>Nina est ce filtre. Elle prend mes idées trop grandes, trop nombreuses, et elle leur trace un chemin. Elle est la business girl, je suis la creative girl, et depuis nous avançons au même rythme.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre III</span><h3>L'éclipse</h3>
+            <p>Un jour, nos chemins se sont superposés. Pendant une éclipse totale, à la seconde où la Lune finit de couvrir le Soleil, un dernier éclat reste accroché au bord.</p>
+            <p>Les astronomes l'appellent l'anneau de diamant. En voyant cette image, j'ai su ce que nous allions fabriquer.</p></li>
+          <li class="chapter"><span class="chapter-n">Chapitre IV</span><h3>Singulier</h3>
+            <p>Dans chaque bague, il y a un peu de nous deux : la douceur d'un trait de crayon et l'aplomb de quelqu'un qui sait où elle va.</p>
+            <p>Il y a surtout vous. Votre souvenir, votre caractère, votre histoire. Singulier, c'est vous.</p></li>
+        </ol>
+        <div class="story-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sur mesure -->
+  <section class="section" id="sur-mesure" aria-labelledby="sm-titre">
+    <div class="wrap">
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-bague"/></svg>Niveau 1 · Bague unique</p>
+      <h2 class="title-xl" id="sm-titre" data-split>Sur mesure</h2>
+      <div class="grid-2" style="margin-top:40px">
+        <div>
+          <div data-for="nina">
+            <p class="lead" data-reveal>Une bague créée à partir de votre histoire. Elle n'existe qu'une fois.</p>
+            <div class="prose" style="margin-top:24px" data-reveal><p>Chaque étape est validée avec vous avant de passer à la suivante. Les tarifs et les délais se fixent sur devis, après un premier échange.</p></div>
+            <ol class="steps">
+              <li class="step" data-reveal><span class="step-n">1</span><div><h3>Vous nous racontez</h3><p>Votre histoire, un moment de vie, un trait de caractère, ce qui vous rend unique.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">2</span><div><h3>Nous imaginons</h3><p>Maëline s'inspire de votre récit pour dessiner une bague sur mesure.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">3</span><div><h3>Nous créons</h3><p>Fabrication à la main, sertissage et gravure, avec des matériaux nobles.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">4</span><div><h3>Nous vous la remettons</h3><p>Votre bague arrive avec son certificat d'authenticité. Une pièce unique au monde.</p></div></li>
+            </ol>
+          </div>
+          <div data-for="maeline">
+            <p class="lead" data-reveal>Vous racontez un souvenir. Maëline le dessine, puis le met au doigt.</p>
+            <div class="prose" style="margin-top:24px" data-reveal><p>Une couleur qui vous ressemble, un lieu, une date, une forme qui revient dans votre vie : tout peut devenir un détail de la monture.</p></div>
+            <ol class="steps">
+              <li class="step" data-reveal><span class="step-n">1</span><div><h3>L'écoute</h3><p>On parle de vous, de la main qui portera la bague, des métaux que vous aimez.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">2</span><div><h3>Le croquis</h3><p>Dessin au crayon, vue de dessus à l'échelle, puis maquette en volume à faire tourner.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">3</span><div><h3>L'atelier</h3><p>Le métal est coulé puis sculpté. Maëline sertit la pierre et grave la pièce.</p></div></li>
+              <li class="step" data-reveal><span class="step-n">4</span><div><h3>La remise</h3><p>La bague vous est remise avec son certificat d'authenticité.</p></div></li>
+            </ol>
+          </div>
+        </div>
+        <div class="cert" data-reveal aria-label="Exemple de certificat d'authenticité">
+          <div>
+            <div class="cert-brand">SINGULIER</div>
+            <p class="cert-title" style="margin-top:20px">Certificat d'authenticité</p>
+          </div>
+          <dl>
+            <div><dt>Pièce</dt><dd>Unique</dd></div>
+            <div><dt>Création</dt><dd>Sur mesure</dd></div>
+            <div><dt>Matériaux</dt><dd>Nobles</dd></div>
+            <div><dt>Façon</dt><dd>Main, sertie, gravée</dd></div>
+          </dl>
+          <div>
+            <div class="cert-sign"><span>Nina</span><span>Maëline</span></div>
+            <p class="cert-note">Remis avec chaque bague, avec un code QR pour le retrouver sur le site.</p>
+            <button type="button" class="btn btn-line" data-cert="6" style="margin-top:12px">Voir un certificat complet</button>
+          </div>
+        </div>
+      </div>
+
+      <form class="form-card" id="raconter" novalidate aria-labelledby="form-titre">
+        <h3 class="title-l" id="form-titre">Racontez votre histoire</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-prenom">Prénom</label>
+            <input id="f-prenom" name="prenom" type="text" autocomplete="given-name" required aria-describedby="e-prenom">
+            <p class="error" id="e-prenom" hidden>Indiquez votre prénom.</p>
+          </div>
+          <div class="field">
+            <label for="f-email">E-mail</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+            <p class="error" id="e-email" hidden>Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.</p>
+          </div>
+          <div class="field field-wide">
+            <label for="f-histoire">Votre histoire</label>
+            <p class="help" id="h-histoire">Un moment de vie, un trait de caractère, un souvenir. Quelques lignes suffisent.</p>
+            <textarea id="f-histoire" name="histoire" required aria-describedby="h-histoire e-histoire"></textarea>
+            <p class="error" id="e-histoire" hidden>Écrivez au moins quelques mots sur votre histoire.</p>
+          </div>
+          <div class="field">
+            <label for="f-metal">Métal préféré</label>
+            <select id="f-metal" name="metal">
+              <option>Je ne sais pas encore</option>
+              <option>Or jaune</option>
+              <option>Or rose</option>
+              <option>Or blanc</option>
+              <option>Argent</option>
+            </select>
+          </div>
+          <fieldset class="field field-wide">
+            <legend>Pierre ou pierres souhaitées <span class="opt">(plusieurs choix possibles)</span></legend>
+            <div class="pick-row">
+              <input type="checkbox" id="fp-diamant" name="pierres" value="Diamant"><label for="fp-diamant">Diamant</label>
+              <input type="checkbox" id="fp-saphir" name="pierres" value="Saphir"><label for="fp-saphir">Saphir</label>
+              <input type="checkbox" id="fp-rubis" name="pierres" value="Rubis"><label for="fp-rubis">Rubis</label>
+              <input type="checkbox" id="fp-emeraude" name="pierres" value="Émeraude"><label for="fp-emeraude">Émeraude</label>
+              <input type="checkbox" id="fp-spinelle" name="pierres" value="Spinelle"><label for="fp-spinelle">Spinelle</label>
+              <input type="checkbox" id="fp-tourmaline" name="pierres" value="Tourmaline"><label for="fp-tourmaline">Tourmaline</label>
+              <input type="checkbox" id="fp-tanzanite" name="pierres" value="Tanzanite"><label for="fp-tanzanite">Tanzanite</label>
+              <input type="checkbox" id="fp-aigue" name="pierres" value="Aigue-marine"><label for="fp-aigue">Aigue-marine</label>
+              <input type="checkbox" id="fp-peridot" name="pierres" value="Péridot"><label for="fp-peridot">Péridot</label>
+              <input type="checkbox" id="fp-grenat" name="pierres" value="Grenat"><label for="fp-grenat">Grenat</label>
+              <input type="checkbox" id="fp-nsp" name="pierres" value="À choisir ensemble"><label for="fp-nsp">À choisir ensemble</label>
+            </div>
+          </fieldset>
+          <div class="field field-wide">
+            <label for="f-inspi">Vos inspirations <span class="opt">(facultatif)</span></label>
+            <p class="help" id="h-inspi">Une bague aperçue quelque part, une forme, une couleur, un lien vers une image.</p>
+            <textarea id="f-inspi" name="inspirations" aria-describedby="h-inspi" style="min-height:90px"></textarea>
+          </div>
+          <div class="field field-wide">
+            <label for="f-inspi-img">Images d'inspiration <span class="opt">(facultatif, 6 au plus)</span></label>
+            <input id="f-inspi-img" name="images" type="file" accept="image/*" multiple>
+            <div class="thumbs" id="f-thumbs"></div>
+          </div>
+          <div class="field" style="align-content:end">
+            <button type="submit" class="btn btn-main">Envoyer mon histoire <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
+          </div>
+        </div>
+        <p class="form-status" id="form-status" role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Flash -->
+  <section class="section" id="flash" aria-labelledby="flash-titre">
+    <div class="wrap">
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-bague"/></svg>Niveau 2 · Édition limitée</p>
+      <div class="flash-head">
+        <div>
+          <h2 class="title-xl" id="flash-titre" data-split>Flash</h2>
+          <p class="lead" data-for="nina" data-reveal>Soixante-six bagues, une seule fois chacune. Jamais refaites.</p>
+          <p class="lead" data-for="maeline" data-reveal>Soixante-six bagues dessinées une à une, en métal coulé et sculpté à la main.</p>
+        </div>
+        <div class="prose" data-reveal>
+          <p data-for="nina">Ce ne sont pas des pièces sur mesure : chaque bague est déjà dessinée et n'existera qu'en un exemplaire. Les pierres viennent de lots sélectionnés aux enchères et seront vérifiées avant fabrication. Un lot vendu est remplacé par une pierre de même nature, de même couleur et de poids proche.</p>
+          <p data-for="maeline">Chatons qui débordent sur la pierre, bras en spirale, branches, racines, gouttes, granules, sertis étoilés. Survolez une fiche : la bague se retourne et montre sa monture au crayon. Ouvrez-la pour la faire tourner en 3D et voir le croquis, l'illustration et le détail du serti.</p>
+          <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Les bagues affichées sont des rendus 3D calculés à partir des paramètres de chaque modèle, en attendant les photos des pièces réelles. Pierres, poids, dimensions et prix sont proposés, à confirmer.</span></p>
+          <details class="calc">
+            <summary>Comment la fourchette de prix est calculée</summary>
+            <ul>
+              <li>Prix = (pierre + métal + heures de fabrication + matériel) × 1,10.</li>
+              <li>Pierre : prix au carat estimé d'après des lots aux enchères, à remplacer par le prix réel.</li>
+              <li>Métal : or 18 carats entre 98 et 112 € le gramme, argent 925 entre 1,50 et 2 € le gramme (hypothèses).</li>
+              <li>Fabrication : 9 à 16 heures selon la monture, au SMIC horaire brut de 12,31 €.</li>
+              <li>Non compris : TVA éventuelle, fonte sous-traitée, poinçon de garantie, écrin, livraison.</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+
+      <div class="toolbar" role="group" aria-label="Filtrer et trier les bagues">
+        <ul class="filters" id="filters" aria-label="Couleur de pierre"></ul>
+        <div class="selects">
+          <div class="sel"><label for="fl-metal">Métal</label><select id="fl-metal"></select></div>
+          <div class="sel"><label for="fl-motif">Monture</label><select id="fl-motif"></select></div>
+          <div class="sel"><label for="fl-forme">Forme de la pierre</label><select id="fl-forme"></select></div>
+          <div class="sel"><label for="fl-prix">Budget de départ</label><select id="fl-prix"></select></div>
+          <div class="sel"><label for="fl-tri">Trier par</label><select id="fl-tri"></select></div>
+        </div>
+        <div class="tool-foot"><p class="count" id="count" aria-live="polite"></p><button type="button" class="btn-link" id="fl-reset" hidden>Effacer les filtres</button></div>
+      </div>
+      <ul class="fiches" id="fiches"></ul>
+      <div class="more"><button type="button" class="btn btn-line" id="more"></button></div>
+    </div>
+  </section>
+
+  <!-- Pluriel -->
+  <section class="section" id="pluriel" aria-labelledby="pluriel-titre">
+    <div class="wrap">
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-bague"/></svg>Niveau 3 · Collection</p>
+      <h2 class="title-xl" id="pluriel-titre" data-split>Pluriel</h2>
+      <div class="grid-2" style="margin-top:40px">
+        <p class="lead" data-for="nina" data-reveal>Une collection pour tout le monde, faite main avec le même soin que les pièces uniques.</p>
+        <p class="lead" data-for="maeline" data-reveal>Les petits signes des bagues uniques, à garder sur soi tous les jours.</p>
+        <div class="prose" data-reveal>
+          <p data-for="nina">Plusieurs modèles, plusieurs articles, et chaque produit en plusieurs tailles. C'est la porte d'entrée dans l'univers Singulier.</p>
+          <p data-for="maeline">Un grain, une goutte, une racine, une étoile : on les retrouve sur les bagues Flash. Ici, ils deviennent des modèles plus simples, fabriqués, sertis et gravés par Maëline.</p>
+          <p>Choisissez une taille pour voir à quoi elle correspond, puis ajoutez le modèle à votre panier. Livraison offerte.</p>
+        </div>
+      </div>
+      <ul class="models" id="models"></ul>
+    </div>
+  </section>
+</main>
+
+<section class="news" aria-labelledby="news-title">
+  <div class="wrap news-in">
+    <div>
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-bague"/></svg>Chaque mois</p>
+      <h2 class="title-l" id="news-title">La revue des pierres précieuses</h2>
+      <p class="prose" style="margin:16px 0 0">Une pierre par mois : d'où elle vient, comment la reconnaître, comment la porter. Et les nouvelles bagues de l'atelier avant tout le monde.</p>
+    </div>
+    <form class="news-form" id="news-form" novalidate>
+      <div class="news-row">
+        <div class="field"><label for="n-email">Votre adresse e-mail</label><input id="n-email" type="email" inputmode="email" autocomplete="email" required aria-describedby="n-err"></div>
+        <button type="submit" class="btn btn-main" style="align-self:end">Je m'abonne</button>
+      </div>
+      <label class="check"><input type="checkbox" id="n-ok"><span>J'accepte de recevoir la revue mensuelle de Singulier. Je peux me désabonner à tout moment. Voir la <a href="#confidentialite" data-doc="confidentialite">politique de confidentialité</a>.</span></label>
+      <p class="error" id="n-err" role="alert" hidden></p>
+      <p class="form-status" id="news-status" role="status" hidden></p>
+    </form>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div><h3>Service client</h3><ul>
+        <li><a href="#raconter">Nous écrire</a></li>
+        <li><a href="#certificat" data-verify>Vérifier un certificat</a></li>
+        <li><a href="#sur-mesure">Bague sur mesure</a></li></ul></div>
+      <div><h3>Votre commande</h3><ul>
+        <li><button type="button" data-open-account>Mon compte</button></li>
+        <li><button type="button" data-open-cart>Mon panier</button></li>
+        <li class="plain">Livraison offerte</li>
+        <li class="plain">3 fois sans frais avec Klarna</li></ul></div>
+      <div><h3>Informations légales</h3><ul>
+        <li><a href="#mentions-legales" data-doc="mentions-legales">Mentions légales</a></li>
+        <li><a href="#cgv" data-doc="cgv">Conditions générales de vente</a></li>
+        <li><a href="#confidentialite" data-doc="confidentialite">Politique de confidentialité</a></li>
+        <li><a href="#cookies" data-doc="cookies">Cookies</a></li>
+        <li><a href="#cadre-legal" data-doc="cadre-legal">Lois et obligations</a></li></ul></div>
+      <div><h3>La maison</h3><ul>
+        <li><a href="#histoire">Notre histoire</a></li>
+        <li><a href="#flash">Bagues Flash</a></li>
+        <li><a href="#pluriel">Collection Pluriel</a></li></ul></div>
+    </div>
+    <a class="foot-brand" href="#accueil" aria-label="Singulier, retour à l'accueil">SINGULIER</a>
+    <p class="foot-tag">Singulier, c'est vous.</p>
+    <p>Nina &amp; Maëline · Bijoux faits main, sertis et gravés</p>
+    <small id="foot-note">Les bagues affichées sont des rendus 3D et des illustrations de travail, pas des photos de pièces finies. Les prix sont des fourchettes estimées, à confirmer par devis. Le compte, le panier et la revue sont des démonstrations enregistrées dans votre navigateur.</small>
+  </div>
+</footer>
+
+<button type="button" class="door" id="door"></button>
+
+<div class="eclipse" id="eclipse" data-to="maeline" aria-hidden="true"><div class="ec-disc"></div><p class="ec-word"></p></div>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="c-ring"><span class="c-glyph"></span><span class="c-label"></span></div>
+  <div class="c-dot"></div>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-head">
+    <span class="card-num" id="sheet-num"></span>
+    <h2 id="sheet-title"></h2>
+    <button type="button" class="icon-btn" id="sheet-close" aria-label="Fermer la fiche"><svg aria-hidden="true"><use href="#i-croix"/></svg></button>
+  </div>
+  <div class="sheet-body">
+    <p class="sheet-price"><strong id="sheet-price"></strong><span id="sheet-price-note">Fourchette estimée, à confirmer par devis.</span></p>
+    <div class="views">
+      <figure class="view">
+        <div class="view-art" id="v-3d"></div>
+        <figcaption><span><strong>Rendu 3D.</strong> Glissez pour faire tourner la bague.</span>
+          <span class="view-tools"><button type="button" class="chip" id="v-mode" aria-pressed="false">Maquette framboise</button></span></figcaption>
+      </figure>
+      <figure class="view">
+        <div class="view-art view-paper" id="v-croquis"></div>
+        <figcaption><span><strong>Croquis dessin.</strong> Vue de dessus au crayon, échelle 5 mm.</span></figcaption>
+      </figure>
+      <figure class="view">
+        <div class="view-art" id="v-illu"></div>
+        <figcaption><span><strong>Illustration semi-réelle.</strong> Rendu de travail, vue de dessus.</span></figcaption>
+      </figure>
+      <figure class="view">
+        <div class="view-art" id="v-serti"><span class="view-badge">×4</span></div>
+        <figcaption><span><strong>Détail du serti.</strong> <span id="v-serti-txt"></span></span></figcaption>
+      </figure>
+    </div>
+    <dl class="specs" id="sheet-specs"></dl>
+    <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span id="sheet-note"></span></p>
+    <div class="sheet-actions">
+      <button type="button" class="btn btn-main" id="sheet-add">Ajouter au panier</button>
+      <button type="button" class="btn btn-line" data-try="sheet"><svg aria-hidden="true"><use href="#i-camera"/></svg>Essayer sur ma main</button>
+      <button type="button" class="btn btn-line" data-cert="sheet">Voir le certificat</button>
+    </div>
+    <ul class="perks"><li><strong>Livraison offerte</strong> et assurée en France métropolitaine.</li><li><strong>Paiement en 3 fois sans frais avec Klarna</strong>, sous réserve d'acceptation.</li></ul>
+    <div class="sheet-nav">
+      <button type="button" class="btn btn-line" id="sheet-prev"><span>Bague précédente</span></button>
+      <button type="button" class="btn btn-line" id="sheet-next"><span>Bague suivante</span> <svg aria-hidden="true"><use href="#i-fleche"/></svg></button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="drawer" id="account" aria-labelledby="account-title">
+  <div class="sheet-head"><h2 id="account-title">Mon compte</h2><button type="button" class="icon-btn" data-close aria-label="Fermer mon compte"><svg aria-hidden="true"><use href="#i-croix"/></svg></button></div>
+  <div class="drawer-body" id="account-body"></div>
+</dialog>
+
+<dialog class="drawer" id="cart" aria-labelledby="cart-title">
+  <div class="sheet-head"><h2 id="cart-title">Mon panier</h2><button type="button" class="icon-btn" data-close aria-label="Fermer mon panier"><svg aria-hidden="true"><use href="#i-croix"/></svg></button></div>
+  <div class="drawer-body" id="cart-body"></div>
+</dialog>
+
+<dialog class="sheet" id="tryon" aria-labelledby="try-title">
+  <div class="sheet-head"><h2 id="try-title">Essayer sur ma main</h2><button type="button" class="icon-btn" data-close aria-label="Fermer l'essayage"><svg aria-hidden="true"><use href="#i-croix"/></svg></button></div>
+  <div class="sheet-body">
+    <div class="try-consent" id="try-consent">
+      <p class="lead" style="margin:0">Pour voir <strong id="try-name"></strong> sur votre doigt, Singulier a besoin de votre caméra.</p>
+      <ul>
+        <li>L'image reste sur votre téléphone. Le repérage de la main se fait dans votre navigateur ; rien n'est envoyé ni enregistré par Singulier.</li>
+        <li>Votre navigateur vous demandera ensuite de confirmer. Vous pourrez retirer cette autorisation dans ses réglages.</li>
+        <li>Vous préférez ne pas l'activer ? Choisissez une photo de votre main.</li>
+      </ul>
+      <div class="btn-row">
+        <button type="button" class="btn btn-main" id="try-cam"><svg aria-hidden="true"><use href="#i-camera"/></svg>Autoriser la caméra</button>
+        <label class="btn btn-line" for="try-file">Utiliser une photo</label>
+        <input class="sr-only" type="file" id="try-file" accept="image/*">
+      </div>
+      <p class="error" id="try-error" role="alert" hidden></p>
+    </div>
+    <div id="try-live" hidden class="stack">
+      <div class="try-stage" id="try-stage">
+        <video id="try-video" playsinline muted hidden></video>
+        <img class="bg" id="try-photo" alt="Photo de votre main" hidden>
+        <img class="try-ring" id="try-ring" alt="" draggable="false">
+        <p class="try-hint">Dos de la main face à la caméra, doigts vers le haut.</p>
+      </div>
+      <div class="try-tools"><button type="button" class="btn btn-line" id="try-track" aria-pressed="true">Suivi de la main : activé</button></div>
+      <p class="try-status" id="try-status" role="status" aria-live="polite"></p>
+      <label class="range" for="try-size">Taille<input type="range" id="try-size" min="15" max="250" value="60"></label>
+      <label class="range" for="try-rot">Rotation<input type="range" id="try-rot" min="-180" max="180" value="0"></label>
+      <div class="btn-row">
+        <button type="button" class="btn btn-main" id="try-shot">Prendre la photo</button>
+        <button type="button" class="btn btn-line" id="try-back">Changer d'image</button>
+      </div>
+      <p class="fine">Le suivi repère votre annulaire et y pose la bague. L'analyse se fait dans votre navigateur : aucune image ne quitte votre téléphone. Touchez la bague pour la placer vous-même. Aperçu indicatif : la taille réelle se vérifie avec votre tour de doigt.</p>
+    </div>
+    <div id="try-result" hidden class="stack try-result">
+      <img id="try-out" alt="Votre main avec la bague">
+      <p class="fine">Appuyez longuement sur l'image pour l'enregistrer ou la partager.</p>
+      <div class="btn-row"><button type="button" class="btn btn-line" id="try-again">Recommencer</button><button type="button" class="btn btn-main" id="try-add">Ajouter au panier</button></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="certdlg" aria-labelledby="cert-title">
+  <div class="sheet-head"><h2 id="cert-title">Certificat d'authenticité</h2><button type="button" class="icon-btn" data-close aria-label="Fermer le certificat"><svg aria-hidden="true"><use href="#i-croix"/></svg></button></div>
+  <div class="sheet-body">
+    <form class="lookup" id="cert-lookup" novalidate>
+      <div class="field"><label for="cert-no">Numéro de certificat</label><input id="cert-no" type="text" inputmode="text" autocomplete="off" placeholder="SG-F-07" aria-describedby="cert-err"></div>
+      <button type="submit" class="btn btn-main">Vérifier</button>
+      <p class="error" id="cert-err" role="alert" hidden style="flex-basis:100%">Aucun certificat ne porte ce numéro. Le format est SG-F-01 à SG-F-66.</p>
+    </form>
+    <div id="cert-out"></div>
+    <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Spécimen : la bague n'est pas encore fabriquée. Le certificat définitif reprend les mesures réelles de la pièce, la date de remise et les deux signatures. Le code QR renvoie à cette page.</span></p>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog class="ck" id="cookies" aria-labelledby="ck-title" aria-describedby="ck-desc">
+  <div class="ck-sky" aria-hidden="true">
+    <div class="ck-corona"></div>
+    <div class="ck-sun"></div>
+    <div class="ck-moon"></div>
+    <div class="ck-diamond"></div>
+  </div>
+  <div class="ck-panel">
+    <h2 id="ck-title" tabindex="-1">Avant l'éclipse, votre accord</h2>
+    <p id="ck-desc">Singulier garde dans votre navigateur vos réglages, vos favoris et votre panier : c'est nécessaire au site. La mesure d'audience n'est activée qu'avec votre accord.</p>
+    <div class="ck-btns">
+      <button type="button" class="btn btn-line" data-ck="refuse">Tout refuser</button>
+      <button type="button" class="btn btn-line" data-ck="custom">Personnaliser</button>
+      <button type="button" class="btn btn-main" data-ck="accept">Tout accepter</button>
+    </div>
+    <p class="fine"><a href="#cookies" data-doc="cookies">En savoir plus sur les cookies</a></p>
+  </div>
+</dialog>
+
+<template id="doc-cookies">
+  <p>Un cookie est un petit fichier que le site dépose dans votre navigateur. Singulier utilise aussi le stockage local, qui joue le même rôle. Vous pouvez changer d'avis à tout moment depuis le lien « Cookies » en bas de page. Votre choix est conservé six mois.</p>
+  <div class="doc-box stack">
+    <label class="check"><input type="checkbox" checked disabled id="ck-need"><span><strong>Nécessaires</strong> (toujours actifs). Univers choisi, favoris, panier, compte de démonstration et ce choix de cookies. Ils restent dans votre navigateur.</span></label>
+    <label class="check"><input type="checkbox" id="ck-audience"><span><strong>Mesure d'audience.</strong> Compter les visites pour améliorer le site. Aucun outil n'est installé pour l'instant : ce réglage sera appliqué le jour où Singulier en ajoutera un.</span></label>
+    <div class="btn-row"><button type="button" class="btn btn-main" data-ck="save">Enregistrer mes choix</button><button type="button" class="btn btn-line" data-ck="refuse">Tout refuser</button></div>
+  </div>
+  <h3>Ce que le site n'utilise pas</h3>
+  <p>Aucun cookie publicitaire, aucun traceur de réseau social, aucune revente de données.</p>
+  <h3>Caméra</h3>
+  <p>L'essayage sur la main demande votre accord avant d'activer la caméra. L'image est traitée dans votre navigateur et n'est jamais transmise.</p>
+  <h3>Cadre légal</h3>
+  <p>Article 82 de la loi n° 78-17 du 6 janvier 1978 et lignes directrices de la CNIL : refuser doit être aussi simple qu'accepter, et les traceurs non nécessaires attendent votre consentement.</p>
+</template>
+
+<dialog class="sheet" id="legal" aria-labelledby="legal-title">
+  <div class="sheet-head">
+    <h2 id="legal-title"></h2>
+    <button type="button" class="icon-btn" id="legal-close" aria-label="Fermer le document"><svg aria-hidden="true"><use href="#i-croix"/></svg></button>
+  </div>
+  <div class="doc" id="legal-body"></div>
+</dialog>
+
+<template id="doc-cgv">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Projet de conditions générales, à faire relire par un ou une juriste avant toute vente. Les passages surlignés sont à compléter une fois l'entreprise créée.</span></p>
+  <p>Version du <span class="todo">[date]</span>. Les présentes conditions s'appliquent aux ventes conclues entre <span class="todo">[dénomination sociale, forme juridique, adresse du siège, numéro SIREN]</span>, ci-après « Singulier », et toute personne physique qui achète pour ses besoins personnels, ci-après « le client ».</p>
+
+  <h3>1. Objet</h3>
+  <p>Singulier crée et vend des bijoux faits main. Les présentes conditions fixent les droits et obligations des parties pour les trois offres : les bagues <strong>Sur mesure</strong>, les bagues <strong>Flash</strong> en pièce unique, et la collection <strong>Pluriel</strong>. Le client les accepte en signant le devis ou le bon de commande.</p>
+
+  <h3>2. Produits</h3>
+  <ul>
+    <li>Chaque bijou est fabriqué à la main. De légères différences de forme, de poids ou de teinte par rapport aux croquis, aux rendus 3D et aux photographies sont normales et ne constituent pas un défaut.</li>
+    <li>Les images du site sont des rendus de travail. Seul le descriptif du devis ou du bon de commande engage Singulier.</li>
+    <li>Les pierres sont naturelles, sauf mention contraire. Conformément au décret n° 2002-65 du 14 janvier 2002 relatif au commerce des pierres gemmes et des perles, Singulier indique la dénomination exacte de chaque pierre et les traitements qu'elle a reçus.</li>
+    <li>Le titre du métal figure sur le descriptif : or 750 millièmes (18 carats) ou argent 925 millièmes.</li>
+  </ul>
+
+  <h3>3. Prix</h3>
+  <p>Les prix sont exprimés en euros, toutes taxes comprises <span class="todo">[ou : « TVA non applicable, article 293 B du CGI » si franchise en base]</span>. Les fourchettes affichées sur le site sont des estimations : elles dépendent du cours des métaux, du prix réel de la pierre et du temps de fabrication. Le prix ferme est celui du devis ou du bon de commande accepté par le client. Les frais de livraison sont indiqués avant la validation de la commande.</p>
+
+  <h3>4. Commande</h3>
+  <p>Le site ne propose pas de paiement en ligne. La commande se forme lorsque le client accepte par écrit le devis ou le bon de commande que Singulier lui adresse.</p>
+  <ul>
+    <li><strong>Sur mesure :</strong> après un premier échange, Singulier présente un croquis et un devis. La fabrication commence après validation écrite du croquis et versement d'un acompte de <span class="todo">[x %]</span>.</li>
+    <li><strong>Flash :</strong> chaque bague existe en un seul exemplaire. La première commande confirmée et payée l'emporte.</li>
+    <li><strong>Pluriel :</strong> le client choisit son modèle et sa taille.</li>
+  </ul>
+
+  <h3>5. Paiement</h3>
+  <p>Moyens acceptés : <span class="todo">[virement, carte bancaire, autre]</span>. Le solde est dû avant l'expédition ou à la remise en main propre. Le client peut régler en trois fois sans frais avec Klarna, sous réserve d'acceptation par Klarna et dans les conditions que ce prestataire lui communique <span class="todo">[à confirmer une fois le contrat Klarna signé]</span>. Le paiement en espèces est limité à 1 000 € par l'article D. 112-3 du Code monétaire et financier.</p>
+
+  <h3>6. Fabrication et livraison</h3>
+  <p>Singulier indique un délai de fabrication et de livraison sur chaque devis. À défaut d'indication, la livraison intervient au plus tard trente jours après la commande (article L. 216-1 du Code de la consommation). En cas de retard, le client peut résoudre le contrat dans les conditions de l'article L. 216-6 du même code. La livraison est offerte en France métropolitaine <span class="todo">[à confirmer, et préciser les autres destinations]</span>. Les bijoux voyagent en envoi assuré, remis contre signature. Le risque de perte ou de dommage passe au client lorsqu'il prend physiquement possession du bijou (article L. 216-2).</p>
+
+  <h3>7. Droit de rétractation</h3>
+  <p>Pour les bagues <strong>Flash</strong> et la collection <strong>Pluriel</strong> achetées à distance, le client dispose de quatorze jours à compter de la réception pour se rétracter, sans donner de motif (article L. 221-18 du Code de la consommation). Il en informe Singulier par une déclaration écrite sans ambiguïté, ou avec le formulaire ci-dessous, puis renvoie le bijou dans son état d'origine, non porté, dans les quatorze jours qui suivent. Les frais de retour sont à sa charge. Singulier rembourse la totalité des sommes versées, livraison standard comprise, dans les quatorze jours suivant la notification, et peut différer ce remboursement jusqu'à la réception du bijou ou d'une preuve d'expédition.</p>
+  <p><strong>Exception.</strong> Le droit de rétractation ne s'applique pas aux biens confectionnés selon les spécifications du client ou nettement personnalisés (article L. 221-28, 3°). Sont concernés : les bagues Sur mesure, et toute pièce gravée ou modifiée à la demande du client.</p>
+  <div class="doc-box">
+    <p><strong>Formulaire de rétractation</strong></p>
+    <p>À l'attention de <span class="todo">[dénomination, adresse postale, adresse e-mail]</span>. Je vous notifie par la présente ma rétractation du contrat portant sur la vente du bijou suivant : … Commandé le … / reçu le … Nom du client : … Adresse du client : … Date : … Signature (si envoi sur papier) : …</p>
+  </div>
+
+  <h3>8. Garanties légales</h3>
+  <p>Le client bénéficie de la garantie légale de conformité (articles L. 217-3 et suivants du Code de la consommation) pendant deux ans à compter de la délivrance du bijou, et de la garantie des vices cachés (articles 1641 à 1649 du Code civil), à exercer dans les deux ans suivant la découverte du vice. Pendant la garantie de conformité, le client peut demander la réparation ou le remplacement du bijou, ou à défaut une réduction du prix ou la résolution de la vente.</p>
+  <p><span class="todo">[Insérer ici l'encadré d'information obligatoire prévu à l'annexe de l'article D. 211-2 du Code de la consommation.]</span></p>
+  <p>Ces garanties ne couvrent pas l'usure normale, les rayures, les chocs, la perte d'une pierre à la suite d'un choc, ni les interventions réalisées par un tiers.</p>
+
+  <h3>9. Poinçons et certificat</h3>
+  <p>Les ouvrages en métaux précieux sont soumis à la garantie du titre prévue aux articles 521 et suivants du Code général des impôts. Ils portent le poinçon de maître de Singulier et, au-delà de 3 grammes pour l'or et de 30 grammes pour l'argent, le poinçon de garantie. Chaque bague Sur mesure et chaque bague Flash est remise avec un certificat d'authenticité qui décrit le métal, la pierre et ses éventuels traitements.</p>
+
+  <h3>10. Diamants</h3>
+  <p>Singulier s'approvisionne auprès de fournisseurs qui garantissent, sur leurs factures, que leurs diamants proviennent de sources légitimes, conformes au Processus de Kimberley et aux résolutions des Nations unies.</p>
+
+  <h3>11. Entretien et mise à taille</h3>
+  <p>Singulier remet des conseils d'entretien avec chaque bijou. Une mise à taille est possible sur devis lorsque la monture le permet. Certaines montures sculptées ne peuvent pas être agrandies ou réduites : Singulier le signale avant la commande.</p>
+
+  <h3>12. Réserve de propriété</h3>
+  <p>Le bijou reste la propriété de Singulier jusqu'au paiement complet du prix (article 2367 du Code civil).</p>
+
+  <h3>13. Force majeure</h3>
+  <p>Aucune des parties n'est responsable d'un manquement causé par un événement de force majeure au sens de l'article 1218 du Code civil.</p>
+
+  <h3>14. Données personnelles</h3>
+  <p>Singulier traite les données du client pour répondre à ses demandes et exécuter ses commandes. Le détail figure dans la politique de confidentialité.</p>
+
+  <h3>15. Médiation et litiges</h3>
+  <p>En cas de difficulté, le client écrit d'abord à <span class="todo">[adresse e-mail du service client]</span>. Si aucune solution n'est trouvée, il peut saisir gratuitement le médiateur de la consommation dont relève Singulier (article L. 612-1 du Code de la consommation) : <span class="todo">[nom du médiateur, adresse postale, site internet]</span>.</p>
+  <p>Les présentes conditions sont soumises au droit français. Le client peut saisir, à son choix, la juridiction du lieu où il demeurait au moment de la conclusion du contrat ou de la survenance du fait dommageable (article R. 631-3 du Code de la consommation).</p>
+</template>
+
+<template id="doc-mentions">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Mentions à compléter dès l'immatriculation de l'entreprise. Elles sont imposées par la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique.</span></p>
+  <h3>Éditeur du site</h3>
+  <ul>
+    <li>Dénomination : <span class="todo">[dénomination sociale ou nom et prénom]</span></li>
+    <li>Forme juridique et capital : <span class="todo">[à compléter]</span></li>
+    <li>Siège : <span class="todo">[adresse]</span></li>
+    <li>Immatriculation : <span class="todo">[SIREN, RCS ou Répertoire national des entreprises]</span></li>
+    <li>TVA intracommunautaire : <span class="todo">[numéro, ou mention de la franchise en base]</span></li>
+    <li>Contact : <span class="todo">[adresse e-mail et numéro de téléphone]</span></li>
+    <li>Directrice de la publication : <span class="todo">[nom et prénom]</span></li>
+  </ul>
+  <h3>Hébergeur</h3>
+  <p><span class="todo">[Nom de l'hébergeur, adresse, numéro de téléphone]</span></p>
+  <h3>Propriété intellectuelle</h3>
+  <p>Le nom Singulier, les textes, les croquis, les rendus et les modèles de bijoux présentés sur ce site appartiennent à leurs autrices. Toute reproduction sans accord écrit est interdite (articles L. 122-4 et L. 335-2 du Code de la propriété intellectuelle).</p>
+  <h3>Images</h3>
+  <p>Les bagues affichées sont des rendus 3D et des illustrations générés à partir des paramètres de chaque modèle. Ce ne sont pas des photographies de pièces finies. La Lune et le Soleil de la page d'accueil sont calculés en temps réel.</p>
+</template>
+
+<template id="doc-conf">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Projet de politique de confidentialité, conforme au règlement (UE) 2016/679 (RGPD) et à la loi n° 78-17 du 6 janvier 1978. À compléter et à faire relire avant la mise en ligne.</span></p>
+  <h3>Responsable du traitement</h3>
+  <p><span class="todo">[Dénomination, adresse, adresse e-mail de contact]</span></p>
+  <h3>Données collectées</h3>
+  <ul>
+    <li><strong>Formulaire « Racontez votre histoire » :</strong> prénom, adresse e-mail, récit, métal préféré. Ne nous confiez pas d'informations de santé ou d'autres données sensibles dans votre récit.</li>
+    <li><strong>Commande :</strong> identité, adresse de livraison, taille de doigt, historique des échanges et des paiements.</li>
+    <li><strong>Compte, favoris et panier :</strong> prénom, nom, adresse e-mail, taille de doigt, bagues choisies. Dans cette version, ces données restent dans votre navigateur.</li>
+    <li><strong>Revue mensuelle :</strong> votre adresse e-mail, avec votre accord, jusqu'à votre désabonnement.</li>
+    <li><strong>Essayage sur la main :</strong> l'image de la caméra est affichée dans votre navigateur. Singulier ne la reçoit pas et ne l'enregistre pas.</li>
+    <li><strong>Images d'inspiration :</strong> les fichiers que vous joignez à votre demande.</li>
+  </ul>
+  <h3>Finalités et bases légales</h3>
+  <ul>
+    <li>Répondre à votre demande et préparer un devis : mesures précontractuelles prises à votre demande.</li>
+    <li>Fabriquer, livrer et garantir votre bijou : exécution du contrat.</li>
+    <li>Tenir la comptabilité : obligation légale.</li>
+    <li>Vous envoyer des nouvelles de la marque : votre consentement, que vous pouvez retirer à tout moment.</li>
+  </ul>
+  <h3>Durées de conservation</h3>
+  <ul>
+    <li>Demandes sans suite : trois ans après le dernier contact.</li>
+    <li>Commandes et factures : dix ans (article L. 123-22 du Code de commerce).</li>
+  </ul>
+  <h3>Destinataires</h3>
+  <p>Nina et Maëline, et leurs prestataires : <span class="todo">[hébergeur, messagerie, transporteur, banque]</span>. Singulier ne vend aucune donnée.</p>
+  <h3>Cookies et stockage local</h3>
+  <p>Le site ne dépose aucun cookie publicitaire ni de mesure d'audience. Il enregistre dans votre navigateur un seul réglage, l'univers choisi (Nina ou Maëline). Ce stockage est strictement nécessaire à l'affichage et ne demande pas de consentement (article 82 de la loi du 6 janvier 1978).</p>
+  <p>Les polices de caractères et les bibliothèques d'animation sont chargées depuis des serveurs tiers (Google Fonts, cdnjs, jsDelivr), qui reçoivent votre adresse IP. <span class="todo">[Recommandation : héberger ces fichiers sur le serveur du site avant la mise en ligne.]</span></p>
+  <h3>Vos droits</h3>
+  <p>Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, leur portabilité, la limitation du traitement, ou vous y opposer. Vous pouvez aussi définir le sort de vos données après votre décès. Écrivez à <span class="todo">[adresse e-mail]</span>. Si la réponse ne vous satisfait pas, vous pouvez saisir la CNIL, 3 place de Fontenoy, 75007 Paris, cnil.fr.</p>
+</template>
+
+<template id="doc-lois">
+  <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Résumé des principaux textes qui encadrent la vente de bijoux en France. Il ne remplace pas un conseil juridique : vérifiez chaque point avec le bureau de garantie des douanes et un professionnel du droit.</span></p>
+  <h3>Métaux précieux</h3>
+  <ul>
+    <li><strong>Garantie du titre</strong> (Code général des impôts, articles 521 et suivants). Titres légaux les plus courants : or 750 millièmes, argent 925 millièmes.</li>
+    <li><strong>Poinçon de maître</strong> du fabricant et <strong>poinçon de garantie</strong>. Les ouvrages de moins de 3 grammes en or et de moins de 30 grammes en argent sont dispensés du poinçon de garantie.</li>
+    <li><strong>Déclaration d'existence</strong> auprès du bureau de garantie avant de commencer l'activité, et tenue des registres exigés par les douanes.</li>
+  </ul>
+  <h3>Pierres</h3>
+  <ul>
+    <li><strong>Décret n° 2002-65 du 14 janvier 2002</strong> : dénomination exacte des pierres gemmes et des perles, mention obligatoire des traitements, des pierres synthétiques et des imitations.</li>
+    <li><strong>Processus de Kimberley</strong> (règlement (CE) n° 2368/2002) : certification des diamants bruts, complétée par les garanties écrites des fournisseurs pour les diamants taillés.</li>
+  </ul>
+  <h3>Vente aux particuliers</h3>
+  <ul>
+    <li><strong>Information précontractuelle</strong> (Code de la consommation, articles L. 111-1 et L. 221-5) : caractéristiques, prix, délai, identité du vendeur, garanties.</li>
+    <li><strong>Affichage des prix</strong> toutes taxes comprises (arrêté du 3 décembre 1987).</li>
+    <li><strong>Droit de rétractation de quatorze jours</strong> pour la vente à distance (article L. 221-18), sauf pour les pièces sur mesure ou personnalisées (article L. 221-28, 3°).</li>
+    <li><strong>Garantie légale de conformité</strong> de deux ans (articles L. 217-3 et suivants) et <strong>garantie des vices cachés</strong> (Code civil, articles 1641 à 1649).</li>
+    <li><strong>Médiation de la consommation</strong> : adhésion obligatoire à un médiateur (article L. 612-1).</li>
+    <li><strong>Paiement en espèces</strong> plafonné à 1 000 € (Code monétaire et financier, article D. 112-3).</li>
+  </ul>
+  <h3>Site internet et données</h3>
+  <ul>
+    <li><strong>Mentions légales</strong> : loi n° 2004-575 du 21 juin 2004.</li>
+    <li><strong>Données personnelles</strong> : RGPD et loi Informatique et Libertés du 6 janvier 1978.</li>
+  </ul>
+  <h3>Marque et modèles</h3>
+  <ul>
+    <li><strong>Dépôt de la marque</strong> Singulier à l'INPI, après une recherche d'antériorité.</li>
+    <li><strong>Protection des créations</strong> : droit d'auteur dès la création, et dépôt de dessins et modèles possible à l'INPI.</li>
+  </ul>
+</template>
+{% endraw %}

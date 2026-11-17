@@ -62,3 +62,12 @@ Le jeton public est fait pour être visible dans le navigateur. Ne mettez jamais
 ## Mettre à jour le catalogue
 
 `produits.csv` et `images/` sont générés à partir des données du site (bagues, pierres, prix estimés). Si vous changez une bague dans `index.html`, demandez à Claude de régénérer ces fichiers.
+
+## Thème de la boutique (bijouteriesingulier.com)
+
+La page d'accueil du thème « Singulier — site » est le site lui-même : même HTML, même CSS, même JavaScript. Les fiches produit, les collections et le panier Shopify reprennent les couleurs (crème, bordeaux, rose) et la police Cormorant du site.
+
+- `shopify/theme/build.py` génère les fichiers du thème à partir de `index.html` : `assets/singulier.css`, `assets/singulier.js`, `layout/singulier.liquid` et `templates/index.liquid`.
+- Après une modification de `index.html`, relancez `python3 shopify/theme/build.py`, puis renvoyez ces quatre fichiers dans le thème (demandez à Claude).
+- Le contenu de la page d'accueil se modifie dans `index.html`, pas dans l'éditeur de thème de Shopify.
+- Le choix fait dans le bandeau cookies du site (l'éclipse) est transmis à Shopify. Désactivez la bannière de cookies de Shopify (Paramètres > Confidentialité des clients > Bannière de cookies) pour n'en garder qu'une.
