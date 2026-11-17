@@ -157,6 +157,10 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 /* ---------- Curseur ---------- */
 .cursor{position:fixed; left:0; top:0; z-index:100; pointer-events:none; display:none}
 .has-cursor .cursor{display:block}
+/* Le curseur passe dans la couche supérieure du navigateur (popover) pour rester au-dessus des fenêtres : cookies, panier, compte, fiches */
+.cursor[popover]{inset:0 auto auto 0; width:0; height:0; margin:0; padding:0; border:0; background:none; overflow:visible; color:inherit}
+.cursor[popover]::backdrop{display:none}
+.has-cursor dialog, .has-cursor dialog::backdrop{cursor:none}
 .has-cursor, .has-cursor a, .has-cursor button, .has-cursor [role="slider"], .has-cursor label{cursor:none}
 .has-cursor input, .has-cursor textarea, .has-cursor select{cursor:auto}
 .c-dot, .c-ring{position:fixed; left:0; top:0; border-radius:50%; will-change:transform}
@@ -1603,7 +1607,7 @@ const Live = (() => {
   const c = CFG.shopify || {};
   const domain = String(c.domain || '').trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
   const on = !!(domain && c.storefrontToken);
-  const endpoint = on ? `https://${domain}/api/${c.apiVersion || '2025-07'}/graphql.json` : '';
+  const endpoint = on ? `https://${domain}/api/${c.apiVersion || '2026-07'}/graphql.json` : '';
   const products = new Map();
   const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
   async function gql(query, variables){
@@ -1644,10 +1648,11 @@ fillSel('fl-motif', [['', 'Toutes les montures'], ...Object.entries(MOTIFS).map(
 fillSel('fl-forme', [['', 'Toutes les formes'], ...Object.entries(SHAPES).map(([k, s]) => [k, 'Taille ' + s.nom])]);
 fillSel('fl-prix', [['', 'Tous les budgets'], ['0-700', 'Moins de 700 €'], ['700-1200', '700 à 1 200 €'], ['1200-2000', '1 200 à 2 000 €'], ['2000-999999', 'Plus de 2 000 €']]);
 fillSel('fl-tri', [['num', 'Numéro'], ['nom', 'Nom, de A à Z'], ['prix-asc', 'Prix croissant'], ['prix-desc', 'Prix décroissant'], ['ct-desc', 'Pierre la plus grosse'], ['ct-asc', 'Pierre la plus petite']]);
-const SORTERS = { num: (x, y) => x.i - y.i, nom: (x, y) => x.nom.localeCompare(y.nom, 'fr'), 'prix-asc': (x, y) => x.prix[0] - y.prix[0], 'prix-desc': (x, y) => y.prix[1] - x.prix[1], 'ct-desc': (x, y) => y.ct - x.ct, 'ct-asc': (x, y) => x.ct - y.ct };
+const prixOf = (r) => { const p = liveProduct('f' + r.i); if (p && p.variants.nodes.length){ const v = Math.min(...p.variants.nodes.map(n => +n.price.amount)); return [v, v]; } return r.prix; };
+const SORTERS = { num: (x, y) => x.i - y.i, nom: (x, y) => x.nom.localeCompare(y.nom, 'fr'), 'prix-asc': (x, y) => prixOf(x)[0] - prixOf(y)[0], 'prix-desc': (x, y) => prixOf(y)[1] - prixOf(x)[1], 'ct-desc': (x, y) => y.ct - x.ct, 'ct-asc': (x, y) => x.ct - y.ct };
 function filtered(){
   let a = RINGS.filter(r => (F.fam === 'tout' || r.stone.fam === F.fam) && (!F.metal || r.metal === F.metal) && (!F.motif || r.motif === F.motif) && (!F.forme || r.shape === F.forme));
-  if (F.prix){ const [lo, hi] = F.prix.split('-').map(Number); a = a.filter(r => r.prix[0] >= lo && r.prix[0] < hi); }
+  if (F.prix){ const [lo, hi] = F.prix.split('-').map(Number); a = a.filter(r => prixOf(r)[0] >= lo && prixOf(r)[0] < hi); }
   return a.slice().sort(SORTERS[F.tri]);
 }
 filtersEl.innerHTML = FAMILIES.map(f => `<li><button type="button" class="chip" data-f="${f.id}" aria-pressed="${f.id === F.fam}">${f.sw ? `<span class="sw" style="background:${f.sw}"></span>` : ''}${f.nom}</button></li>`).join('');
@@ -2267,11 +2272,16 @@ new IntersectionObserver(([en]) => { door.classList.toggle('is-away', en.isInter
 const Cursor = (() => {
   const el = $('#cursor'), ringEl = $('.c-ring', el), dotEl = $('.c-dot', el), label = $('.c-label', el);
   let active = false, qx, qy, rx, ry;
+  const topLayer = typeof el.showPopover === 'function';
+  if (topLayer) el.setAttribute('popover', 'manual');
+  /* Chaque fenêtre ouverte passe au sommet de la couche supérieure : on y remet le curseur juste après */
+  function raise(){ if (!topLayer || !active) return; try { if (el.matches(':popover-open')) el.hidePopover(); el.showPopover(); } catch(e){} }
+  if (topLayer) ['showModal', 'show'].forEach(k => { const f = HTMLDialogElement.prototype[k]; HTMLDialogElement.prototype[k] = function(){ const r = f.apply(this, arguments); raise(); return r; }; });
   function enable(){
-    if (active || !mqFine.matches) return; active = true; root.classList.add('has-cursor');
+    if (active || !mqFine.matches) return; active = true; root.classList.add('has-cursor'); raise();
     if (G && !reduce){ qx = G.quickTo(ringEl, 'x', { duration: .45, ease: 'power3' }); qy = G.quickTo(ringEl, 'y', { duration: .45, ease: 'power3' }); }
   }
-  function disable(){ active = false; root.classList.remove('has-cursor'); }
+  function disable(){ active = false; root.classList.remove('has-cursor'); if (topLayer && el.matches(':popover-open')) el.hidePopover(); }
   addEventListener('pointermove', e => {
     if (e.pointerType !== 'mouse') return; if (!active) enable(); if (!active) return;
     dotEl.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
@@ -2390,6 +2400,7 @@ const accountDlg = $('#account'), cartDlg = $('#cart');
 let accTab = 'profil', authTab = 'login', liveCart = null, cartBusy = false;
 
 function refreshPrices(){
+  if (F.prix || F.tri.startsWith('prix')) renderList(true);   // le tri et le filtre prennent les prix boutique dès qu'ils arrivent
   $$('[data-price]').forEach(el => { const id = el.dataset.price, it = itemOf(id); if (it) el.innerHTML = priceInner(id, it.prix); });
   $$('[data-add]').forEach(b => { const p = liveProduct(b.dataset.add); const sold = !!(p && !p.availableForSale); b.disabled = sold; if (sold) b.textContent = 'Vendue'; });
   if (sheet.open) fillSheet();
@@ -2428,11 +2439,10 @@ async function liveAdd(id, it){
   if (cartBusy) return; cartBusy = true;
   try {
     const lines = [{ merchandiseId: v.id, quantity: 1 }];
-    const d = shop.cartId
-      ? await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })
-      : await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines });
-    const res = d.cartLinesAdd || d.cartCreate;
-    if (res.userErrors.length) throw new Error(res.userErrors[0].message);
+    const create = async () => (await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines })).cartCreate;
+    let res = shop.cartId ? (await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })).cartLinesAdd : await create();
+    if (!res.cart && shop.cartId){ shop.cartId = ''; liveCart = null; res = await create(); }   // panier expiré ou payé : on en ouvre un neuf
+    if (res.userErrors.length || !res.cart) throw new Error((res.userErrors[0] || {}).message || 'panier');
     liveCart = res.cart; shop.cartId = liveCart.id; syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick();
   } catch(e){ toast('Le panier n\'a pas pu être mis à jour. Réessayez dans un instant.'); }
   cartBusy = false;
