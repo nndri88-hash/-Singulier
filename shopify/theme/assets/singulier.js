@@ -1284,7 +1284,7 @@ function postToShop(fields){
     real.querySelectorAll('[data-sg]').forEach(i => i.remove());
     Object.entries(fields).forEach(([k, v]) => { if (k === 'form_type' || k === 'utf8') return; const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; i.dataset.sg = ''; real.appendChild(i); });
     try { sessionStorage.setItem('sg-sent', fields.form_type === 'customer' ? 'news' : 'contact'); } catch(e){}
-    if (typeof real.requestSubmit === 'function') real.requestSubmit(); else HTMLFormElement.prototype.submit.call(real); return true;
+    HTMLFormElement.prototype.submit.call(real); return true;   // envoi natif : les scripts de la boutique interceptaient l'événement et annulaient l'envoi
   }
   const f = document.createElement('form'); f.method = 'post'; f.action = `https://${Live.domain}/contact#contact_form`; f.target = '_blank'; f.hidden = true;
   Object.entries(Object.assign({ utf8: '✓' }, fields)).forEach(([k, v]) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
