@@ -235,7 +235,7 @@ main{position:relative}
 :root[data-side="nina"] .cert-title{text-transform:uppercase; font-weight:300; letter-spacing:.08em}
 :root[data-side="maeline"] .cert-title{font-style:italic; font-variation-settings:"SOFT" 100; color:var(--rose)}
 .cert dl{margin:0; display:grid; gap:10px; text-align:left; font-size:.9rem}
-.cert dl div{display:flex; justify-content:space-between; gap:12px; border-bottom:1px dotted var(--line); padding-bottom:6px}
+.cert dl div{display:flex; justify-content:space-between; gap:12px; padding-bottom:6px}
 .cert dt{color:var(--muted)} .cert dd{margin:0; font-weight:600; text-align:right}
 .cert-sign{font-family:var(--f-main); font-size:1.7rem; color:var(--accent); display:flex; justify-content:space-between}
 .cert-note{font-size:.78rem; color:var(--muted); margin:0}
@@ -592,6 +592,47 @@ fieldset.field legend{font-weight:600; font-size:.92rem; padding:0; margin-botto
 .foot-cols li.plain{min-height:40px; display:flex; align-items:center; font-size:.92rem; color:var(--muted)}
 a.foot-brand{display:block; text-decoration:none}
 @media (prefers-reduced-motion: reduce){ dialog.drawer, dialog.drawer:not([open]){transform:none; transition:opacity .2s ease, overlay .2s allow-discrete, display .2s allow-discrete} .toast{transition:opacity .2s ease; transform:translate(-50%,0)} .cookies{transition:none} }
+
+/* ---------- v4 : cookies en éclipse, suivi de la main ---------- */
+dialog.ck{width:min(560px, 100% - 32px); max-height:calc(100dvh - 24px); padding:0; border:0; background:transparent; color:var(--fg); overflow:visible; display:none}
+dialog.ck[open]{display:grid; justify-items:center; gap:0}
+dialog.ck::backdrop{background:radial-gradient(60% 60% at 50% 40%, rgba(43,2,2,.55), rgba(10,0,2,.88)); backdrop-filter:blur(3px); animation:ck-dim 1.8s var(--ease-in-out) both}
+.ck-sky{position:relative; width:clamp(150px, 34vw, 220px); aspect-ratio:1; margin-bottom:-28px; z-index:1}
+.ck-sun, .ck-moon, .ck-corona, .ck-diamond{position:absolute; border-radius:50%}
+.ck-sun{inset:16%; background:radial-gradient(circle at 46% 42%, #FFFDF0, #FFE39A 50%, #F9B052); box-shadow:0 0 50px 16px rgba(255,200,120,.55); animation:ck-sun 1.8s var(--ease-in-out) both}
+.ck-corona{inset:-8%; background:radial-gradient(circle, rgba(255,244,214,.9) 0 30%, rgba(255,214,150,.45) 42%, rgba(255,170,150,.14) 56%, transparent 68%), repeating-conic-gradient(from 8deg, rgba(255,236,200,.45) 0 4deg, transparent 4deg 15deg, rgba(255,220,170,.25) 15deg 19deg, transparent 19deg 36deg); filter:blur(4px); opacity:0; animation:ck-corona 1.8s ease both}
+.ck-moon{inset:15.5%; background:radial-gradient(circle at 34% 30%, #2C0E18, #0D0206 74%); animation:ck-moon 1.8s var(--ease-in-out) both}
+.ck-diamond{width:12%; height:12%; left:73%; top:27%; transform:translate(-50%,-50%); background:radial-gradient(circle, #fff 0 30%, transparent 70%); box-shadow:0 0 24px 10px rgba(255,244,220,.95), 0 0 70px 24px rgba(255,220,170,.5); opacity:0; animation:ck-diamond 1.8s ease both}
+.ck-panel{position:relative; width:100%; padding:44px clamp(20px, 4vw, 32px) 24px; text-align:center; background:color-mix(in srgb, var(--bg) 94%, transparent); border:1px solid var(--line); border-radius:var(--radius-lg); box-shadow:0 40px 90px -30px rgba(0,0,0,.7); animation:ck-panel .5s var(--ease-out) 1.35s both}
+.ck-panel h2{margin:0 0 10px; font-family:var(--display); font-weight:var(--display-weight); font-size:clamp(1.5rem, 4vw, 2rem); line-height:1.1; text-wrap:balance}
+:root[data-side="nina"] .ck-panel h2{text-transform:uppercase; letter-spacing:.05em}
+:root[data-side="maeline"] .ck-panel h2{font-style:italic; font-variation-settings:"SOFT" 100; color:var(--rose)}
+.ck-panel h2:focus{outline:none}
+.ck-panel p{margin:0 auto 18px; max-width:46ch; color:var(--muted); font-size:.95rem}
+.ck-btns{display:grid; gap:8px; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); margin-bottom:14px}
+.ck-btns .btn{min-height:48px}
+.ck-panel .fine a{color:var(--accent); text-underline-offset:4px}
+@keyframes ck-dim{from{opacity:0}}
+@keyframes ck-sun{0%{opacity:0; transform:scale(.9)} 18%{opacity:1; transform:none}}
+@keyframes ck-moon{0%{transform:translate(-150%, 30%)} 72%{transform:translate(0,0)} 100%{transform:translate(0,0)}}
+@keyframes ck-corona{0%, 60%{opacity:0} 82%{opacity:1} 100%{opacity:.85}}
+@keyframes ck-diamond{0%, 62%{opacity:0; transform:translate(-50%,-50%) scale(.4)} 74%{opacity:1; transform:translate(-50%,-50%) scale(1.3)} 100%{opacity:.75; transform:translate(-50%,-50%) scale(1)}}
+@keyframes ck-panel{from{opacity:0; transform:translateY(14px) scale(.97)}}
+dialog.ck.is-leaving .ck-moon{animation:ck-moon-out .6s var(--ease-in-out) forwards}
+dialog.ck.is-leaving .ck-corona, dialog.ck.is-leaving .ck-diamond{animation:ck-fade .35s ease forwards}
+dialog.ck.is-leaving .ck-panel{animation:ck-fade .3s ease .25s forwards}
+dialog.ck.is-leaving::backdrop{animation:ck-fade .6s ease forwards}
+@keyframes ck-moon-out{to{transform:translate(150%, -30%)}}
+@keyframes ck-fade{to{opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .ck-moon, .ck-sun, .ck-corona, .ck-diamond, dialog.ck::backdrop{animation:none}
+  .ck-corona{opacity:.85} .ck-diamond{opacity:.75}
+  .ck-panel{animation:ck-fade-in .2s ease both}
+}
+@keyframes ck-fade-in{from{opacity:0}}
+.try-status{min-height:1.5em; margin:0; font-size:.9rem; font-weight:600; color:var(--fg)}
+.try-tools{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.btn:disabled{opacity:.5; cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -981,7 +1022,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <button type="button" class="icon-btn" id="sheet-close" aria-label="Fermer la fiche"><svg aria-hidden="true"><use href="#i-croix"/></svg></button>
   </div>
   <div class="sheet-body">
-    <p class="sheet-price"><strong id="sheet-price"></strong><span>Fourchette estimée, à confirmer par devis.</span></p>
+    <p class="sheet-price"><strong id="sheet-price"></strong><span id="sheet-price-note">Fourchette estimée, à confirmer par devis.</span></p>
     <div class="views">
       <figure class="view">
         <div class="view-art" id="v-3d"></div>
@@ -1032,7 +1073,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
     <div class="try-consent" id="try-consent">
       <p class="lead" style="margin:0">Pour voir <strong id="try-name"></strong> sur votre doigt, Singulier a besoin de votre caméra.</p>
       <ul>
-        <li>L'image reste sur votre téléphone. Rien n'est envoyé ni enregistré par Singulier.</li>
+        <li>L'image reste sur votre téléphone. Le repérage de la main se fait dans votre navigateur ; rien n'est envoyé ni enregistré par Singulier.</li>
         <li>Votre navigateur vous demandera ensuite de confirmer. Vous pourrez retirer cette autorisation dans ses réglages.</li>
         <li>Vous préférez ne pas l'activer ? Choisissez une photo de votre main.</li>
       </ul>
@@ -1048,15 +1089,17 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
         <video id="try-video" playsinline muted hidden></video>
         <img class="bg" id="try-photo" alt="Photo de votre main" hidden>
         <img class="try-ring" id="try-ring" alt="" draggable="false">
-        <p class="try-hint">Glissez la bague sur votre doigt. Deux doigts pour l'agrandir ou la tourner.</p>
+        <p class="try-hint">Dos de la main face à la caméra, doigts vers le haut.</p>
       </div>
+      <div class="try-tools"><button type="button" class="btn btn-line" id="try-track" aria-pressed="true">Suivi de la main : activé</button></div>
+      <p class="try-status" id="try-status" role="status" aria-live="polite"></p>
       <label class="range" for="try-size">Taille<input type="range" id="try-size" min="15" max="250" value="60"></label>
       <label class="range" for="try-rot">Rotation<input type="range" id="try-rot" min="-180" max="180" value="0"></label>
       <div class="btn-row">
         <button type="button" class="btn btn-main" id="try-shot">Prendre la photo</button>
         <button type="button" class="btn btn-line" id="try-back">Changer d'image</button>
       </div>
-      <p class="fine">Aperçu indicatif : la bague est posée à la main, sans suivi automatique du doigt. Les proportions réelles se vérifient avec votre taille de doigt.</p>
+      <p class="fine">Le suivi repère votre annulaire et y pose la bague. L'analyse se fait dans votre navigateur : aucune image ne quitte votre téléphone. Touchez la bague pour la placer vous-même. Aperçu indicatif : la taille réelle se vérifie avec votre tour de doigt.</p>
     </div>
     <div id="try-result" hidden class="stack try-result">
       <img id="try-out" alt="Votre main avec la bague">
@@ -1081,14 +1124,24 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="cookies" id="cookies" role="region" aria-label="Cookies et stockage" hidden>
-  <p><strong>Cookies et stockage.</strong> Singulier enregistre dans votre navigateur vos réglages, vos favoris et votre panier : c'est nécessaire au fonctionnement du site. La mesure d'audience ne s'active qu'avec votre accord.</p>
-  <div class="btn-row">
-    <button type="button" class="btn btn-line" data-ck="refuse">Tout refuser</button>
-    <button type="button" class="btn btn-line" data-ck="custom">Personnaliser</button>
-    <button type="button" class="btn btn-main" data-ck="accept">Tout accepter</button>
+<dialog class="ck" id="cookies" aria-labelledby="ck-title" aria-describedby="ck-desc">
+  <div class="ck-sky" aria-hidden="true">
+    <div class="ck-corona"></div>
+    <div class="ck-sun"></div>
+    <div class="ck-moon"></div>
+    <div class="ck-diamond"></div>
   </div>
-</div>
+  <div class="ck-panel">
+    <h2 id="ck-title" tabindex="-1">Avant l'éclipse, votre accord</h2>
+    <p id="ck-desc">Singulier garde dans votre navigateur vos réglages, vos favoris et votre panier : c'est nécessaire au site. La mesure d'audience n'est activée qu'avec votre accord.</p>
+    <div class="ck-btns">
+      <button type="button" class="btn btn-line" data-ck="refuse">Tout refuser</button>
+      <button type="button" class="btn btn-line" data-ck="custom">Personnaliser</button>
+      <button type="button" class="btn btn-main" data-ck="accept">Tout accepter</button>
+    </div>
+    <p class="fine"><a href="#cookies" data-doc="cookies">En savoir plus sur les cookies</a></p>
+  </div>
+</dialog>
 
 <template id="doc-cookies">
   <p>Un cookie est un petit fichier que le site dépose dans votre navigateur. Singulier utilise aussi le stockage local, qui joue le même rôle. Vous pouvez changer d'avis à tout moment depuis le lien « Cookies » en bas de page. Votre choix est conservé six mois.</p>
@@ -1269,6 +1322,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
   </ul>
 </template>
 
+<script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
@@ -1543,6 +1597,42 @@ const saveShop = () => store.set('singulier-shop', JSON.stringify(shop));
 const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const heartBtn = (id, nom) => `<button type="button" class="heart" data-fav="${id}" aria-pressed="${shop.fav.includes(id)}" aria-label="Favori : ${nom}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>`;
 
+/* ================= Shopify : Storefront API (activée par config.js) ================= */
+const CFG = window.SINGULIER_CONFIG || {};
+const Live = (() => {
+  const c = CFG.shopify || {};
+  const domain = String(c.domain || '').trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const on = !!(domain && c.storefrontToken);
+  const endpoint = on ? `https://${domain}/api/${c.apiVersion || '2025-07'}/graphql.json` : '';
+  const products = new Map();
+  const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  async function gql(query, variables){
+    const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': c.storefrontToken }, body: JSON.stringify({ query, variables }) });
+    if (!r.ok) throw new Error('Shopify a répondu ' + r.status);
+    const j = await r.json(); if (j.errors && j.errors.length) throw new Error(j.errors[0].message); return j.data;
+  }
+  const PRODUCTS = `query P($cursor: String){ products(first: 100, after: $cursor, query: "tag:flash OR tag:pluriel"){ pageInfo{ hasNextPage endCursor } nodes{ handle title availableForSale variants(first: 30){ nodes{ id availableForSale price{ amount currencyCode } selectedOptions{ name value } } } } } }`;
+  const ready = on ? (async () => {
+    let cursor = null;
+    do { const d = await gql(PRODUCTS, { cursor }); d.products.nodes.forEach(p => products.set(p.handle, p)); cursor = d.products.pageInfo.hasNextPage ? d.products.pageInfo.endCursor : null; } while (cursor);
+    return products;
+  })() : Promise.resolve(products);
+  ready.catch(() => {});
+  return { on, domain, gql, ready, products, slug, accountUrl: on ? `https://${domain}/account` : '' };
+})();
+const handleOf = (id) => id[0] === 'f' ? 'flash-' + String(+id.slice(1) + 1).padStart(2, '0') : 'pluriel-' + Live.slug(MODELS_NAMES[+id.slice(1)] || '');
+const MODELS_NAMES = ['Granule', 'Goutte', 'Racine', 'Étoile'];
+function liveProduct(id){ return Live.on ? Live.products.get(handleOf(id)) || null : null; }
+function priceInner(id, est){
+  const p = liveProduct(id);
+  if (p){
+    if (!p.availableForSale) return `Vendue<small>pièce déjà adoptée</small>`;
+    const v = p.variants.nodes.map(n => +n.price.amount), lo = Math.min(...v), hi = Math.max(...v);
+    return `${lo === hi ? eur(lo) : 'À partir de ' + eur(lo)}<small>prix boutique</small>`;
+  }
+  return `${priceTxt(est)}<small>fourchette estimée</small>`;
+}
+
 /* ================= Flash : filtres, tri, grille, fiche ================= */
 const listEl = $('#fiches'), moreBtn = $('#more'), countEl = $('#count'), filtersEl = $('#filters'), resetBtn = $('#fl-reset');
 const PAGE = mobile ? 8 : 12;
@@ -1584,7 +1674,7 @@ function cardHTML(r){
       <p class="card-num">N° ${r.num} / 66</p>
       <h3 class="card-name">${r.nom}</h3>
       <p class="card-spec">${stoneLine(r)}<br>${METALS[r.metal].nom} · ${MOTIFS[r.motif].nom.toLowerCase()}</p>
-      <p class="card-price">${priceTxt(r.prix)}<small>fourchette estimée</small></p>
+      <p class="card-price" data-price="f${r.i}">${priceInner('f' + r.i, r.prix)}</p>
       <div class="card-actions">
         <button type="button" class="btn btn-line" data-flip aria-pressed="false">Voir la monture</button>
         <button type="button" class="btn btn-main" data-open="${r.i}">Ouvrir la fiche</button>
@@ -1632,13 +1722,14 @@ function fillSheet(){
   const r = RINGS[sheetIdx];
   $('#sheet-num').textContent = `N° ${r.num} / 66`;
   $('#sheet-title').textContent = r.nom;
-  $('#sheet-price').textContent = priceTxt(r.prix);
+  $('#sheet-price').innerHTML = priceInner('f' + r.i, r.prix).replace(/<small>.*<\/small>/, '');
   $('#v-croquis').innerHTML = ringSVG(r, 'croquis', { label: 'n°' + r.num + ' · vue de dessus' });
   $('#v-illu').innerHTML = ringSVG(r, 'illu');
   const px = Math.min(9, 112 / Math.max(r.L, r.W * 1.15));
   const ex = 110 + r.W * px / 2, size = 55;
   $('#v-serti').innerHTML = `<span class="view-badge">×4</span>` + ringSVG(r, 'illu', { viewBox: `${(ex - size / 2).toFixed(1)} ${(110 - size / 2).toFixed(1)} ${size} ${size}` });
   $('#v-serti-txt').textContent = MOTIFS[r.motif].serti;
+  { const lp = liveProduct('f' + r.i), sold = !!(lp && !lp.availableForSale); $('#sheet-price-note').textContent = lp ? (sold ? 'Cette pièce unique a trouvé sa propriétaire.' : 'Prix boutique, livraison offerte.') : 'Fourchette estimée, à confirmer par devis.'; const add = $('#sheet-add'); if (add){ add.disabled = sold; add.textContent = sold ? 'Vendue' : 'Ajouter au panier'; } }
   const s = r.stone, isD = s.id === 'diamant';
   const rows = [
     ['Pierre', isD ? 'Diamant à sourcer' : s.nom],
@@ -1676,7 +1767,7 @@ $('#models').innerHTML = MODELS.map((m, k) => `<li class="model" data-k="${k}">$
   <div class="model-body">
     <h3>${m.nom}</h3>
     <p>${m.txt}</p>
-    <p class="model-price">${priceTxt(priceOf(m.r, { g: 3.4, h: [4, 7] }))}<small>fourchette estimée, ${METALS[m.r.metal].nom.toLowerCase()}</small></p>
+    <p class="model-price" data-price="p${k}">${priceInner('p' + k, priceOf(m.r, { g: 3.4, h: [4, 7] }))}</p>
     <ul class="articles" aria-label="Articles">${m.art.map(a => `<li>${a}</li>`).join('')}</ul>
     <fieldset class="sizes"><legend>Taille</legend>
       <div class="size-row">${SIZES.map(s => `<input type="radio" id="t-${k}-${s}" name="taille-${k}" value="${s}"${s === 52 ? ' checked' : ''}><label for="t-${k}-${s}">${s}</label>`).join('')}</div>
@@ -1873,14 +1964,14 @@ const Studio = hasThree ? (() => {
     return buildRing3D({ metal: METALS[r.metal].three, stone: r.stone.hex[1], shape: r.shape, motif: r.motif, size, ior: r.stone.ior, seed: (r.seed % 17) + 1, gemEnv }, mobile);
   }
   function dispose(obj){ obj.traverse(o => { if (o.geometry) o.geometry.dispose(); }); obj.userData.metal.dispose(); obj.userData.stoneMat.dispose(); }
-  function shoot(r, kind){
-    renderer.setPixelRatio(1); renderer.setSize(TH, TH, false);
+  function shoot(r, kind, size){
+    renderer.setPixelRatio(1); renderer.setSize(size || TH, size || TH, false);
     camera.aspect = 1; camera.position.set(0, .2, 5.7); camera.lookAt(0, .2, 0); camera.updateProjectionMatrix();
     const g = make(r); g.rotation.set(.95, -.5 + ((r.seed % 5) - 2) * .12, 0); g.position.y = -.2;
     if (kind === 'worn'){ camera.position.set(0, 0, 7); camera.lookAt(0, 0, 0); camera.updateProjectionMatrix(); g.rotation.set(Math.PI / 2, 0, 0); g.position.y = 0; }
     scene.add(g);
     renderer.render(scene, camera);
-    let url = ''; try { url = canvas.toDataURL('image/webp', .9); } catch(e){}
+    let url = ''; try { url = canvas.toDataURL(size ? 'image/png' : 'image/webp', .9); } catch(e){}
     scene.remove(g); dispose(g); return url;
   }
   function pump(){
@@ -1893,6 +1984,7 @@ const Studio = hasThree ? (() => {
   return {
     canvas,
     thumb(r, el, done, kind){ const key = (kind || '') + (r.nom || '') + r.seed; if (cache.has(key)){ done(cache.get(key)); return; } if (!init()) return; jobs.push({ r, el, done, key, kind }); kick(); },
+    render(r, size, kind){ return init() && !viewing ? shoot(r, kind, size) : ''; },
     begin(){ if (!init()) return null; viewing = true; return { renderer, scene, camera, make, dispose }; },
     end(){ viewing = false; kick(); }
   };
@@ -2250,7 +2342,14 @@ form.addEventListener('submit', e => {
   const status = $('#form-status');
   if (firstBad){ status.hidden = true; firstBad.focus(); return; }
   status.hidden = false;
-  status.textContent = `Merci ${$('#f-prenom').value.trim()}. Ce formulaire est une démonstration : il n'est pas encore relié à une boîte mail, donc votre histoire n'a pas été envoyée.`;
+  const prenom = $('#f-prenom').value.trim();
+  if (Live.on){
+    const pierres = $$('input[name="pierres"]:checked').map(i => i.value).join(', ') || 'non précisé';
+    const nImg = ($('#f-inspi-img').files || []).length;
+    postToShop({ form_type: 'contact', 'contact[name]': prenom, 'contact[email]': $('#f-email').value.trim(), 'contact[Demande]': 'Bague sur mesure',
+      'contact[body]': `Histoire : ${$('#f-histoire').value.trim()}\n\nPierres souhaitées : ${pierres}\nMétal préféré : ${$('#f-metal').value}\nInspirations : ${$('#f-inspi').value.trim() || 'aucune'}${nImg ? `\nImages d'inspiration : ${nImg} (à envoyer en réponse à notre e-mail)` : ''}` });
+    status.textContent = `Merci ${prenom}. Votre histoire part vers la boutique Singulier : une page de confirmation s'est ouverte.${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
+  } else status.textContent = `Merci ${prenom}. Ce formulaire est une démonstration : il n'est pas encore relié à une boîte mail, donc votre histoire n'a pas été envoyée.`;
   Sound.chime();
 });
 $$('#raconter input, #raconter textarea').forEach(f => f.addEventListener('input', () => { if (f.getAttribute('aria-invalid') === 'true'){ f.removeAttribute('aria-invalid'); const err = $('#e-' + f.id.slice(2)); if (err) err.hidden = true; } }));
@@ -2282,30 +2381,93 @@ function itemOf(id){
   if (id[0] === 'f'){ const r = RINGS[n]; return r ? { id, r, nom: r.nom, spec: `${stoneLine(r)} · ${METALS[r.metal].nom}`, prix: r.prix, kind: 'Flash, pièce unique' } : null; }
   const m = MODELS[n]; return m ? { id, r: m.r, nom: m.nom, spec: METALS[m.r.metal].nom, prix: priceOf(m.r, PLURIEL_OPT), kind: 'Collection Pluriel' } : null;
 }
+function itemOfHandle(h){ const m = /^flash-(\d{2})$/.exec(h); if (m) return itemOf('f' + (+m[1] - 1)); const k = MODELS_NAMES.findIndex(n => 'pluriel-' + Live.slug(n) === h); return k >= 0 ? itemOf('p' + k) : null; }
 const toastEl = $('#toast'); let toastT = 0;
 function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('is-on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('is-on'), 2800); }
 const miniHTML = (it) => `<span class="mini" data-mini="${it.id}">${ringSVG(it.r, 'illu')}<img alt=""></span>`;
 function hydrateMinis(box){ if (!Studio) return; $$('[data-mini]', box).forEach(el => { const it = itemOf(el.dataset.mini); Studio.thumb(it.r, el, url => { if (url) el.querySelector('img').src = url; }); }); }
 const accountDlg = $('#account'), cartDlg = $('#cart');
-let accTab = 'profil', authTab = 'login';
+let accTab = 'profil', authTab = 'login', liveCart = null, cartBusy = false;
 
+function refreshPrices(){
+  $$('[data-price]').forEach(el => { const id = el.dataset.price, it = itemOf(id); if (it) el.innerHTML = priceInner(id, it.prix); });
+  $$('[data-add]').forEach(b => { const p = liveProduct(b.dataset.add); const sold = !!(p && !p.availableForSale); b.disabled = sold; if (sold) b.textContent = 'Vendue'; });
+  if (sheet.open) fillSheet();
+}
+function cartCount(){ return Live.on ? (liveCart ? liveCart.totalQuantity : 0) : shop.cart.length; }
 function syncShop(){
   saveShop();
-  const n = shop.cart.length, badge = $('#cart-count');
+  const n = cartCount(), badge = $('#cart-count');
   badge.hidden = !n; badge.textContent = n;
   $('#btn-cart').setAttribute('aria-label', n ? `Mon panier, ${n} article${n > 1 ? 's' : ''}` : 'Mon panier, vide');
   $$('[data-fav]').forEach(b => b.setAttribute('aria-pressed', String(shop.fav.includes(b.dataset.fav))));
   if (cartDlg.open) renderCart();
   if (accountDlg.open) renderAccount();
 }
+
+/* --- Panier Shopify --- */
+const CART_FIELDS = `id checkoutUrl totalQuantity cost{ totalAmount{ amount currencyCode } } lines(first: 50){ nodes{ id quantity cost{ totalAmount{ amount } } merchandise{ ... on ProductVariant{ id title product{ handle title } } } } }`;
+async function loadLiveCart(){
+  if (!Live.on || !shop.cartId) return;
+  try { const d = await Live.gql(`query C($id: ID!){ cart(id: $id){ ${CART_FIELDS} } }`, { id: shop.cartId }); liveCart = d.cart; if (!liveCart){ shop.cartId = ''; } } catch(e){ liveCart = null; }
+  syncShop();
+}
+function pickVariant(id){
+  const p = liveProduct(id); if (!p) return null;
+  const vs = p.variants.nodes.filter(v => v.availableForSale);
+  if (id[0] === 'p'){ const k = id.slice(1), sz = ($(`input[name="taille-${k}"]:checked`) || {}).value; return vs.find(v => v.selectedOptions.some(o => o.value === sz)) || null; }
+  return vs[0] || null;
+}
+async function liveAdd(id, it){
+  await Live.ready.catch(() => {});
+  const p = liveProduct(id);
+  if (!p){ toast(`${it.nom} n'est pas encore en vente sur la boutique.`); return; }
+  const v = pickVariant(id);
+  if (!v){ toast(p.availableForSale ? 'Cette taille est épuisée. Choisissez-en une autre.' : `${it.nom} a déjà trouvé sa propriétaire.`); return; }
+  if (liveCart && liveCart.lines.nodes.some(l => l.merchandise.id === v.id && id[0] === 'f')){ toast(`${it.nom} est déjà dans votre panier.`); return; }
+  if (cartBusy) return; cartBusy = true;
+  try {
+    const lines = [{ merchandiseId: v.id, quantity: 1 }];
+    const d = shop.cartId
+      ? await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })
+      : await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines });
+    const res = d.cartLinesAdd || d.cartCreate;
+    if (res.userErrors.length) throw new Error(res.userErrors[0].message);
+    liveCart = res.cart; shop.cartId = liveCart.id; syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick();
+  } catch(e){ toast('Le panier n\'a pas pu être mis à jour. Réessayez dans un instant.'); }
+  cartBusy = false;
+}
+async function liveRemove(lineId){
+  try { const d = await Live.gql(`mutation R($id: ID!, $ids: [ID!]!){ cartLinesRemove(cartId: $id, lineIds: $ids){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, ids: [lineId] }); liveCart = d.cartLinesRemove.cart; syncShop(); }
+  catch(e){ toast('Impossible de retirer cet article pour le moment.'); }
+}
 function addToCart(id){
   const it = itemOf(id); if (!it) return;
+  if (Live.on){ liveAdd(id, it); return; }
   if (shop.cart.some(c => c.id === id)){ toast(`${it.nom} est déjà dans votre panier.`); return; }
-  shop.cart.push({ id, size: (shop.user && shop.user.taille) || '' }); syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick();
+  const k = id[0] === 'p' ? ($(`input[name="taille-${id.slice(1)}"]:checked`) || {}).value : '';
+  shop.cart.push({ id, size: k || (shop.user && shop.user.taille) || '' }); syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick();
 }
 const sizeOpts = (v) => `<option value="">Taille à définir</option>` + SIZES.map(s => `<option value="${s}"${String(v) === String(s) ? ' selected' : ''}>Taille ${s}</option>`).join('');
+const perks = (lo, hi) => `<ul class="perks">
+      <li><strong>Livraison offerte</strong> en France métropolitaine, en envoi assuré remis contre signature.</li>
+      <li><strong>Paiement en 3 fois sans frais avec Klarna :</strong> 3 × ${hi == null ? eur(Math.round(lo / 3)) : Math.round(lo / 3).toLocaleString('fr-FR') + ' à ' + eur(Math.round(hi / 3))}, sous réserve d'acceptation par Klarna.</li>
+      <li><strong>Retour sous 14 jours</strong> pour les bagues Flash et Pluriel non gravées.</li>
+    </ul>`;
 function renderCart(){
   const box = $('#cart-body');
+  if (Live.on){
+    const lines = liveCart ? liveCart.lines.nodes : [];
+    if (!lines.length){ box.innerHTML = '<p class="empty">Votre panier est vide. Parcourez les bagues Flash ou la collection Pluriel pour y ajouter une pièce.</p><a class="btn btn-main" href="#flash" data-close>Voir les bagues Flash</a>'; return; }
+    const total = +liveCart.cost.totalAmount.amount;
+    box.innerHTML = `<ul class="lines">${lines.map(l => { const it = itemOfHandle(l.merchandise.product.handle) || { id: '', nom: l.merchandise.product.title, kind: '', r: null }; const size = l.merchandise.title !== 'Default Title' ? l.merchandise.title : '';
+        return `<li class="line">${it.r ? miniHTML(it) : '<span class="mini"></span>'}<div><h4>${esc(it.nom)}</h4><p>${it.kind}${size ? ' · ' + esc(size) : ''}</p><p class="p">${eur(+l.cost.totalAmount.amount)}</p></div><div class="line-btns"><button type="button" class="txt-btn" data-rmline="${l.id}">Retirer</button></div></li>`; }).join('')}</ul>
+      ${perks(total)}
+      <p class="total"><span>Total</span><b>${eur(total)}</b></p>
+      <a class="btn btn-main" href="${esc(liveCart.checkoutUrl)}">Passer au paiement sécurisé</a>
+      <p class="fine">Le paiement se fait sur la page sécurisée de Shopify : carte bancaire, Apple Pay ou Klarna en 3 fois sans frais.</p>`;
+    hydrateMinis(box); return;
+  }
   const items = shop.cart.map(c => ({ c, it: itemOf(c.id) })).filter(x => x.it);
   if (!items.length){ box.innerHTML = '<p class="empty">Votre panier est vide. Parcourez les bagues Flash ou la collection Pluriel pour y ajouter une pièce.</p><a class="btn btn-main" href="#flash" data-close>Voir les bagues Flash</a>'; return; }
   const lo = items.reduce((a, x) => a + x.it.prix[0], 0), hi = items.reduce((a, x) => a + x.it.prix[1], 0);
@@ -2313,14 +2475,10 @@ function renderCart(){
       <div><h4>${it.nom}</h4><p>${it.kind}</p><p>${it.spec}</p><p class="p">${priceTxt(it.prix)}</p>
         <label class="sr-only" for="sz-${it.id}">Taille de doigt pour ${it.nom}</label><select id="sz-${it.id}" data-size="${it.id}">${sizeOpts(c.size)}</select></div>
       <div class="line-btns"><button type="button" class="txt-btn" data-rm="${it.id}">Retirer</button></div></li>`).join('')}</ul>
-    <ul class="perks">
-      <li><strong>Livraison offerte</strong> en France métropolitaine, en envoi assuré remis contre signature.</li>
-      <li><strong>Paiement en 3 fois sans frais avec Klarna :</strong> 3 × ${Math.round(lo / 3).toLocaleString('fr-FR')} à ${eur(Math.round(hi / 3))}, sous réserve d'acceptation par Klarna.</li>
-      <li><strong>Retour sous 14 jours</strong> pour les bagues Flash et Pluriel non gravées.</li>
-    </ul>
+    ${perks(lo, hi)}
     <p class="total"><span>Total estimé</span><b>${priceTxt([lo, hi])}</b></p>
     <button type="button" class="btn btn-main" id="cart-go">Envoyer ma demande de réservation</button>
-    <p class="fine">Le paiement en ligne n'est pas encore ouvert : cette demande ne débite rien. Le prix ferme figure sur le devis que Singulier vous envoie ensuite.</p>`;
+    <p class="fine">La boutique en ligne n'est pas encore branchée : cette demande ne débite rien. Le prix ferme figure sur le devis que Singulier vous envoie ensuite.</p>`;
   hydrateMinis(box);
 }
 function placeOrder(){
@@ -2331,8 +2489,19 @@ function placeOrder(){
   shop.orders.unshift({ ref, date: new Date().toLocaleDateString('fr-FR'), items, prix }); shop.cart = [];
   accTab = 'commandes'; syncShop(); cartDlg.close(); openAccount(); toast(`Demande ${ref} enregistrée.`); Sound.chime();
 }
+function favsHTML(){
+  const favs = shop.fav.map(itemOf).filter(Boolean);
+  return favs.length ? `<ul class="lines">${favs.map(it => `<li class="line">${miniHTML(it)}<div><h4>${it.nom}</h4><p>${it.kind}</p><p class="p" data-price="${it.id}">${priceInner(it.id, it.prix)}</p></div><div class="line-btns"><button type="button" class="txt-btn" data-add="${it.id}">Au panier</button><button type="button" class="txt-btn" data-fav="${it.id}" aria-pressed="true">Retirer</button></div></li>`).join('')}</ul>` : '<p class="empty">Touchez le cœur d\'une bague pour la retrouver ici.</p>';
+}
 function renderAccount(){
   const box = $('#account-body'), demo = '<p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Démonstration : le compte est enregistré dans ce navigateur seulement. Le mot de passe n\'est ni vérifié ni conservé.</span></p>';
+  if (Live.on){
+    box.innerHTML = `<p class="lead" style="margin:0">Votre espace client</p>
+      <p class="fine">Connexion, création de compte, profil, adresses et suivi des commandes se gèrent sur votre compte client sécurisé Singulier, hébergé par Shopify.</p>
+      <div class="btn-row"><a class="btn btn-main" href="${esc(Live.accountUrl)}">Se connecter ou créer un compte</a><a class="btn btn-line" href="${esc(Live.accountUrl)}">Mes commandes</a></div>
+      <h3 class="chapter-n" style="margin:12px 0 0">Mes favoris</h3>${favsHTML()}<p class="fine">Vos favoris restent enregistrés dans ce navigateur.</p>`;
+    hydrateMinis(box); return;
+  }
   if (!shop.logged){
     const login = authTab === 'login';
     box.innerHTML = `<div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="${login}" data-auth="login">Se connecter</button><button type="button" role="tab" aria-selected="${!login}" data-auth="signup">Créer un compte</button></div>
@@ -2358,7 +2527,7 @@ function renderAccount(){
       <button type="button" class="txt-btn" id="forget" style="justify-self:start">Supprimer mon compte et mes données de ce navigateur</button>
     </form>`;
   if (accTab === 'commandes') body = shop.orders.length ? `<ul class="lines">${shop.orders.map(o => `<li class="line" style="grid-template-columns:1fr auto"><div><h4>${o.ref}</h4><p>Demande du ${o.date}</p><p>${o.items.map(i => { const it = itemOf(i.id); return it ? it.nom + (i.size ? ' (taille ' + i.size + ')' : '') : ''; }).filter(Boolean).join(', ')}</p><p class="p">${priceTxt(o.prix)}</p></div><div class="line-btns"><span class="fine">En attente de devis</span></div></li>`).join('')}</ul><p class="fine">Livraison offerte et paiement en 3 fois sans frais avec Klarna sur chaque commande confirmée.</p>` : '<p class="empty">Aucune commande pour l\'instant. Vos demandes de réservation apparaîtront ici.</p>';
-  if (accTab === 'favoris'){ const favs = shop.fav.map(itemOf).filter(Boolean); body = favs.length ? `<ul class="lines">${favs.map(it => `<li class="line">${miniHTML(it)}<div><h4>${it.nom}</h4><p>${it.kind}</p><p class="p">${priceTxt(it.prix)}</p></div><div class="line-btns"><button type="button" class="txt-btn" data-add="${it.id}">Au panier</button><button type="button" class="txt-btn" data-fav="${it.id}" aria-pressed="true">Retirer</button></div></li>`).join('')}</ul>` : '<p class="empty">Touchez le cœur d\'une bague pour la retrouver ici.</p>'; }
+  if (accTab === 'favoris') body = favsHTML();
   box.innerHTML = `<p class="lead" style="margin:0">Bonjour ${esc(u.prenom)}.</p><div class="tabs" role="tablist">${tabs.map(([k, t]) => `<button type="button" role="tab" aria-selected="${k === accTab}" data-acc="${k}">${t}</button>`).join('')}</div>${body}${accTab === 'profil' ? demo : ''}`;
   hydrateMinis(box);
 }
@@ -2368,17 +2537,18 @@ $('#btn-account').addEventListener('click', openAccount);
 $('#btn-cart').addEventListener('click', openCart);
 [accountDlg, cartDlg].forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-fav],[data-add],[data-rm],[data-auth],[data-acc],[data-close],[data-open-account],[data-open-cart],#cart-go,#logout,#forget'); if (!t) return;
+  const t = e.target.closest('[data-fav],[data-add],[data-rm],[data-rmline],[data-auth],[data-acc],[data-close],[data-open-account],[data-open-cart],#cart-go,#logout,#forget'); if (!t) return;
   if (t.dataset.fav){ const id = t.dataset.fav, i = shop.fav.indexOf(id), it = itemOf(id); if (i >= 0) shop.fav.splice(i, 1); else shop.fav.push(id); syncShop(); toast(i >= 0 ? `${it.nom} retirée des favoris.` : `${it.nom} ajoutée aux favoris.`); return; }
   if (t.dataset.add){ addToCart(t.dataset.add); return; }
   if (t.dataset.rm){ shop.cart = shop.cart.filter(c => c.id !== t.dataset.rm); syncShop(); return; }
+  if (t.dataset.rmline){ liveRemove(t.dataset.rmline); return; }
   if (t.dataset.auth){ authTab = t.dataset.auth; renderAccount(); return; }
   if (t.dataset.acc){ accTab = t.dataset.acc; renderAccount(); return; }
   if (t.hasAttribute('data-open-account')){ openAccount(); return; }
   if (t.hasAttribute('data-open-cart')){ openCart(); return; }
   if (t.hasAttribute('data-close')){ const d = t.closest('dialog'); if (d) d.close(); return; }
   if (t.id === 'cart-go'){ placeOrder(); return; }
-  if (t.id === 'logout'){ shop.logged = false; authTab = 'login'; syncShop(); toast('Vous êtes déconnectée.'); return; }
+  if (t.id === 'logout'){ shop.logged = false; authTab = 'login'; syncShop(); toast('Vous êtes déconnecté·e.'); return; }
   if (t.id === 'forget'){ shop.user = null; shop.logged = false; shop.orders = []; shop.fav = []; shop.cart = []; shop.news = ''; authTab = 'signup'; syncShop(); toast('Compte et données supprimés de ce navigateur.'); }
 });
 document.addEventListener('change', e => { const s = e.target.closest('[data-size]'); if (!s) return; const c = shop.cart.find(x => x.id === s.dataset.size); if (c){ c.size = s.value; saveShop(); } });
@@ -2406,38 +2576,101 @@ document.addEventListener('submit', e => {
     syncShop(); toast('Profil enregistré.');
   }
 });
+/* Envoi vers les formulaires natifs de la boutique Shopify (contact et abonnement) */
+function postToShop(fields){
+  const f = document.createElement('form'); f.method = 'post'; f.action = `https://${Live.domain}/contact#contact_form`; f.target = '_blank'; f.hidden = true;
+  Object.entries(Object.assign({ utf8: '✓' }, fields)).forEach(([k, v]) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
+  document.body.appendChild(f); f.submit(); f.remove();
+}
 syncShop();
+if (Live.on){ Live.ready.then(refreshPrices).catch(() => toast('La boutique ne répond pas. Les prix affichés sont des estimations.')); loadLiveCart(); }
 
-/* ================= Essayage sur la main ================= */
+/* ================= Essayage sur la main, avec suivi automatique ================= */
 const TryOn = (() => {
-  const dlg = $('#tryon'), stage = $('#try-stage'), video = $('#try-video'), photo = $('#try-photo'), ringImg = $('#try-ring'), sizeIn = $('#try-size'), rotIn = $('#try-rot'), errEl = $('#try-error');
+  const dlg = $('#tryon'), stage = $('#try-stage'), video = $('#try-video'), photo = $('#try-photo'), ringImg = $('#try-ring'), sizeIn = $('#try-size'), rotIn = $('#try-rot'), errEl = $('#try-error'), trackBtn = $('#try-track'), statusEl = $('#try-status');
   const steps = { consent: $('#try-consent'), live: $('#try-live'), result: $('#try-result') };
+  const HC = Object.assign({ cdn: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14', model: 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task' }, CFG.handTracking || {});
   let stream = null, cur = null, blobUrl = '', T = { x: .5, y: .5, s: .6, a: 0 };
+  let tracking = true, landmarker = null, loading = null, mode = '', raf = 0, lastT = -1, seen = false, lostFrames = 0, statusTxt = '';
   const pts = new Map(); let g0 = null;
   const show = (k) => { for (const n in steps) steps[n].hidden = n !== k; };
-  function apply(){ ringImg.style.left = (T.x * 100).toFixed(2) + '%'; ringImg.style.top = (T.y * 100).toFixed(2) + '%'; ringImg.style.transform = `translate(-50%,-50%) rotate(${T.a.toFixed(1)}deg) scale(${T.s.toFixed(3)})`; sizeIn.value = Math.round(T.s * 100); rotIn.value = Math.round(T.a); }
-  function stopCam(){ if (stream){ stream.getTracks().forEach(t => t.stop()); stream = null; } video.srcObject = null; video.hidden = true; }
+  function apply(){ ringImg.style.left = (T.x * 100).toFixed(2) + '%'; ringImg.style.top = (T.y * 100).toFixed(2) + '%'; ringImg.style.transform = `translate(-50%,-50%) rotate(${T.a.toFixed(1)}deg) scale(${T.s.toFixed(3)})`; sizeIn.value = Math.round(T.s * 100); rotIn.value = Math.round(((T.a + 540) % 360) - 180); }
+  function say(t){ if (t !== statusTxt){ statusTxt = t; statusEl.textContent = t; } }
+  function setTracking(on){ tracking = on; trackBtn.setAttribute('aria-pressed', String(on)); trackBtn.textContent = on ? 'Suivi de la main : activé' : 'Suivi de la main : désactivé'; if (on) startTracking(); else { cancelAnimationFrame(raf); raf = 0; say('Placez la bague à la main : glissez-la, ou utilisez les curseurs.'); } }
+
+  async function getLandmarker(){
+    if (landmarker) return landmarker; if (loading) return loading;
+    loading = (async () => {
+      const vision = await import(HC.cdn + '/vision_bundle.mjs');
+      const files = await vision.FilesetResolver.forVisionTasks(HC.cdn + '/wasm');
+      const opts = (delegate) => ({ baseOptions: { modelAssetPath: HC.model, delegate }, runningMode: 'VIDEO', numHands: 1, minHandDetectionConfidence: .4, minHandPresenceConfidence: .4, minTrackingConfidence: .4 });
+      try { landmarker = await vision.HandLandmarker.createFromOptions(files, opts('GPU')); } catch(e){ landmarker = await vision.HandLandmarker.createFromOptions(files, opts('CPU')); }
+      mode = 'VIDEO'; return landmarker;
+    })();
+    try { return await loading; } catch(e){ loading = null; throw e; }
+  }
+  async function setMode(m){ if (mode !== m){ await landmarker.setOptions(m === 'IMAGE' ? { runningMode: m, minHandDetectionConfidence: .1, minHandPresenceConfidence: .1 } : { runningMode: m, minHandDetectionConfidence: .4, minHandPresenceConfidence: .4, minTrackingConfidence: .4 }); mode = m; } }
+  /* Bague posée sur la première phalange de l'annulaire (repères 13 et 14), largeur déduite de la paume */
+  function fit(lms, sw, sh){
+    const r = stage.getBoundingClientRect(), sc = Math.max(r.width / sw, r.height / sh), dx = (r.width - sw * sc) / 2, dy = (r.height - sh * sc) / 2;
+    const P = (i) => ({ x: lms[i].x * sw * sc + dx, y: lms[i].y * sh * sc + dy });
+    const a = P(13), b = P(14), i9 = P(9), i17 = P(17);
+    const t = .4, x = a.x + (b.x - a.x) * t, y = a.y + (b.y - a.y) * t;
+    const finger = Math.hypot(i9.x - i17.x, i9.y - i17.y) * .5;
+    return { x: x / r.width, y: y / r.height, s: Math.max(.12, Math.min(2.5, finger * 1.9 / (r.width * .46))), a: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI + 90 };
+  }
+  function follow(n, k){ T.x += (n.x - T.x) * k; T.y += (n.y - T.y) * k; T.s += (n.s - T.s) * k; const d = ((n.a - T.a + 540) % 360) - 180; T.a += d * k; apply(); }
+  function loop(){
+    raf = 0; if (!tracking || !stream || video.hidden || !landmarker || !dlg.open) return;
+    if (video.readyState >= 2 && video.currentTime !== lastT){
+      lastT = video.currentTime;
+      try {
+        const res = landmarker.detectForVideo(video, performance.now());
+        if (res.landmarks && res.landmarks[0]){ follow(fit(res.landmarks[0], video.videoWidth, video.videoHeight), seen ? (reduce ? 1 : .45) : 1); seen = true; lostFrames = 0; say('Main détectée : la bague suit votre annulaire.'); }
+        else if (++lostFrames > 8){ seen = false; say('Montrez le dos de votre main, doigts vers le haut.'); }
+      } catch(e){}
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  async function startTracking(){
+    if (!tracking) return;
+    say('Chargement du suivi de la main…');
+    try { await getLandmarker(); } catch(e){ say('Le suivi automatique n\'a pas pu démarrer ici. Placez la bague à la main.'); return; }
+    if (!tracking) return;
+    if (stream && !video.hidden){ await setMode('VIDEO'); seen = false; lostFrames = 0; say('Montrez le dos de votre main, doigts vers le haut.'); if (!raf) raf = requestAnimationFrame(loop); }
+    else if (!photo.hidden && photo.complete && photo.naturalWidth){
+      await setMode('IMAGE');
+      try { const k = Math.min(1, 960 / Math.max(photo.naturalWidth, photo.naturalHeight)), cv = document.createElement('canvas'); cv.width = Math.round(photo.naturalWidth * k); cv.height = Math.round(photo.naturalHeight * k); cv.getContext('2d').drawImage(photo, 0, 0, cv.width, cv.height);
+        const res = landmarker.detect(cv); if (res.landmarks && res.landmarks[0]){ follow(fit(res.landmarks[0], photo.naturalWidth, photo.naturalHeight), 1); say('Main détectée : ajustez si besoin.'); } else say('Aucune main trouvée sur la photo. Placez la bague à la main.'); }
+      catch(e){ say('Analyse impossible sur cette photo. Placez la bague à la main.'); }
+    }
+  }
+  function stopCam(){ cancelAnimationFrame(raf); raf = 0; if (stream){ stream.getTracks().forEach(t => t.stop()); stream = null; } video.srcObject = null; video.hidden = true; }
   function fail(msg){ errEl.textContent = msg; errEl.hidden = false; show('consent'); }
   async function startCam(){
     errEl.hidden = true;
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return fail('La caméra n\'est pas disponible dans ce navigateur. Utilisez une photo de votre main.');
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
-      video.srcObject = stream; photo.hidden = true; video.hidden = false; await video.play(); show('live');
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
+      video.srcObject = stream; photo.hidden = true; video.hidden = false; await video.play(); show('live'); startTracking();
     } catch(e){
       fail(e && e.name === 'NotAllowedError' ? 'L\'accès à la caméra a été refusé. Vous pouvez l\'autoriser dans les réglages du navigateur, ou utiliser une photo de votre main.' : 'La caméra n\'a pas pu démarrer ici. Utilisez une photo de votre main.');
     }
   }
   $('#try-cam').addEventListener('click', startCam);
-  $('#try-file').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; if (!f) return; stopCam(); if (blobUrl) URL.revokeObjectURL(blobUrl); blobUrl = URL.createObjectURL(f); photo.src = blobUrl; photo.hidden = false; errEl.hidden = true; show('live'); e.target.value = ''; });
+  $('#try-file').addEventListener('change', e => {
+    const f = e.target.files && e.target.files[0]; if (!f) return; stopCam(); if (blobUrl) URL.revokeObjectURL(blobUrl); blobUrl = URL.createObjectURL(f);
+    photo.onload = () => startTracking(); photo.src = blobUrl; photo.hidden = false; errEl.hidden = true; show('live'); e.target.value = '';
+  });
+  trackBtn.addEventListener('click', () => setTracking(!tracking));
   sizeIn.addEventListener('input', () => { T.s = sizeIn.value / 100; apply(); });
   rotIn.addEventListener('input', () => { T.a = +rotIn.value; apply(); });
-  stage.addEventListener('pointerdown', e => { stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); g0 = null; });
+  stage.addEventListener('pointerdown', e => { if (tracking && stream) setTracking(false); stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); g0 = null; });
   stage.addEventListener('pointermove', e => {
     const p = pts.get(e.pointerId); if (!p) return; const r = stage.getBoundingClientRect();
     if (pts.size === 1){ T.x = Math.max(0, Math.min(1, T.x + (e.clientX - p.x) / r.width)); T.y = Math.max(0, Math.min(1, T.y + (e.clientY - p.y) / r.height)); p.x = e.clientX; p.y = e.clientY; }
     else { p.x = e.clientX; p.y = e.clientY; const [a, b] = Array.from(pts.values()); const d = Math.hypot(b.x - a.x, b.y - a.y), ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-      if (!g0) g0 = { d, ang, s: T.s, a: T.a }; T.s = Math.max(.15, Math.min(2.5, g0.s * d / g0.d)); T.a = Math.max(-180, Math.min(180, g0.a + ang - g0.ang)); }
+      if (!g0) g0 = { d, ang, s: T.s, a: T.a }; T.s = Math.max(.12, Math.min(2.5, g0.s * d / g0.d)); T.a = g0.a + ang - g0.ang; }
     apply();
   });
   const up = e => { pts.delete(e.pointerId); g0 = null; }; stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
@@ -2455,6 +2688,7 @@ const TryOn = (() => {
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
   return { open(id){
     const it = itemOf(id); if (!it) return; cur = it; $('#try-name').textContent = it.nom; errEl.hidden = true; T = { x: .5, y: .5, s: .6, a: 0 }; apply(); show('consent');
+    tracking = true; trackBtn.setAttribute('aria-pressed', 'true'); trackBtn.textContent = 'Suivi de la main : activé'; say('');
     ringImg.src = 'data:image/svg+xml,' + encodeURIComponent(ringSVG(it.r, 'illu'));
     if (Studio) Studio.thumb(it.r, dlg, url => { if (url) ringImg.src = url; }, 'worn');
     if (!dlg.open) dlg.showModal();
@@ -2520,11 +2754,18 @@ document.addEventListener('click', e => {
 });
 $('#sheet-add').addEventListener('click', () => addToCart('f' + sheetIdx));
 
-/* ================= Cookies ================= */
-const cookieBar = $('#cookies');
+/* ================= Cookies : la fenêtre s'ouvre comme une éclipse ================= */
+const ckDlg = $('#cookies');
 function cookieChoice(){ try { const c = JSON.parse(localStorage.getItem('singulier-cookies')); if (c && Date.now() - c.ts < 183 * 864e5) return c; } catch(e){} return null; }
-function setCookies(audience){ store.set('singulier-cookies', JSON.stringify({ ts: Date.now(), audience: !!audience })); cookieBar.hidden = true; toast(audience ? 'Cookies acceptés.' : 'Seuls les cookies nécessaires restent actifs.'); }
-if (!cookieChoice()) cookieBar.hidden = false;
+function closeEclipse(){
+  if (!ckDlg.open) return;
+  if (reduce){ ckDlg.close(); return; }
+  ckDlg.classList.add('is-leaving');
+  setTimeout(() => { ckDlg.close(); ckDlg.classList.remove('is-leaving'); }, 650);
+}
+function setCookies(audience){ store.set('singulier-cookies', JSON.stringify({ ts: Date.now(), audience: !!audience })); closeEclipse(); toast(audience ? 'Cookies acceptés. La lumière revient.' : 'Seuls les cookies nécessaires restent actifs.'); }
+ckDlg.addEventListener('cancel', e => e.preventDefault());           // un choix explicite est demandé ; « Tout refuser » est aussi simple qu'accepter
+if (!cookieChoice()) requestAnimationFrame(() => { ckDlg.showModal(); $('#ck-title').focus({ preventScroll: true }); });
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-ck]'); if (!b) return; const k = b.dataset.ck;
   if (k === 'accept') setCookies(true);
@@ -2539,12 +2780,16 @@ $('#news-form').addEventListener('submit', e => {
   inp.setAttribute('aria-invalid', String(!ok)); $('#n-err').hidden = ok && agree;
   $('#n-err').textContent = !ok ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : 'Cochez la case pour confirmer votre inscription.';
   if (!ok){ inp.focus(); return; } if (!agree){ $('#n-ok').focus(); return; }
-  shop.news = inp.value.trim(); if (shop.user) shop.user.news = true; saveShop();
-  st.hidden = false; st.textContent = 'Merci. Démonstration : l\'envoi de la revue n\'est pas encore branché, votre adresse est seulement notée dans ce navigateur.';
+  shop.news = inp.value.trim(); if (shop.user) shop.user.news = true; saveShop(); st.hidden = false;
+  if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Merci. Votre inscription part vers la boutique Singulier : une page de confirmation s\'est ouverte.'; }
+  else st.textContent = 'Merci. Démonstration : l\'envoi de la revue n\'est pas encore branché, votre adresse est seulement notée dans ce navigateur.';
 });
 
 /* Inspirations : aperçu local des images choisies */
 $('#f-inspi-img').addEventListener('change', e => { const box = $('#f-thumbs'); box.innerHTML = ''; Array.from(e.target.files || []).slice(0, 6).forEach(f => { if (!/^image\//.test(f.type)) return; const im = new Image(); im.alt = 'Inspiration : ' + f.name; im.src = URL.createObjectURL(f); im.onload = () => URL.revokeObjectURL(im.src); box.appendChild(im); }); });
+
+/* Accès pour l'export du catalogue Shopify (dossier shopify/) */
+window.Singulier = { RINGS, MODELS, SIZES, METALS, MOTIFS, SHAPES, priceOf, stoneLine, handleOf, render: (r, size, kind) => Studio ? Studio.render(r, size, kind) : '' };
 
 /* ================= Préférences changeantes ================= */
 mqReduce.addEventListener && mqReduce.addEventListener('change', e => { reduce = e.matches; });
