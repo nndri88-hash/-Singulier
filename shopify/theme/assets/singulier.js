@@ -1085,7 +1085,28 @@ function syncShop(){
 
 /* --- Panier Shopify --- */
 const CART_FIELDS = `id checkoutUrl totalQuantity cost{ totalAmount{ amount currencyCode } } lines(first: 50){ nodes{ id quantity cost{ totalAmount{ amount } } merchandise{ ... on ProductVariant{ id title product{ handle title } } } } }`;
+/* Sur la boutique elle-même (bijouteriesingulier.com), le site utilise le panier natif de Shopify :
+   un seul panier partagé avec les fiches produit, les collections et la page panier de la boutique. */
+const Native = (() => {
+  const on = !!(Live.on && window.Shopify && window.Shopify.shop && location.hostname === Live.domain);
+  const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  const shape = (c) => ({ id: 'native', checkoutUrl: root + 'checkout', totalQuantity: c.item_count, cost: { totalAmount: { amount: String(c.total_price / 100), currencyCode: c.currency } },
+    lines: { nodes: c.items.map(i => ({ id: i.key, quantity: i.quantity, cost: { totalAmount: { amount: String(i.final_line_price / 100) } },
+      merchandise: { id: 'gid://shopify/ProductVariant/' + i.variant_id, title: i.variant_title || 'Default Title', product: { handle: i.handle, title: i.product_title } } })) } });
+  async function call(path, body){
+    const r = await fetch(root + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) } : { headers: { Accept: 'application/json' } });
+    if (!r.ok){ let m = 'panier'; try { m = (await r.json()).description || m; } catch(e){} throw new Error(m); }
+    return r.json();
+  }
+  return {
+    on,
+    get: async () => shape(await call('cart.js')),
+    add: async (variantGid) => { await call('cart/add.js', { items: [{ id: +String(variantGid).split('/').pop(), quantity: 1 }] }); return shape(await call('cart.js')); },
+    remove: async (key) => shape(await call('cart/change.js', { id: key, quantity: 0 }))
+  };
+})();
 async function loadLiveCart(){
+  if (Native.on){ try { liveCart = await Native.get(); } catch(e){ liveCart = null; } syncShop(); return; }
   if (!Live.on || !shop.cartId) return;
   try { const d = await Live.gql(`query C($id: ID!){ cart(id: $id){ ${CART_FIELDS} } }`, { id: shop.cartId }); liveCart = d.cart; if (!liveCart){ shop.cartId = ''; } } catch(e){ liveCart = null; }
   syncShop();
@@ -1105,6 +1126,7 @@ async function liveAdd(id, it){
   if (liveCart && liveCart.lines.nodes.some(l => l.merchandise.id === v.id && id[0] === 'f')){ toast(`${it.nom} est déjà dans votre panier.`); return; }
   if (cartBusy) return; cartBusy = true;
   try {
+    if (Native.on){ liveCart = await Native.add(v.id); syncShop(); toast(`${it.nom} ajoutée au panier.`); Sound.tick(); cartBusy = false; return; }
     const lines = [{ merchandiseId: v.id, quantity: 1 }];
     const create = async () => (await Live.gql(`mutation N($lines: [CartLineInput!]){ cartCreate(input: { lines: $lines }){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { lines })).cartCreate;
     let res = shop.cartId ? (await Live.gql(`mutation A($id: ID!, $lines: [CartLineInput!]!){ cartLinesAdd(cartId: $id, lines: $lines){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, lines })).cartLinesAdd : await create();
@@ -1115,6 +1137,7 @@ async function liveAdd(id, it){
   cartBusy = false;
 }
 async function liveRemove(lineId){
+  if (Native.on){ try { liveCart = await Native.remove(lineId); syncShop(); } catch(e){ toast('Impossible de retirer cet article pour le moment.'); } return; }
   try { const d = await Live.gql(`mutation R($id: ID!, $ids: [ID!]!){ cartLinesRemove(cartId: $id, lineIds: $ids){ cart{ ${CART_FIELDS} } userErrors{ message } } }`, { id: shop.cartId, ids: [lineId] }); liveCart = d.cartLinesRemove.cart; syncShop(); }
   catch(e){ toast('Impossible de retirer cet article pour le moment.'); }
 }
