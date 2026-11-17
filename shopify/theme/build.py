@@ -16,7 +16,7 @@ body = html.split('<body>', 1)[1].split('</body>', 1)[0]
 # CSS : le bloc <style> du <head>
 css = re.search(r'<style>\n?(.*?)</style>', head, re.S).group(1)
 # Liens de polices (Google Fonts) et balises meta à garder dans la mise en page
-font_links = '\n'.join(re.findall(r'<link [^>]*>', head))
+font_links = '\n'.join(l for l in re.findall(r'<link [^>]*>', head) if 'canonical' not in l)
 
 # JavaScript : le dernier <script> du corps (le site), les scripts CDN restent dans la mise en page
 scripts = list(re.finditer(r'<script(?P<attrs>[^>]*)>(?P<code>.*?)</script>', body, re.S))
