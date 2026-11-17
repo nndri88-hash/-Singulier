@@ -43,7 +43,7 @@ window.SINGULIER_CONFIG = {
   shopify: {
     domain: 'votre-boutique.myshopify.com',
     storefrontToken: 'le jeton public copié à l’étape 3',
-    apiVersion: '2025-07'
+    apiVersion: '2026-07'
   },
   ...
 };

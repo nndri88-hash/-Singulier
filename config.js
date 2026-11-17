@@ -17,7 +17,7 @@ window.SINGULIER_CONFIG = {
   shopify: {
     domain: '',
     storefrontToken: '',
-    apiVersion: '2025-07'
+    apiVersion: '2026-07'
   },
   handTracking: {
     // Bibliothèque MediaPipe et modèle de repérage de la main, chargés seulement au moment de l'essayage
