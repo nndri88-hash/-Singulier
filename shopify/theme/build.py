@@ -33,6 +33,17 @@ markup = markup.strip() + '\n'
 
 assert '{{' not in markup and '{%' not in markup, 'syntaxe Liquid dans le HTML'
 
+# Les formulaires Sur mesure et revue deviennent les vrais formulaires Shopify (jetons et protection anti-spam inclus)
+def liquid_form(markup, opening, tag):
+    i = markup.index(opening)
+    j = markup.index('</form>', i)
+    return (markup[:i] + '{% endraw %}' + tag + '{% raw %}' + markup[i + len(opening):j]
+            + '{% endraw %}{%- endform -%}{% raw %}' + markup[j + len('</form>'):])
+markup = liquid_form(markup, '<form class="form-card" id="raconter" novalidate aria-labelledby="form-titre">',
+                     "{%- form 'contact', id: 'raconter', class: 'form-card', novalidate: 'novalidate' -%}")
+markup = liquid_form(markup, '<form class="news-form" id="news-form" novalidate>',
+                     "{%- form 'customer', id: 'news-form', class: 'news-form', novalidate: 'novalidate' -%}")
+
 (OUT / 'assets').mkdir(parents=True, exist_ok=True)
 (OUT / 'layout').mkdir(parents=True, exist_ok=True)
 (OUT / 'templates').mkdir(parents=True, exist_ok=True)
@@ -57,10 +68,6 @@ layout = f"""<!doctype html>
 </head>
 <body>
 {{{{ content_for_layout }}}}
-{{%- comment -%}} Vrais formulaires Shopify (jetons anti-spam) remplis par le site : demandes Sur mesure et revue mensuelle {{%- endcomment -%}}
-<style>.sg-shopify-form{{display:none}}</style>
-{{%- form 'contact', id: 'sg-contact', class: 'sg-shopify-form' -%}}{{%- endform -%}}
-{{%- form 'customer', id: 'sg-customer', class: 'sg-shopify-form' -%}}{{%- endform -%}}
 <script>
 window.SINGULIER_CONFIG = {{
   shopify: {{
