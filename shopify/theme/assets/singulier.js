@@ -1007,8 +1007,9 @@ heroIntro(); setupReveals();
 
 /* ================= Formulaire ================= */
 const form = $('#raconter');
+const isShopForm = (f) => !!f.querySelector('input[name="form_type"]');   // formulaire rendu par Shopify (thème de la boutique)
+[form, $('#news-form')].forEach(f => { f.noValidate = true; });   // la validation est faite par le site
 form.addEventListener('submit', e => {
-  e.preventDefault();
   const checks = [
     ['f-prenom', 'e-prenom', v => v.trim().length > 0],
     ['f-email', 'e-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())],
@@ -1017,9 +1018,18 @@ form.addEventListener('submit', e => {
   let firstBad = null;
   checks.forEach(([id, err, ok]) => { const f = $('#' + id), good = ok(f.value); f.setAttribute('aria-invalid', String(!good)); $('#' + err).hidden = good; if (!good && !firstBad) firstBad = f; });
   const status = $('#form-status');
-  if (firstBad){ status.hidden = true; firstBad.focus(); return; }
+  if (firstBad){ e.preventDefault(); status.hidden = true; firstBad.focus(); return; }
   status.hidden = false;
   const prenom = $('#f-prenom').value.trim();
+  if (isShopForm(form)){
+    /* Le formulaire part tel quel vers Shopify, qui l'envoie à l'adresse de contact de la boutique. La protection anti-spam de Shopify s'applique. */
+    $('#f-pierres').value = $$('input[name="pierres"]:checked').map(i => i.value).join(', ') || 'non précisé';
+    try { sessionStorage.setItem('sg-sent', 'contact'); } catch(err){}
+    const nImg = ($('#f-inspi-img').files || []).length;
+    status.textContent = `Envoi de votre histoire en cours…${nImg ? ' Les images ne passent pas par ce formulaire : envoyez-les en réponse à notre premier e-mail.' : ''}`;
+    return;
+  }
+  e.preventDefault();
   if (Live.on){
     const pierres = $$('input[name="pierres"]:checked').map(i => i.value).join(', ') || 'non précisé';
     const nImg = ($('#f-inspi-img').files || []).length;
@@ -1505,11 +1515,13 @@ document.addEventListener('click', e => {
 
 /* ================= Revue mensuelle ================= */
 $('#news-form').addEventListener('submit', e => {
-  e.preventDefault(); const inp = $('#n-email'), ok = mailOK(inp.value), agree = $('#n-ok').checked, st = $('#news-status');
+  const inp = $('#n-email'), ok = mailOK(inp.value), agree = $('#n-ok').checked, st = $('#news-status');
   inp.setAttribute('aria-invalid', String(!ok)); $('#n-err').hidden = ok && agree;
   $('#n-err').textContent = !ok ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : 'Cochez la case pour confirmer votre inscription.';
-  if (!ok){ inp.focus(); return; } if (!agree){ $('#n-ok').focus(); return; }
+  if (!ok){ e.preventDefault(); inp.focus(); return; } if (!agree){ e.preventDefault(); $('#n-ok').focus(); return; }
   shop.news = inp.value.trim(); if (shop.user) shop.user.news = true; saveShop(); st.hidden = false;
+  if (isShopForm(e.target)){ try { sessionStorage.setItem('sg-sent', 'news'); } catch(err){} st.textContent = 'Inscription en cours…'; return; }
+  e.preventDefault();
   if (Live.on){ postToShop({ form_type: 'customer', 'contact[email]': shop.news, 'contact[tags]': 'newsletter, revue-pierres' }); st.textContent = 'Inscription en cours…'; }
   else st.textContent = 'Merci. Démonstration : l\'envoi de la revue n\'est pas encore branché, votre adresse est seulement notée dans ce navigateur.';
 });

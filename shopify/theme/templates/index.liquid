@@ -197,28 +197,30 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
         </div>
       </div>
 
-      <form class="form-card" id="raconter" novalidate aria-labelledby="form-titre">
+      {% endraw %}{%- form 'contact', id: 'raconter', class: 'form-card', novalidate: 'novalidate' -%}{% raw %}
+        <input type="hidden" name="contact[Demande]" value="Bague sur mesure">
+        <input type="hidden" name="contact[Pierres souhaitées]" id="f-pierres" value="">
         <h3 class="title-l" id="form-titre">Racontez votre histoire</h3>
         <div class="form-grid">
           <div class="field">
             <label for="f-prenom">Prénom</label>
-            <input id="f-prenom" name="prenom" type="text" autocomplete="given-name" required aria-describedby="e-prenom">
+            <input id="f-prenom" name="contact[Prénom]" type="text" autocomplete="given-name" required aria-describedby="e-prenom">
             <p class="error" id="e-prenom" hidden>Indiquez votre prénom.</p>
           </div>
           <div class="field">
             <label for="f-email">E-mail</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+            <input id="f-email" name="contact[email]" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
             <p class="error" id="e-email" hidden>Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.</p>
           </div>
           <div class="field field-wide">
             <label for="f-histoire">Votre histoire</label>
             <p class="help" id="h-histoire">Un moment de vie, un trait de caractère, un souvenir. Quelques lignes suffisent.</p>
-            <textarea id="f-histoire" name="histoire" required aria-describedby="h-histoire e-histoire"></textarea>
+            <textarea id="f-histoire" name="contact[body]" required aria-describedby="h-histoire e-histoire"></textarea>
             <p class="error" id="e-histoire" hidden>Écrivez au moins quelques mots sur votre histoire.</p>
           </div>
           <div class="field">
             <label for="f-metal">Métal préféré</label>
-            <select id="f-metal" name="metal">
+            <select id="f-metal" name="contact[Métal préféré]">
               <option>Je ne sais pas encore</option>
               <option>Or jaune</option>
               <option>Or rose</option>
@@ -245,11 +247,11 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
           <div class="field field-wide">
             <label for="f-inspi">Vos inspirations <span class="opt">(facultatif)</span></label>
             <p class="help" id="h-inspi">Une bague aperçue quelque part, une forme, une couleur, un lien vers une image.</p>
-            <textarea id="f-inspi" name="inspirations" aria-describedby="h-inspi" style="min-height:90px"></textarea>
+            <textarea id="f-inspi" name="contact[Inspirations]" aria-describedby="h-inspi" style="min-height:90px"></textarea>
           </div>
           <div class="field field-wide">
             <label for="f-inspi-img">Images d'inspiration <span class="opt">(facultatif, 6 au plus)</span></label>
-            <input id="f-inspi-img" name="images" type="file" accept="image/*" multiple>
+            <input id="f-inspi-img" type="file" accept="image/*" multiple>
             <div class="thumbs" id="f-thumbs"></div>
           </div>
           <div class="field" style="align-content:end">
@@ -257,7 +259,7 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
           </div>
         </div>
         <p class="form-status" id="form-status" role="status" hidden></p>
-      </form>
+      {% endraw %}{%- endform -%}{% raw %}
     </div>
   </section>
 
@@ -330,15 +332,16 @@ if(!document.documentElement.dataset.side) document.documentElement.dataset.side
       <h2 class="title-l" id="news-title">La revue des pierres précieuses</h2>
       <p class="prose" style="margin:16px 0 0">Une pierre par mois : d'où elle vient, comment la reconnaître, comment la porter. Et les nouvelles bagues de l'atelier avant tout le monde.</p>
     </div>
-    <form class="news-form" id="news-form" novalidate>
+    {% endraw %}{%- form 'customer', id: 'news-form', class: 'news-form', novalidate: 'novalidate' -%}{% raw %}
+      <input type="hidden" name="contact[tags]" value="newsletter, revue-pierres">
       <div class="news-row">
-        <div class="field"><label for="n-email">Votre adresse e-mail</label><input id="n-email" type="email" inputmode="email" autocomplete="email" required aria-describedby="n-err"></div>
+        <div class="field"><label for="n-email">Votre adresse e-mail</label><input id="n-email" name="contact[email]" type="email" inputmode="email" autocomplete="email" required aria-describedby="n-err"></div>
         <button type="submit" class="btn btn-main" style="align-self:end">Je m'abonne</button>
       </div>
       <label class="check"><input type="checkbox" id="n-ok"><span>J'accepte de recevoir la revue mensuelle de Singulier. Je peux me désabonner à tout moment. Voir la <a href="#confidentialite" data-doc="confidentialite">politique de confidentialité</a>.</span></label>
       <p class="error" id="n-err" role="alert" hidden></p>
       <p class="form-status" id="news-status" role="status" hidden></p>
-    </form>
+    {% endraw %}{%- endform -%}{% raw %}
   </div>
 </section>
 
