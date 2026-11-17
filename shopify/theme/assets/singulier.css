@@ -582,6 +582,9 @@ fieldset.field legend{font-weight:600; font-size:.92rem; padding:0; margin-botto
 @media (hover:hover) and (pointer:fine){ .foot-cols a:hover, .foot-cols button:hover{text-decoration:underline; text-underline-offset:4px} }
 .foot-cols li.plain{min-height:40px; display:flex; align-items:center; font-size:.92rem; color:var(--muted)}
 a.foot-brand{display:block; text-decoration:none}
+.logo{display:inline-flex; align-items:center}
+.logo-mark{width:1.9em; height:1.9em; margin-right:.55em; flex:none; overflow:visible}
+.foot-mark{display:block; width:.9em; height:.9em; margin:0 auto .12em; overflow:visible}
 @media (prefers-reduced-motion: reduce){ dialog.drawer, dialog.drawer:not([open]){transform:none; transition:opacity .2s ease, overlay .2s allow-discrete, display .2s allow-discrete} .toast{transition:opacity .2s ease; transform:translate(-50%,0)} .cookies{transition:none} }
 
 /* ---------- v4 : cookies en éclipse, suivi de la main ---------- */
