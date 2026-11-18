@@ -1,0 +1,5 @@
+# Relevé /ig-viral : une ligne par Reel ou TikTok. Colonnes séparées par des tabulations.
+# median = vues médianes des 12 dernières vidéos du compte (à l'œil). hook = première phrase, mot pour mot.
+# Copier ce fichier en AAAA-MM-JJ.tsv chaque dimanche, remplir 10 à 15 lignes, supprimer l'exemple.
+account	followers	median	views	hook	length	cta	platform
+@exemple_atelier	8200	3100	96000	ce bruit c'est une pierre qui ne bougera plus jamais	14	enregistre	tiktok
