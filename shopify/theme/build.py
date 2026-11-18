@@ -65,6 +65,8 @@ layout = f"""<!doctype html>
 {font_links}
 {{{{ 'singulier.css' | asset_url | stylesheet_tag }}}}
 {{{{ content_for_header }}}}
+{{%- comment -%}} Sur l'accueil, le bandeau cookies du site (l'éclipse) remplace celui de Shopify : il transmet le choix à l'API de consentement de Shopify. {{%- endcomment -%}}
+<style>#shopify-pc__banner{{display:none !important}}</style>
 </head>
 <body>
 {{{{ content_for_layout }}}}

@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Manrope:wght@400;500;600&display=swap">
 {{ 'singulier.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}
+{%- comment -%} Sur l'accueil, le bandeau cookies du site (l'éclipse) remplace celui de Shopify : il transmet le choix à l'API de consentement de Shopify. {%- endcomment -%}
+<style>#shopify-pc__banner{display:none !important}</style>
 </head>
 <body>
 {{ content_for_layout }}
